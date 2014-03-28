@@ -6,5 +6,5 @@ setup(name='TweetStory',
       author='Andrea Carmisciano',
       author_email='andrea.carmisciano@gmail.com',
       url='https://github.com/acarmisc/tweetstory',
-      install_requires=['MarkupSafe'],
+      install_requires=['MarkupSafe', 'flask'],
      )
