@@ -1,8 +1,6 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 import pymongo
-import json
-from bson import json_util
 import ConfigParser
 
 
@@ -25,10 +23,11 @@ def test():
     conn = pymongo.Connection(db_url)
     db = conn[db_name]
 
-    result = db.messages.find()
+    result = db.history.find()
 
     #turn the results into valid JSON
-    return str(json.dumps({'results': list(result)}, default=json_util.default))
+    #return jsonify({'results': result})
+    return render_template('test.html', entries=result)
 
 
 #need this in a scalable app so that HAProxy thinks the app is up

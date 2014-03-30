@@ -1,0 +1,33 @@
+body {
+    background-color: #012131;
+}
+
+.twitt-block {
+    border: 1px solid #fff;
+    background-color: #C9DFEA;
+    margin-bottom: 10px;
+    padding: 5px;
+
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+    max-width: 300px;
+
+    font-family: "Helvetica Neue";
+    font-size: 12px;
+    line-height: 160%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.head-title {
+    background-color: #4D819A;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.highlight {
+    background-color: #3B494F;
+    color: white;
+    padding-left: 3px;
+    padding-right: 3px;
+}

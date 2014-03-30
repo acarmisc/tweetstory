@@ -1,0 +1,64 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TwittStory</title>
+    <link rel="stylesheet" href="/static/css/foundation.css" />
+    <link rel="stylesheet" href="/static/twittstory.css" />
+    <script src="/static/js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    <div class="fixed contain-to-grid">
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="#">Welcome to TwittStory</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
+
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="active"><a href="#">TwittPlay</a></li>
+          <li class="has-dropdown">
+            <a href="#">Record</a>
+            <ul class="dropdown">
+              <li><a href="#">Agenda</a></li>
+              <li><a href="#">History</a></li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </nav>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="head-title">
+            <h4>Tweets recorderd for <span class="highlight">#mistero</span> between
+                <span class="highlight">27 mar 2014 21:47</span>
+                <span class="highlight">27 mar 2014 22:30</span> </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            {% for message in entries %}
+                <div class="twitt-block">
+                    <div class="">{{ message.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <script src="/static/js/vendor/jquery.js"></script>
+    <script src="/static/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
