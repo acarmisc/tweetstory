@@ -24,15 +24,17 @@ db = conn[db_name]
 
 while True:
     time.sleep(5)
-    results = api.search(q="#mistero")
+    results = api.search(q="#ballaro")
 
     for result in results:
+
         hashtags = []
         for h in result.entities['hashtags']:
             hashtags.append({'tag': h['text']})
 
         tostore = {'text': result.text,
                    'author': result.author.screen_name,
+                   'avatar': result.user.profile_image_url_https,
                    'hashtags': hashtags,
                    'created_at': result.created_at}
 
