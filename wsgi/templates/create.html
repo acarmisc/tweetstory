@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body %}
+      <h1>Plan your record</h1>
+
+        <form class="well" id="new-ticket-form" onsubmit="" action="/save" method="POST">
+          <h2>New schedule</h2>
+
+          <p><input type="text" name="subject" class="input-xlarge" placeholder="Title"></p>
+          <p><textarea name="description" rows="3" cols="80" style="width:90%; height:200px;" placeholder="description"></textarea></p>
+          <p>
+              <label>From</label><input type="text" id="date_start" name="date_start" class="input-medium" />
+              <label>To</label><input type="text" id="date_end" name="date_end" class="input-medium" />
+          </p>
+          <p><label>#</label><input type="text" name="hashtag" class="input-small" placeholder="hashtag"></p>
+          <p><button type="submit" class="btn btn-primary">Save</button></p>
+        </form>
+
+{% endblock %}

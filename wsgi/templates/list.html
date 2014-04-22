@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+      <h1>Recordings</h1>
+
+      <ul>
+      {% for schedule in entries %}
+
+        <div class="schedule-entry">
+            <dt><a href="/show/{{ schedule._id }}">{{ schedule.subject }}</a></dt>
+            <dd>record #{{ schedule.hashtag }} from {{ schedule.date_start }} to {{ schedule.date_end }}</dd>
+        </div>
+
+      {% endfor %}
+      </ul>
+
+{% endblock %}

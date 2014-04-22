@@ -1,49 +1,55 @@
-import os
 import tweepy
-import time
-import pymongo
-import ConfigParser
+import logging
+
+# must be better
+logging.basicConfig(level=logging.DEBUG)
 
 
-auth = tweepy.OAuthHandler('HUIx9DPeNg3JRhQttArw', 'ZBLfb6ifYbg1S2EeGPi8yoYVZNemQNFmh1Hu2OXRHM')
-auth.set_access_token('14421751-IYMHYtG8DBuHYrDkK3Bpf0BftfJo4xseCynkmvFsE', 'XPWW8ZCMC0Ebs5MMNUjPRUVIKIXnYi7AUqPzzIrLWhQ8R')
+class twitterClient(object):
 
-api = tweepy.API(auth)
+    def __init__(self, config_dict=False, consumer_key=False,
+                 consumer_secret=False, key=False, secret=False):
 
-config = ConfigParser.RawConfigParser()
+        if config_dict:
+            self.consumer_key = config_dict['consumer_key']
+            self.consumer_secret = config_dict['consumer_secret']
+            self.key = config_dict['key']
+            self.secret = config_dict['secret']
+        else:
+            self.consumer_key = consumer_key
+            self.consumer_secret = consumer_secret
+            self.key = key
+            self.secret = secret
 
-if config.read('config.ini'):
-    db_url = config.get('mongodb', 'db_url')
-    db_name = config.get('mongodb', 'db_name')
-else:
-    db_url = os.environ['OPENSHIFT_MONGODB_DB_URL']
-    db_name = os.environ['OPENSHIFT_APP_NAME']
+    def connect(self):
+        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
+        auth.set_access_token(self.key, self.secret)
 
-conn = pymongo.Connection(db_url)
-db = conn[db_name]
+        api = tweepy.API(auth)
 
-while True:
-    time.sleep(5)
-    results = api.search(q="#ballaro")
+        return api
 
-    for result in results:
+    def fetch(self, todo):
+        fetched = []
 
-        hashtags = []
-        for h in result.entities['hashtags']:
-            hashtags.append({'tag': h['text']})
+        for el in todo:
+            api = self.connect()
+            results = api.search(q=el['hashtag'])
 
-        tostore = {'text': result.text,
-                   'author': result.author.screen_name,
-                   'avatar': result.user.profile_image_url_https,
-                   'hashtags': hashtags,
-                   'created_at': result.created_at}
+            logging.debug("Fetching data for #%s" % el['hashtag'])
 
-        history = db.history
-        cid = False
-        try:
-            cid = history.insert(tostore)
-            print cid
-        except:
-            pass
+            for r in results:
+                hashtags = []
+                for h in r.entities['hashtags']:
+                    hashtags.append({'tag': h['text']})
 
-        print tostore
+                data = {'oid': r.id,
+                        'text': r.text,
+                        'author': r.author.screen_name,
+                        'avatar': r.user.profile_image_url_https,
+                        'hashtags': hashtags,
+                        'created_at': r.created_at}
+
+                fetched.append(data)
+
+        return fetched

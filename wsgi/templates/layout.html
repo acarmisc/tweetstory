@@ -29,31 +29,20 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-
+              <li><a href="/create">Create</a></li>
+              <li><a href="/list">List</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
     <div class="container">
+        {% for message in get_flashed_messages() %}
+          <div class=flash>{{ message }}</div>
+        {% endfor %}
+        {% block body %}{% endblock %}
+    </div>
 
-      {% for message in entries %}
-        <div class="twitt-block">
-          <div class="avatar">
-            <img src="{{ message.avatar }}" />
-          </div>
-          <div class="msg">{{ message.text }}</div>
-          <div class="author">{{ message.author }}</div>
-          <div class="created_at">{{ message.created_at }}</div>
-        </div>
-      {% endfor %}
-
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
   </body>
