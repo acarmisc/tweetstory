@@ -1,6 +1,6 @@
 from setuptools import setup
 
-setup(name='TweetStory',
+setup(name='myTwiStory',
       version='0.1',
       description='Cache custom Tweet',
       author='Andrea Carmisciano',
