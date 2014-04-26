@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request
 import datetime
 from bson.objectid import ObjectId
-import threading
-import time
 import logging
 from tools import getConfig, dbConnect
 from twitter import twitterClient
@@ -66,27 +64,5 @@ def welcome():
     return render_template('welcome.html')
 
 
-def daemon():
-    now = datetime.datetime.now()
-    todo = db.schedule.find({'date_start': {'$lt': now},
-                             'date_end': {'$gte': now}})
-
-    logging.debug("Fetching data at %s" % time.ctime())
-    fetched = tClient.fetch(todo)
-
-    #TODO: move to specific object
-    history = db.history
-    for f in fetched:
-        # avoid duplicated twitt
-        found = history.find({'oid': f['oid']})
-        if found.count() == 0:
-            try:
-                history.insert(f)
-            except:
-                pass
-
-    threading.Timer(30, daemon).start()
-
 if __name__ == "__main__":
     app.run(debug=True)
-    daemon()
