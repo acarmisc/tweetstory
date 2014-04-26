@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source ${OPENSHIFT_DATA_DIR}/.myenv
 
 export t_api_key='sH7Tm9bw2ZGEK7zLVA87LY8Xg'
