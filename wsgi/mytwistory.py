@@ -5,6 +5,7 @@ import logging
 from tools import getConfig, dbConnect
 from twitter import twitterClient
 from flask_oauth import OAuth
+from models import User
 
 
 app = Flask(__name__)
@@ -18,9 +19,7 @@ tClient = twitterClient(config_dict=config['twitter'])
 logging.basicConfig(level=logging.DEBUG)
 
 
-"""
-Twitter login part
-"""
+""" Twitter login part """
 
 oauth = OAuth()
 twitter = oauth.remote_app('twitter',
@@ -47,7 +46,7 @@ def login():
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
 def oauth_authorized(resp):
-    next_url = url_for('list')
+    next_url = url_for('post_login')
     if resp is None:
         flash(u'You denied the request to sign in.')
         return redirect(next_url)
@@ -60,6 +59,15 @@ def oauth_authorized(resp):
 
     flash('You were signed in as %s' % resp['screen_name'])
     return redirect(next_url)
+
+
+@app.route('/post_login')
+def post_login():
+    user = User()
+
+    session['user'] = user.get_or_create(session['twitter_user'])
+
+    return redirect(url_for('list'))
 
 
 """ Main applications logic starts here """
@@ -104,10 +112,7 @@ def show(id=None):
 
 @app.route("/")
 def welcome():
-    session['testme'] = 'testme'
-    print session
-    return list()
-
+    return render_template('login.html')
 
 if __name__ == "__main__":
     app.secret_key = 'A0Zr98j/3yXaR~XHH!jmN]LWX/d?RT'

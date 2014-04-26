@@ -1,3 +1,8 @@
+"""
+agent.py is used to fetch twitts from live stream and
+store them to db.
+"""
+
 import datetime
 from twitter import twitterClient
 from tools import getConfig, dbConnect
