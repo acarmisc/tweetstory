@@ -40,13 +40,12 @@ def get_twitter_token(token=None):
 @app.route('/login')
 def login():
     return twitter.authorize(callback=url_for('oauth_authorized',
-        next=request.referrer or None))
+                             next=request.referrer or None))
 
 
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
 def oauth_authorized(resp):
-    import pdb; pdb.set_trace()
     next_url = url_for('post_login')
     if resp is None:
         flash(u'You denied the request to sign in.')
