@@ -7,23 +7,16 @@ logging.basicConfig(level=logging.DEBUG)
 
 class twitterClient(object):
 
-    def __init__(self, config_dict=False, consumer_key=False,
-                 consumer_secret=False, key=False, secret=False):
+    def __init__(self, config_dict=False):
 
-        if config_dict:
-            self.consumer_key = config_dict['consumer_key']
-            self.consumer_secret = config_dict['consumer_secret']
-            self.key = config_dict['key']
-            self.secret = config_dict['secret']
-        else:
-            self.consumer_key = consumer_key
-            self.consumer_secret = consumer_secret
-            self.key = key
-            self.secret = secret
+        self.t_acc_token = config_dict['t_acc_token']
+        self.t_acc_secret = config_dict['t_acc_secret']
+        self.t_api_key = config_dict['t_api_key']
+        self.t_api_secret = config_dict['t_api_secret']
 
     def connect(self):
-        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
-        auth.set_access_token(self.key, self.secret)
+        auth = tweepy.OAuthHandler(self.t_api_key, self.t_api_secret)
+        auth.set_access_token(self.t_acc_token, self.t_acc_secret)
 
         api = tweepy.API(auth)
 

@@ -26,9 +26,9 @@ twitter = oauth.remote_app('twitter',
     base_url='https://api.twitter.com/1/',
     request_token_url='https://api.twitter.com/oauth/request_token',
     access_token_url='https://api.twitter.com/oauth/access_token',
-    authorize_url='https://api.twitter.com/oauth/authorize',
-    consumer_key=config['twitter']['consumer_key'],
-    consumer_secret=config['twitter']['consumer_secret']
+    authorize_url='https://api.twitter.com/oauth/authenticate',
+    consumer_key=config['twitter']['t_api_key'],
+    consumer_secret=config['twitter']['t_api_secret']
 )
 
 
@@ -40,12 +40,13 @@ def get_twitter_token(token=None):
 @app.route('/login')
 def login():
     return twitter.authorize(callback=url_for('oauth_authorized',
-        next=request.args.get('next') or request.referrer or None))
+        next=request.referrer or None))
 
 
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
 def oauth_authorized(resp):
+    import pdb; pdb.set_trace()
     next_url = url_for('post_login')
     if resp is None:
         flash(u'You denied the request to sign in.')
@@ -75,15 +76,13 @@ def post_login():
 
 @app.route('/save', methods=['POST'])
 def save():
-
     tostore = {
-        'date_start': datetime.datetime.strptime(request.form['date_start'],
+        'date_start': datetime.datetime.strptime(request.form.get('date_start', None),
                                                  "%Y-%m-%d %H:%M:%S"),
-        'date_end': datetime.datetime.strptime(request.form['date_end'],
+        'date_end': datetime.datetime.strptime(request.form.get('date_end', None),
                                                "%Y-%m-%d %H:%M:%S"),
-        'subject': request.form['subject'],
-        'description': request.form['description'],
-        'hashtag': request.form['hashtag']
+        'subject': request.form.get('subject', None),
+        'hashtag': request.form.get('hashtag', None)
     }
 
     db.schedule.insert(tostore)

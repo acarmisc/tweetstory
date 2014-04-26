@@ -13,18 +13,18 @@ def getConfig():
         db_url = os.environ['OPENSHIFT_MONGODB_DB_URL']
         db_name = os.environ['OPENSHIFT_APP_NAME']
 
-    consumer_key = os.environ['twitter_consumer_key']
-    consumer_secret = os.environ['twitter_consumer_secret']
-    key = os.environ['twitter_key']
-    secret = os.environ['twitter_secret']
+    t_api_key = os.environ['t_api_key']
+    t_api_secret = os.environ['t_api_secret']
+    t_acc_token = os.environ['t_acc_token']
+    t_acc_secret = os.environ['t_acc_secret']
 
     data = {'db_url': db_url,
             'db_name': db_name,
             'twitter': {
-                'consumer_key': consumer_key,
-                'consumer_secret': consumer_secret,
-                'key': key,
-                'secret': secret
+                't_api_key': t_api_key,
+                't_api_secret': t_api_secret,
+                't_acc_token': t_acc_token,
+                't_acc_secret': t_acc_secret
             }}
 
     return data

@@ -16,6 +16,7 @@ class User(object):
         username = username
         first_name = first_name
         last_name = last_name
+        email = email
 
     def __repr__(self):
         return '<User %r>' % self.username
