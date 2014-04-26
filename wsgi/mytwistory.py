@@ -64,6 +64,7 @@ def oauth_authorized(resp):
 
 """ Main applications logic starts here """
 
+
 @app.route('/save', methods=['POST'])
 def save():
 
@@ -107,5 +108,5 @@ def welcome():
 
 
 if __name__ == "__main__":
-    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    app.secret_key = 'A0Zr98j/3yXaR~XHH!jmN]LWX/d?RT'
     app.run(debug=True)
