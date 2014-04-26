@@ -1,10 +1,2 @@
 #!/bin/bash
-
 source ${OPENSHIFT_DATA_DIR}/.myenv
-
-export t_api_key='sH7Tm9bw2ZGEK7zLVA87LY8Xg'
-export t_api_secret='D9u5MgjOhnSdqswz975jAQ0vL29CdMjjPAq10ihiUSvx1Ui3MM'
-export t_acc_token='14421751-BrYaDr9sOwgwuGSgErFYWjcuEBL04H1TqtNwMQmqI'
-export t_acc_secret='BOIr0WQlN2XuIo6CoSFS35SfLV3bcr0oB7WcZw4IYJeHy'
-
-echo "read"
