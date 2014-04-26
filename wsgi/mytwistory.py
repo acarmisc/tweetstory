@@ -24,10 +24,10 @@ Twitter login part
 
 oauth = OAuth()
 twitter = oauth.remote_app('twitter',
-    base_url='https://api.twitter.com/1/',
+    base_url='https://api.twitter.com/oauth2/token',
     request_token_url='https://api.twitter.com/oauth/request_token',
     access_token_url='https://api.twitter.com/oauth/access_token',
-    authorize_url='https://api.twitter.com/oauth/authenticate',
+    authorize_url='https://api.twitter.com/oauth/authorize',
     consumer_key=config['twitter']['consumer_key'],
     consumer_secret=config['twitter']['consumer_secret']
 )
