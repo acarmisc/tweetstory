@@ -104,6 +104,8 @@ def show(id=None):
 
 @app.route("/")
 def welcome():
+    session['testme'] = 'testme'
+    print session
     return list()
 
 
