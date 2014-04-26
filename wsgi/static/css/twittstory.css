@@ -34,3 +34,8 @@ body {
     color: #aaa;
     float: right;
 }
+
+.record-form input[type=text]{
+    font-size: 130%;
+    padding: 10px;
+}
