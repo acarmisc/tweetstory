@@ -24,7 +24,7 @@ Twitter login part
 
 oauth = OAuth()
 twitter = oauth.remote_app('twitter',
-    base_url='https://api.twitter.com/oauth2/token',
+    base_url='https://api.twitter.com/1/',
     request_token_url='https://api.twitter.com/oauth/request_token',
     access_token_url='https://api.twitter.com/oauth/access_token',
     authorize_url='https://api.twitter.com/oauth/authorize',
@@ -47,7 +47,7 @@ def login():
 @app.route('/oauth-authorized')
 @twitter.authorized_handler
 def oauth_authorized(resp):
-    next_url = request.args.get('next') or url_for('index')
+    next_url = url_for('list')
     if resp is None:
         flash(u'You denied the request to sign in.')
         return redirect(next_url)
