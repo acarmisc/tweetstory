@@ -7,7 +7,6 @@ from tools import getConfig, dbConnect
 from twitter import twitterClient
 from flask_oauth import OAuth
 from models import User
-import os
 
 
 app = Flask(__name__)
@@ -20,6 +19,8 @@ tClient = twitterClient(config_dict=config['twitter'])
 
 logging.basicConfig(level=logging.DEBUG)
 
+import os
+logging.debug(os.environ)
 
 """ Twitter login part """
 
@@ -158,6 +159,5 @@ def welcome():
     return render_template('login.html')
 
 if __name__ == "__main__":
-    logging.debug(os.environ)
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
