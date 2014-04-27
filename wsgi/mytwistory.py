@@ -158,6 +158,6 @@ def welcome():
     return render_template('login.html')
 
 if __name__ == "__main__":
-    print os.environ
+    logging.debug(os.environ)
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
