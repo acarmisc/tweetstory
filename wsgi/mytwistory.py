@@ -165,6 +165,9 @@ def show(id=None):
 
 @app.route("/")
 def welcome():
+    if 'logged_in' in session:
+        return redirect(url_for('list'))
+
     return render_template('login.html')
 
 if __name__ == "__main__":

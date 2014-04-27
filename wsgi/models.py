@@ -25,10 +25,11 @@ class User(object):
         return '<User %r>' % self.username
 
     def get_or_create(self):
-        if not self.get(self.username):
+        found = self.get(username=self.username)
+        if not found:
             self.create()
 
-        return True
+        return self.username
 
     def get_all(self):
         res = db.users.find()
