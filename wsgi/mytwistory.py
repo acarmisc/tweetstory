@@ -19,8 +19,6 @@ tClient = twitterClient(config_dict=config['twitter'])
 
 logging.basicConfig(level=logging.DEBUG)
 
-import os
-logging.debug(os.environ)
 
 """ Twitter login part """
 
