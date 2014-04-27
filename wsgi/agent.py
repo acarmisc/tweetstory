@@ -13,26 +13,26 @@ config = getConfig()
 db = dbConnect(config['db_url'], config['db_name'])
 tClient = twitterClient(config_dict=config['twitter'])
 
-while True:
+#while True:
 
-    now = datetime.datetime.now()
-    print now
+now = datetime.datetime.now()
+print now
 
-    todo = db.schedule.find({'date_start': {'$lt': now},
-                             'date_end': {'$gte': now}})
+todo = db.schedule.find({'date_start': {'$lt': now},
+                         'date_end': {'$gte': now}})
 
-    #logging.debug("Fetching data at %s" % time.ctime())
-    fetched = tClient.fetch(todo)
+#logging.debug("Fetching data at %s" % time.ctime())
+fetched = tClient.fetch(todo)
 
-    #TODO: move to specific object
-    history = db.history
-    for f in fetched:
-        # avoid duplicated twitt
-        found = history.find({'oid': f['oid']})
-        if found.count() == 0:
-            try:
-                history.insert(f)
-            except:
-                pass
+#TODO: move to specific object
+history = db.history
+for f in fetched:
+    # avoid duplicated twitt
+    found = history.find({'oid': f['oid']})
+    if found.count() == 0:
+        try:
+            history.insert(f)
+        except:
+            pass
 
-    time.sleep(5)
+#   time.sleep(30)

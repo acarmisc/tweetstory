@@ -40,7 +40,7 @@ def get_twitter_token(token=None):
 @app.route('/login')
 def login():
     return twitter.authorize(callback=url_for('oauth_authorized',
-                             next=request.referrer or None))
+                             next=None))
 
 
 @app.route('/oauth-authorized')
@@ -56,6 +56,7 @@ def oauth_authorized(resp):
         resp['oauth_token_secret']
     )
     session['twitter_user'] = resp['screen_name']
+    session['twitter_id'] = resp['user_id']
 
     flash('You were signed in as %s' % resp['screen_name'])
     return redirect(next_url)
@@ -63,14 +64,46 @@ def oauth_authorized(resp):
 
 @app.route('/post_login')
 def post_login():
-    user = User()
+    user = User(username=session['twitter_user'], twitter_id=session['twitter_id'])
 
-    session['user'] = user.get_or_create(session['twitter_user'])
+    session['user'] = user.get_or_create()
 
     return redirect(url_for('list'))
 
 
 """ Main applications logic starts here """
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return "clear"
+
+
+@app.route('/login_local', methods=['POST'])
+def login_local():
+    pass
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+
+    user = User(username=request.form.get('username', None),
+                email=request.form.get('email', None),
+                password=request.form.get('password', None))
+
+    if user.create():
+        return redirect(url_for('users'))
+    else:
+        return redirect(url_for('/'))
+
+
+@app.route('/users')
+def users():
+    u = User()
+    users = u.get_all()
+
+    return render_template('users.html', users=users)
 
 
 @app.route('/save', methods=['POST'])
