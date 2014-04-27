@@ -1,5 +1,5 @@
 """
-agent.py is used to fetch twitts from live stream and
+agent.py is used to fetch tweets from live stream and
 store them to db.
 """
 

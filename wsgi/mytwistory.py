@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, \
+    session, redirect, url_for, flash
 import datetime
 from bson.objectid import ObjectId
 import logging
@@ -30,9 +31,6 @@ twitter = oauth.remote_app('twitter',
     consumer_key=config['twitter']['t_api_key'],
     consumer_secret=config['twitter']['t_api_secret']
 )
-
-logging.debug(config['twitter']['t_api_key'])
-logging.debug(config['twitter']['t_api_secret'])
 
 
 @twitter.tokengetter
@@ -80,7 +78,7 @@ def post_login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return "clear"
+    return redirect(url_for('/'))
 
 
 @app.route('/login_local', methods=['POST'])
