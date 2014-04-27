@@ -31,7 +31,7 @@ twitter = oauth.remote_app('twitter',
     consumer_secret=config['twitter']['t_api_secret']
 )
 
-loggin.debug(config['twitter']['t_api_key'])
+logging.debug(config['twitter']['t_api_key'])
 logging.debug(config['twitter']['t_api_secret'])
 
 
