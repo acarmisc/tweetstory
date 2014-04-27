@@ -6,7 +6,6 @@ store them to db.
 import datetime
 from twitter import twitterClient
 from tools import getConfig, dbConnect
-import time
 
 
 config = getConfig()
