@@ -79,7 +79,7 @@ def post_login():
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('/'))
+    return redirect(url_for('welcome'))
 
 
 @app.route('/login_local', methods=['POST'])
