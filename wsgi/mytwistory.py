@@ -68,6 +68,7 @@ def post_login():
     user = User(username=session['twitter_user'], twitter_id=session['twitter_id'])
 
     session['user'] = user.get_or_create()
+    session['logged_in'] = True
 
     return redirect(url_for('list'))
 
@@ -89,6 +90,7 @@ def login_local():
     check = user.check_exists()
     if check:
         session['user'] = check['username']
+        session['logged_in'] = True
         flash('You were signed in as %s' % session['user'])
         return redirect(url_for('list'))
     else:
@@ -111,6 +113,9 @@ def signup():
 
 @app.route('/users')
 def users():
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
     u = User()
     users = u.get_all()
 
@@ -135,6 +140,9 @@ def save():
 
 @app.route("/list")
 def list():
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
     result = db.schedule.find().sort('created_at', -1)
 
     return render_template('list.html', entries=result)
@@ -142,6 +150,9 @@ def list():
 
 @app.route("/show/<id>", methods=['GET'])
 def show(id=None):
+
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
 
     schedule = db.schedule.find_one({'_id': ObjectId(id)})
 
