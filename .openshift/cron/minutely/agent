@@ -1,5 +1,5 @@
- #!/bin/bash
- source activate_virtenv
- python ${OPENSHIFT_REPO_DIR}/wsgi/agent.py
- echo "************ Cronny Executed ***************"
- date >> ${OPENSHIFT_DATA_DIR}/agent.log
+#!/bin/bash
+source python/virtenv/bin/activate
+python ${OPENSHIFT_REPO_DIR}/wsgi/agent.py
+echo "************ Cronny Executed ***************"
+date >> ${OPENSHIFT_DATA_DIR}/agent.log
