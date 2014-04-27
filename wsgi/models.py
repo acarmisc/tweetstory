@@ -52,3 +52,11 @@ class User(object):
         except:
             logging.error("Error writing new user to database")
             return False
+
+    def check_exists(self):
+        found = db.users.find({'username': self.username,
+                               'password': self.password})
+        if found.count() > 0:
+            return found[0]
+        else:
+            return False

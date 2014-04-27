@@ -85,7 +85,17 @@ def logout():
 
 @app.route('/login_local', methods=['POST'])
 def login_local():
-    pass
+    user = User(username=request.form.get('username'),
+                password=request.form.get('password'))
+
+    check = user.check_exists()
+    if check:
+        session['user'] = check['username']
+        flash('You were signed in as %s' % session['user'])
+        return redirect(url_for('list'))
+    else:
+        flash('Login failed')
+        return redirect(url_for('/'))
 
 
 @app.route('/signup', methods=['POST'])
