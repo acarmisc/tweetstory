@@ -2,14 +2,14 @@
 {% block body %}
 
         <h3>New</h3>
-        <form class="well record-form" id="new-ticket-form" onsubmit=""
-          action="{{ url_for('save') }}" method="POST">
-          <input type="text" name="subject" class="input-medium" placeholder="Title">
-          <input data-format="MM/dd/yyyy" type="text" name="date_start" placeholder="From">
-          <input data-format="MM/dd/yyyy" type="text" name="date_end" placeholder="To"></input>
-          <input type="text" name="hashtag" class="input-small" placeholder="#">
+        <!-- replace action with ... -->
+        <form class="well record-form" id="new-ticket-form" role="form"
+        action="/save" method="POST">
 
-          <button type="submit" class="btn btn-primary">Save</button>
+          {% import "_forms.html" as forms %}
+          {{ forms.render(form) }}
+
+          <input type="submit" class="btn btn-primary" value="Save" />
         </form>
 
         <h4>History</h4>
@@ -23,10 +23,10 @@
         </tr>
       {% for schedule in entries %}
         <tr class="schedule-entry">
-            <td><a href="/show/{{ schedule._id }}">{{ schedule.subject }}</a></td>
+            <td><a href="/show/{{ schedule.id }}">{{ schedule.subject }}</a></td>
             <td>#{{ schedule.hashtag }}</td>
-            <td>{{ schedule.date_start }}</td>
-            <td>{{ schedule.date_end }}</td>
+            <td>{{ schedule.start_date }}</td>
+            <td>{{ schedule.end_date }}</td>
             <td>
 
             </td>

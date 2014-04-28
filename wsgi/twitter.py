@@ -1,8 +1,10 @@
 import tweepy
-import logging
+from flask_oauth import OAuth
+from tools import getConfig, _logger
 
-# must be better
-logging.basicConfig(level=logging.DEBUG)
+
+config = getConfig()
+_logger = _logger('Twitter')
 
 
 class twitterClient(object):
@@ -22,6 +24,19 @@ class twitterClient(object):
 
         return api
 
+    def authenticate(self):
+        oauth = OAuth()
+        twitter = oauth.remote_app('twitter',
+            base_url='https://api.twitter.com/1/',
+            request_token_url='https://api.twitter.com/oauth/request_token',
+            access_token_url='https://api.twitter.com/oauth/access_token',
+            authorize_url='https://api.twitter.com/oauth/authenticate',
+            consumer_key=config['twitter']['t_api_key'],
+            consumer_secret=config['twitter']['t_api_secret']
+        )
+
+        return twitter
+
     def fetch(self, todo):
         fetched = []
 
@@ -29,12 +44,12 @@ class twitterClient(object):
             api = self.connect()
             results = api.search(q=el['hashtag'])
 
-            logging.debug("Fetching data for #%s" % el['hashtag'])
+            _logger.debug("Fetching data for #%s" % el['hashtag'])
 
             for r in results:
                 hashtags = []
                 for h in r.entities['hashtags']:
-                    hashtags.append({'tag': h['text']})
+                    hashtags.append(h['text'])
 
                 data = {'oid': r.id,
                         'text': r.text,

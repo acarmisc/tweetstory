@@ -1,47 +1,128 @@
 from flask import Flask, render_template, request, \
     session, redirect, url_for, flash
-import datetime
-from bson.objectid import ObjectId
-import logging
-from tools import getConfig, dbConnect
+from flask.ext.mongoengine import MongoEngine
+from tools import getConfig, _logger
 from twitter import twitterClient
-from flask_oauth import OAuth
-from models import User
 
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config['MONGODB_SETTINGS'] = {'DB': 'twistory'}
 
 config = getConfig()
-db = dbConnect(config['db_url'], config['db_name'])
+_logger = _logger('Core')
 
 tClient = twitterClient(config_dict=config['twitter'])
+twitter = tClient.authenticate()
 
-logging.basicConfig(level=logging.DEBUG)
-
-
-""" Twitter login part """
-
-oauth = OAuth()
-twitter = oauth.remote_app('twitter',
-    base_url='https://api.twitter.com/1/',
-    request_token_url='https://api.twitter.com/oauth/request_token',
-    access_token_url='https://api.twitter.com/oauth/access_token',
-    authorize_url='https://api.twitter.com/oauth/authenticate',
-    consumer_key=config['twitter']['t_api_key'],
-    consumer_secret=config['twitter']['t_api_secret']
-)
+db = MongoEngine(app)
 
 
-@twitter.tokengetter
-def get_twitter_token(token=None):
-    return session.get('twitter_token')
+""" basic functions """
+
+
+@app.route("/")
+def welcome():
+    form = UserForm()
+    if 'logged_in' in session:
+        return redirect(url_for('list'))
+
+    return render_template('login.html', form=form)
 
 
 @app.route('/login')
 def login():
     return twitter.authorize(callback=url_for('oauth_authorized',
                              next=None))
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('welcome'))
+
+
+@app.route('/post_login')
+def post_login():
+    user = User(username=session['twitter_user'],
+                twitter_id=session['twitter_id'])
+
+    session['user'] = user.get_or_create()
+    session['logged_in'] = True
+
+    return redirect(url_for('list'))
+
+
+@app.route('/login_local', methods=['POST'])
+def login_local():
+    user = User(username=request.form.get('username'),
+                password=request.form.get('password'))
+
+    check = user.check_exists()
+    if check:
+        # get more data from check
+        session['user'] = check.username
+        session['logged_in'] = True
+        flash('You were signed in as %s' % session['user'])
+        return redirect(url_for('list'))
+    else:
+        flash('Login failed')
+        return redirect(url_for('/'))
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    user = User()
+
+    if user.create_user(request):
+        return redirect(url_for('users'))
+    else:
+        return redirect(url_for('/'))
+
+
+@app.route("/list")
+def list():
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    schedules = Schedule()
+    results = schedules.get_by_logged_user(session['user'])
+    form = ScheduleForm()
+
+    return render_template('list.html', entries=results, form=form)
+
+
+@app.route('/save', methods=['POST'])
+def save():
+    schedule = Schedule()
+    schedule.create_schedule(request)
+
+    return list()
+
+
+@app.route("/show/<id>", methods=['GET'])
+def show(id=None):
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    # getting schedule
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+
+    # getting zombie related to specific schedule
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    # should return schedule and zombies
+    return render_template('show.html', schedule=schedule, zombies=zombies)
+
+
+""" Twitter login part """
+
+
+@twitter.tokengetter
+def get_twitter_token(token=None):
+    return session.get('twitter_token')
 
 
 @app.route('/oauth-authorized')
@@ -63,52 +144,7 @@ def oauth_authorized(resp):
     return redirect(next_url)
 
 
-@app.route('/post_login')
-def post_login():
-    user = User(username=session['twitter_user'], twitter_id=session['twitter_id'])
-
-    session['user'] = user.get_or_create()
-    session['logged_in'] = True
-
-    return redirect(url_for('list'))
-
-
-""" Main applications logic starts here """
-
-
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect(url_for('welcome'))
-
-
-@app.route('/login_local', methods=['POST'])
-def login_local():
-    user = User(username=request.form.get('username'),
-                password=request.form.get('password'))
-
-    check = user.check_exists()
-    if check:
-        session['user'] = check['username']
-        session['logged_in'] = True
-        flash('You were signed in as %s' % session['user'])
-        return redirect(url_for('list'))
-    else:
-        flash('Login failed')
-        return redirect(url_for('/'))
-
-
-@app.route('/signup', methods=['POST'])
-def signup():
-
-    user = User(username=request.form.get('username', None),
-                email=request.form.get('email', None),
-                password=request.form.get('password', None))
-
-    if user.create():
-        return redirect(url_for('users'))
-    else:
-        return redirect(url_for('/'))
+""" basic admin """
 
 
 @app.route('/users')
@@ -122,54 +158,11 @@ def users():
     return render_template('users.html', users=users)
 
 
-@app.route('/save', methods=['POST'])
-def save():
-    tostore = {
-        'date_start': datetime.datetime.strptime(request.form.get('date_start', None),
-                                                 "%Y-%m-%d %H:%M:%S"),
-        'date_end': datetime.datetime.strptime(request.form.get('date_end', None),
-                                               "%Y-%m-%d %H:%M:%S"),
-        'subject': request.form.get('subject', None),
-        'hashtag': request.form.get('hashtag', None)
-    }
-
-    db.schedule.insert(tostore)
-
-    return list()
-
-
-@app.route("/list")
-def list():
-    if 'logged_in' not in session:
-        return redirect(url_for('welcome'))
-
-    result = db.schedule.find().sort('created_at', -1)
-
-    return render_template('list.html', entries=result)
-
-
-@app.route("/show/<id>", methods=['GET'])
-def show(id=None):
-
-    if 'logged_in' not in session:
-        return redirect(url_for('welcome'))
-
-    schedule = db.schedule.find_one({'_id': ObjectId(id)})
-
-    ffilter = {'$or': [{'hashtags': {'tag': schedule['hashtag']}},
-                       {'hashtags': {'tag': schedule['hashtag'].lower()}}]}
-    result = db.history.find(ffilter).sort('created_at', -1)
-
-    return render_template('show.html', entries=result)
-
-
-@app.route("/")
-def welcome():
-    if 'logged_in' in session:
-        return redirect(url_for('list'))
-
-    return render_template('login.html')
-
 if __name__ == "__main__":
+
+    # models really goes here?!
+    from models.user import User, UserForm
+    from models.schedule import Schedule, ScheduleForm
+    from models.zombie import Zombie
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)

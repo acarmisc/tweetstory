@@ -5,18 +5,24 @@ store them to db.
 
 import datetime
 from twitter import twitterClient
-from tools import getConfig, dbConnect
+from tools import getConfig
 import time
 import logging
+from models.zombie import Zombie
+
+from pymongo import MongoClient
+client = MongoClient()
+
+db = client.twistory
 
 config = getConfig()
-db = dbConnect(config['db_url'], config['db_name'])
+
 tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.now()
 
-todo = db.schedule.find({'date_start': {'$lt': now},
-                         'date_end': {'$gte': now}})
+todo = db.schedule.find({'start_date': {'$lt': now},
+                         'end_date': {'$gte': now}})
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -25,13 +31,17 @@ logging.debug("Fetching data at %s" % time.ctime())
 fetched = tClient.fetch(todo)
 
 #TODO: move to specific object
-history = db.history
+history = db.zombie
 for f in fetched:
     # avoid duplicated tweet
+    zz = Zombie()
+    #import pdb; pdb.set_trace()
+    # rewrite...
     found = history.find({'oid': f['oid']})
     if found.count() == 0:
         try:
-            history.insert(f)
+            zz.create_zombie(f)
+            #history.insert(f)
         except:
             pass
 

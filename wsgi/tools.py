@@ -1,6 +1,20 @@
 import ConfigParser
 import os
-import pymongo
+import logging
+
+
+def _logger(name):
+    #FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'
+    FORMAT = '%(asctime)-15s %(message)s'
+    #FIXME: log level must be moved to config
+    logging.basicConfig(format=FORMAT, level=logging.DEBUG)
+
+    logger = logging.getLogger(name)
+    # use like this:
+    # d = {'clientip': '192.168.0.1', 'user': 'fbloggs'}
+    # logger.warning('Protocol problem: %s', 'connection reset', extra=d)
+
+    return logger
 
 
 def getConfig():
@@ -28,10 +42,3 @@ def getConfig():
             }}
 
     return data
-
-
-def dbConnect(db_url, db_name):
-    conn = pymongo.Connection(db_url)
-    db = conn[db_name]
-
-    return db
