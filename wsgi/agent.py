@@ -27,7 +27,7 @@ fetched = tClient.fetch(todo)
 #TODO: move to specific object
 history = db.history
 for f in fetched:
-    # avoid duplicated twitt
+    # avoid duplicated tweet
     found = history.find({'oid': f['oid']})
     if found.count() == 0:
         try:
