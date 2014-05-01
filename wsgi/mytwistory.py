@@ -8,7 +8,6 @@ from twitter import twitterClient
 config = getConfig()
 _logger = _logger('Core')
 
-
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
@@ -25,7 +24,6 @@ db = MongoEngine(app)
 
 @app.route("/")
 def welcome():
-    from models.user import User, UserForm
     form = UserForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
@@ -163,9 +161,8 @@ def users():
 
 if __name__ == "__main__":
 
-    # models really goes here?!
+    app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
+    app.run(debug=True)
     from models.user import User, UserForm
     from models.schedule import Schedule, ScheduleForm
     from models.zombie import Zombie
-    app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
-    app.run(debug=True)
