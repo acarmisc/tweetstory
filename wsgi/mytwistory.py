@@ -4,9 +4,6 @@ from flask.ext.mongoengine import MongoEngine
 from tools import getConfig, _logger
 from twitter import twitterClient
 
-from models.user import User, UserForm
-from models.schedule import Schedule, ScheduleForm
-from models.zombie import Zombie
 
 config = getConfig()
 _logger = _logger('Core')
