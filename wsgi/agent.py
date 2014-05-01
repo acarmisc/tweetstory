@@ -12,6 +12,7 @@ from models.zombie import Zombie
 from mongoengine import *
 
 
+logging.basicConfig(level=logging.DEBUG)
 config = getConfig()
 
 client = connect(config['db_url'])
@@ -23,9 +24,6 @@ now = datetime.datetime.now()
 
 todo = db.schedule.find({'start_date': {'$lt': now},
                          'end_date': {'$gte': now}})
-
-
-logging.basicConfig(level=logging.DEBUG)
 
 logging.debug("Fetching data at %s" % time.ctime())
 fetched = tClient.fetch(todo)
