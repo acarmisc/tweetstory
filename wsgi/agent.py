@@ -16,6 +16,8 @@ client = MongoClient()
 config = getConfig()
 db = client.config['db_name']
 
+logging.debug(db)
+
 tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.now()

@@ -13,10 +13,13 @@ app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['MONGODB_SETTINGS'] = {'DB': config['db_name']}
 
+_logger.debug("Using DB: %s" % app.config['MONGODB_SETTINGS'])
+
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
 
 db = MongoEngine(app)
+_logger.debug(db)
 
 
 """ basic functions """
