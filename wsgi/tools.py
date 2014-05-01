@@ -27,6 +27,9 @@ def getConfig():
         db_url = os.environ['OPENSHIFT_MONGODB_DB_URL']
         db_name = os.environ['OPENSHIFT_APP_NAME']
 
+    print "=============="
+    print db_name
+
     t_api_key = os.environ['t_api_key']
     t_api_secret = os.environ['t_api_secret']
     t_acc_token = os.environ['t_acc_token']
