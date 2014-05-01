@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, \
     session, redirect, url_for, flash
 from tools import getConfig, _logger
 from twitter import twitterClient
-from models.main import getDb
+from flask.ext.mongoengine import MongoEngine
 
 
 config = getConfig()
@@ -16,7 +16,7 @@ app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
 
-db = getDb(config)
+db = MongoEngine()
 
 """ basic functions """
 
