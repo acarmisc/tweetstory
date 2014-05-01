@@ -32,7 +32,7 @@ class User(db.Document):
         return '<User %r>' % self.username
 
     def create_user(self, request):
-        form = UserForm(request.form)
+        form = self.UserForm(request.form)
         if request.method == 'POST' and form.validate():
             user = User()
             user.username = form.username.data
@@ -52,6 +52,5 @@ class User(db.Document):
         else:
             return False
 
-
-def UserForm():
-    return model_form(User)
+    def UserForm():
+        return model_form(User)

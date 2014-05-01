@@ -24,7 +24,7 @@ db = MongoEngine(app)
 
 @app.route("/")
 def welcome():
-    form = UserForm()
+    form = User.UserForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
 
@@ -163,6 +163,6 @@ if __name__ == "__main__":
 
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
-    from models.user import User, UserForm
+    from models.user import User
     from models.schedule import Schedule, ScheduleForm
     from models.zombie import Zombie
