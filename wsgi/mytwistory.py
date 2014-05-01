@@ -11,9 +11,8 @@ _logger = _logger('Core')
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
-app.config['MONGODB_SETTINGS'] = {'DB': config['db_name']}
-
-_logger.debug("Using DB: %s" % app.config['MONGODB_SETTINGS'])
+app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
+                                  'host': config['db_url']}
 
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()

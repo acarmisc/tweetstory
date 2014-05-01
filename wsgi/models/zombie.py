@@ -41,7 +41,6 @@ class Zombie(db.Document):
         return True
 
     def get_by_schedule(self, schedule):
-        import pdb; pdb.set_trace()
         """
         ffilter = {'$or': [{'hashtags': {'tag': schedule['hashtag']}},
                   {'hashtags': {'tag': schedule['hashtag'].lower()}}]}
