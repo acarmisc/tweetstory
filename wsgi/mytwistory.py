@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, \
     session, redirect, url_for, flash
-from flask.ext.mongoengine import MongoEngine
 from tools import getConfig, _logger
 from twitter import twitterClient
+from models.main import db
 
 
 config = getConfig()
@@ -16,7 +16,7 @@ app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
 
-db = MongoEngine(app)
+db.init_app(app)
 
 
 """ basic functions """
@@ -24,7 +24,7 @@ db = MongoEngine(app)
 
 @app.route("/")
 def welcome():
-    form = User.UserForm()
+    form = UserForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
 
@@ -160,9 +160,9 @@ def users():
 
 
 if __name__ == "__main__":
+    from models.user import User, UserForm
+    from models.schedule import Schedule, ScheduleForm
+    from models.zombie import Zombie
 
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
-    from models.user import User
-    from models.schedule import Schedule, ScheduleForm
-    from models.zombie import Zombie

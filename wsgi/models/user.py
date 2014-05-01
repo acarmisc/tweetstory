@@ -52,5 +52,5 @@ class User(db.Document):
         else:
             return False
 
-    def UserForm():
-        return model_form(User)
+
+UserForm = model_form(User)
