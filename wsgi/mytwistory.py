@@ -16,8 +16,6 @@ app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
 
-db.init_app(app)
-
 
 """ basic functions """
 
@@ -166,3 +164,4 @@ if __name__ == "__main__":
 
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
+    db.init_app(app)
