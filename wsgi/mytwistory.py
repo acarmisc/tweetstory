@@ -5,12 +5,13 @@ from tools import getConfig, _logger
 from twitter import twitterClient
 
 
-app = Flask(__name__)
-app.config['PROPAGATE_EXCEPTIONS'] = True
-app.config['MONGODB_SETTINGS'] = {'DB': 'twistory'}
-
 config = getConfig()
 _logger = _logger('Core')
+
+
+app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config['MONGODB_SETTINGS'] = {'DB': config['db_name']}
 
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
