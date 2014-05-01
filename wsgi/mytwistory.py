@@ -25,6 +25,7 @@ db = MongoEngine(app)
 
 @app.route("/")
 def welcome():
+    from models.user import User, UserForm
     form = UserForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
