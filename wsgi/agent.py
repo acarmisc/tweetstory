@@ -13,9 +13,8 @@ from models.zombie import Zombie
 from pymongo import MongoClient
 client = MongoClient()
 
-db = client.twistory
-
 config = getConfig()
+db = client.config['db_name']
 
 tClient = twitterClient(config_dict=config['twitter'])
 
