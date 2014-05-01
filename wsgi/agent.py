@@ -9,13 +9,13 @@ from tools import getConfig
 import time
 import logging
 from models.zombie import Zombie
-
 from pymongo import MongoClient
-client = MongoClient()
 
-db = client.twistory
 
 config = getConfig()
+client = MongoClient(host=config['db_url'])
+
+db = client.config['db_name']
 
 tClient = twitterClient(config_dict=config['twitter'])
 
@@ -44,29 +44,3 @@ for f in fetched:
             #history.insert(f)
         except:
             pass
-
-"""
-while True:
-
-    now = datetime.datetime.now()
-    print now
-
-    todo = db.schedule.find({'date_start': {'$lt': now},
-                             'date_end': {'$gte': now}})
-
-    #logging.debug("Fetching data at %s" % time.ctime())
-    fetched = tClient.fetch(todo)
-
-    #TODO: move to specific object
-    history = db.history
-    for f in fetched:
-        # avoid duplicated twitt
-        found = history.find({'oid': f['oid']})
-        if found.count() == 0:
-            try:
-                history.insert(f)
-            except:
-                pass
-
-    time.sleep(30)
-"""

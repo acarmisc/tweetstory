@@ -1,21 +1,20 @@
 from flask import Flask, render_template, request, \
     session, redirect, url_for, flash
-from flask.ext.mongoengine import MongoEngine
 from tools import getConfig, _logger
 from twitter import twitterClient
+from models.main import db
 
-
-app = Flask(__name__)
-app.config['PROPAGATE_EXCEPTIONS'] = True
-app.config['MONGODB_SETTINGS'] = {'DB': 'twistory'}
 
 config = getConfig()
 _logger = _logger('Core')
 
+app = Flask(__name__)
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
+                                  'host': config['db_url']}
+
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
-
-db = MongoEngine(app)
 
 
 
@@ -160,10 +159,10 @@ def users():
 
 
 if __name__ == "__main__":
-
-    # models really goes here?!
     from models.user import User, UserForm
     from models.schedule import Schedule, ScheduleForm
     from models.zombie import Zombie
+
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
+    db.init_app(app)
