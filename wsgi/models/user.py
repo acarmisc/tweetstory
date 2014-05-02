@@ -1,5 +1,4 @@
 from flask.ext.mongoengine.wtf import model_form
-
 from tools import getConfig, _logger
 from mytwistory import db
 import datetime
@@ -14,7 +13,7 @@ class User(db.Document):
     password = db.StringField(max_length=255, required=False)
     first_name = db.StringField(max_length=255, required=False)
     last_name = db.StringField(max_length=255, required=False)
-    email = db.StringField(max_length=255, required=False)
+    email = db.EmailField()
     twitter_id = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(required=False)
@@ -70,3 +69,6 @@ class User(db.Document):
         return User.objects()
 
 UserForm = model_form(User)
+
+UserSmallForm = model_form(User, only=['first_name', 'last_name', 'username',
+                                       'password', 'email'])

@@ -28,7 +28,8 @@ from models.zombie import Zombie
 
 @app.route("/")
 def welcome():
-    form = UserForm()
+    from models.user import UserSmallForm
+    form = UserSmallForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
 
