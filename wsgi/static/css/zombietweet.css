@@ -1,13 +1,26 @@
 body {
     margin-top: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.7em;
 }
 
 .twitt-block {
-    margin-bottom: 7px;
-    border-bottom: 1px solid #ccc;
-    width: 450px;
+    margin-bottom: 30px;
+    border-bottom: 3px solid #ccc;
+    width: 90%;
     display: inline-block;
-    padding: 3px;
+    padding: 20px;
+    background-size: 100%;
+}
+
+.twitt-block .msg {
+    font-weight: 300;
+}
+
+.twitt-block .footnotes {
+    font-style: italic;
+    font-weight: 100;
+    font-size: 80%
 }
 
 .twitt-block .avatar {
@@ -24,13 +37,11 @@ body {
 
 
 .twitt-block .author {
-    font-size: 10px;
     color: #777;
     float: left;
 }
 
 .twitt-block .created_at {
-    font-size: 10px;
     color: #aaa;
     float: right;
 }

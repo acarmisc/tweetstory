@@ -19,7 +19,7 @@ twitter = tClient.authenticate()
 db = MongoEngine(app)
 
 from models.user import User
-from models.schedule import Schedule, ScheduleForm
+from models.schedule import Schedule
 from models.zombie import Zombie
 
 """ basic functions """
@@ -53,6 +53,7 @@ def post_login():
                 twitter_id=session['twitter_id'])
 
     session['user'] = user.get_or_create()
+    session['uid'] = session['user']
     session['logged_in'] = True
 
     return redirect(url_for('list'))
@@ -87,12 +88,13 @@ def signup():
 
 @app.route("/list")
 def list():
+    from models.schedule import ScheduleSimpleForm
     if 'logged_in' not in session:
         return redirect(url_for('welcome'))
 
     schedules = Schedule()
     results = schedules.get_by_logged_user(session['user'])
-    form = ScheduleForm()
+    form = ScheduleSimpleForm()
 
     return render_template('list.html', entries=results, form=form)
 

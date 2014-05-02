@@ -7,8 +7,10 @@
             <img src="{{ message.avatar }}" />
           </div>
           <div class="msg">{{ message.text }}</div>
-          <div class="author">{{ message.author }}</div>
-          <div class="created_at">{{ message.created_at }}</div>
+          <div class="footnotes">
+              <div class="author">{{ message.author }}</div>
+              <div class="created_at">{{ message.created_at }}</div>
+          </div>
         </div>
       {% endfor %}
 

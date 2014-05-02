@@ -42,7 +42,8 @@ class twitterClient(object):
 
         for el in todo:
             api = self.connect()
-            results = api.search(q=el.hashtag)
+            import pdb; pdb.set_trace()
+            results = api.search(q=el.hashtag,result_type='recent')
 
             _logger.debug("Fetching data for #%s" % el.hashtag)
 
@@ -55,6 +56,7 @@ class twitterClient(object):
                         'text': r.text,
                         'author': r.author.screen_name,
                         'avatar': r.user.profile_image_url_https,
+                        'screen_name': r.user.screen_name,
                         'hashtags': hashtags,
                         'created_at': r.created_at}
 

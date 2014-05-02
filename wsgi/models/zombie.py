@@ -14,6 +14,7 @@ class Zombie(db.Document):
     avatar = db.StringField(required=True)
     hashtags = db.ListField()
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+    screen_name = db.StringField()
 
     meta = {
         'allow_inheritance': True,
@@ -35,6 +36,7 @@ class Zombie(db.Document):
         zombie.avatar = data['avatar']
         zombie.hashtags = data['hashtags']
         zombie.created_at = data['created_at']
+        zombie.screen_name = data['screen_name']
 
         zombie.save()
 
