@@ -1,6 +1,6 @@
 from flask.ext.mongoengine.wtf import model_form
 from tools import getConfig, _logger
-from mytwistory import db
+from zombietweet import db
 import datetime
 
 

@@ -1,5 +1,5 @@
 from tools import getConfig, _logger
-from mytwistory import db
+from zombietweet import db
 import datetime
 
 

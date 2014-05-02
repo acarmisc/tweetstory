@@ -1,7 +1,7 @@
 from setuptools import setup
 
-setup(name='myTwiStory',
-      version='0.1',
+setup(name='zombietweet',
+      version='0.5',
       description='Cache custom Tweet',
       author='Andrea Carmisciano',
       author_email='andrea.carmisciano@gmail.com',
