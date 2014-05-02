@@ -32,10 +32,10 @@ class Schedule(db.Document):
     def __repr__(self):
         return '<Schedule %r>' % self.subject
 
-    def create_schedule(self, request):
+    def create_schedule(self, request, rest=False):
         schedule = Schedule()
 
-        if 'form' in request:
+        if not rest:
             form = ScheduleForm(request.form)
 
             if request.method == 'POST' and form.validate():

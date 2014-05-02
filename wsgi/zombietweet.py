@@ -246,7 +246,7 @@ def api_create_schedule():
     }
     session['user'] = auth.username()
     schedule = Schedule()
-    schedule.create_schedule(data)
+    schedule.create_schedule(data, rest=True)
     return get_schedules()
 
 
