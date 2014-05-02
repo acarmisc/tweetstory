@@ -2,15 +2,16 @@ body {
     margin-top: 60px;
     font-family: 'Roboto', sans-serif;
     font-size: 1.7em;
+    background-image: url('../img/ice_age.png');
 }
 
 .twitt-block {
     margin-bottom: 30px;
-    border-bottom: 3px solid #ccc;
     width: 90%;
     display: inline-block;
     padding: 20px;
-    background-size: 100%;
+    background-color: white;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
 }
 
 .twitt-block .msg {
@@ -28,7 +29,9 @@ body {
     border-radius: 100px;
     overflow: hidden;
     float: left;
-    margin-right: 5px;
+    margin-right: 10px;
+    border: 3px solid #149C82;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
 }
 
 .twitt-block .avatar img {

@@ -4,7 +4,7 @@
       {% for message in zombies %}
         <div class="twitt-block">
           <div class="avatar">
-            <img src="{{ message.avatar }}" />
+            <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
           </div>
           <div class="msg">{{ message.text }}</div>
           <div class="footnotes">

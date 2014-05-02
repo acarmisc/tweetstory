@@ -3,13 +3,13 @@
 
         <h3>New</h3>
         <!-- replace action with ... -->
-        <form class="well record-form" id="new-ticket-form" role="form"
+        <form class="form-inline well record-form" id="new-ticket-form" role="form"
         action="/save" method="POST">
-
-          {% import "_forms.html" as forms %}
+<p class="pull-right"><input type="submit" class="btn btn-primary" value="Save" /></p>
+          {% import "_inline_forms.html" as forms %}
           {{ forms.render(form) }}
 
-          <input type="submit" class="btn btn-primary" value="Save" />
+
         </form>
 
         <h4>History</h4>
