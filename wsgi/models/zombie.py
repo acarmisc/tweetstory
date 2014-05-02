@@ -28,6 +28,10 @@ class Zombie(db.Document):
     def __repr__(self):
         return '<Zombie %r>' % self.oid
 
+    def getDelta(self, start_date):
+        difference = abs((self.created_at - start_date).seconds / 60)
+        return difference
+
     def create_zombie(self, data):
         zombie = Zombie()
         zombie.oid = str(data['oid'])

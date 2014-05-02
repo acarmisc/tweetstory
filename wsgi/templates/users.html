@@ -12,7 +12,7 @@
         </tr>
       {% for user in users %}
         <tr class="schedule-entry">
-            <td>{{ user.username }}</td>
+            <td><a href="/user/{{ user.id }}">{{ user.username }}</a></td>
             <td>{{ user.email }}</td>
             <td>********</td>
             <td>{{ user.twitter_id }}</td>

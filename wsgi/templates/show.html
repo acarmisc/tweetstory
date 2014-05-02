@@ -1,17 +1,37 @@
 {% extends "layout.html" %}
 {% block body %}
 
-      {% for message in zombies %}
-        <div class="twitt-block">
-          <div class="avatar">
-            <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
+
+  <div class="container">
+    <div class="schedule col-md-6 well">
+      <h1>{{ schedule.subject }}</h1>
+      <p class="interval">
+      {{ schedule.start_date }} - {{ schedule.end_date }}
+      </p>
+
+      <p class="hashtag">#{{ schedule.hashtag }}</p>
+    </div>
+
+    <div class="messages-container col-md-6">
+      <div class="messages">
+
+        {% for message in zombies %}
+          <div class="twitt-block">
+            <div class="avatar">
+              <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
+            </div>
+            <div class="author">{{ message.author }}</div>
+            <div class="msg">{{ message.text }}</div>
+            <div class="footnotes">
+                <div class="created_at">{{ message.created_at }}</div>
+                <div class="delta">{{ message.getDelta(schedule.start_date) }}</div>
+            </div>
           </div>
-          <div class="msg">{{ message.text }}</div>
-          <div class="footnotes">
-              <div class="author">{{ message.author }}</div>
-              <div class="created_at">{{ message.created_at }}</div>
-          </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
 
 {% endblock %}

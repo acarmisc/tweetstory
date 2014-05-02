@@ -56,6 +56,9 @@ class User(db.Document):
         else:
             return False
 
+    def get_by_id(self):
+        return User.objects.get(id=self.id)
+
     def get_or_create(self):
         found = self.check_exists()
         if not found:

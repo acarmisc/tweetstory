@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>{{ user.username }}</h2>
+    <form class="well form-horizontal" role="form" method="POST"
+        action="{{ user.id }}">
+
+        {% import "_forms.html" as forms %}
+        {{ forms.render(form) }}
+
+        <input type="submit" class="btn btn-primary" value="Update" />
+    </form>
+{% endblock %}

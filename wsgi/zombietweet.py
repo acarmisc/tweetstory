@@ -121,7 +121,7 @@ def show(id=None):
     zombies = zombie.get_by_schedule(schedule)
 
     # should return schedule and zombies
-    return render_template('show.html', schedule=schedule, zombies=zombies)
+    return render_template('show.html', schedule=schedule[0], zombies=zombies)
 
 
 """ Twitter login part """
@@ -164,6 +164,24 @@ def users():
 
     return render_template('users.html', users=users)
 
+
+@app.route("/user/<id>", methods=['GET'])
+def get_user(id=None):
+    from models.user import UserSmallForm
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    user = User(id=id)
+    user = user.get_by_id()
+
+    form = UserSmallForm(obj=user)
+
+    return render_template('user.html', user=user, form=form)
+
+
+@app.route("/save_user/<id>", methods=['POST'])
+def save_user(id=None):
+    return users()
 
 if __name__ == "__main__":
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
