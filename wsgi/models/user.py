@@ -10,7 +10,6 @@ _logger = _logger('Models')
 
 
 class User(db.Document):
-    print "test 5"
     username = db.StringField(max_length=255, required=True)
     password = db.StringField(max_length=255, required=False)
     first_name = db.StringField(max_length=255, required=False)

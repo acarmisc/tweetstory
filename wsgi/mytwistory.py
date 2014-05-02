@@ -4,7 +4,7 @@ from tools import getConfig, _logger
 from twitter import twitterClient
 from flask.ext.mongoengine import MongoEngine
 
-print "test2"
+
 config = getConfig()
 _logger = _logger('Core')
 
@@ -16,16 +16,17 @@ app.config['MONGODB_SETTINGS'] = {'DB': config['db_name'],
 tClient = twitterClient(config_dict=config['twitter'])
 twitter = tClient.authenticate()
 
-print "test3"
 db = MongoEngine(app)
 
+from models.user import User, UserForm
+from models.schedule import Schedule, ScheduleForm
+from models.zombie import Zombie
 
 """ basic functions """
 
 
 @app.route("/")
 def welcome():
-    print "test4"
     form = UserForm()
     if 'logged_in' in session:
         return redirect(url_for('list'))
@@ -162,11 +163,5 @@ def users():
 
 
 if __name__ == "__main__":
-    print "test1"
-    from models.user import User, UserForm
-    from models.schedule import Schedule, ScheduleForm
-    from models.zombie import Zombie
-
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
-    db.init_app(app)
