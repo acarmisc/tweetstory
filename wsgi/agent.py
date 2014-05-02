@@ -6,7 +6,6 @@ store them to db.
 import datetime
 from twitter import twitterClient
 from tools import getConfig
-import time
 import logging
 from mytwistory import db
 from models.zombie import Zombie
@@ -17,7 +16,7 @@ config = getConfig()
 
 tClient = twitterClient(config_dict=config['twitter'])
 
-now = datetime.datetime.now()
+now = datetime.datetime.utcnow()
 
 # getting schedules
 todo = Schedule.objects(start_date__lte=now,
@@ -25,7 +24,7 @@ todo = Schedule.objects(start_date__lte=now,
 
 logging.basicConfig(level=logging.DEBUG)
 
-logging.debug("Fetching data at %s" % time.ctime())
+logging.debug("Fetching data at %s" % now)
 fetched = tClient.fetch(todo)
 
 

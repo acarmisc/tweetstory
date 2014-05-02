@@ -12,11 +12,13 @@ _logger = _logger('Models')
 class Schedule(db.Document):
     subject = db.StringField(max_length=255, required=True)
     hashtag = db.StringField(max_length=255, required=False)
-    start_date = db.DateTimeField(default=datetime.datetime.now, required=True)
-    end_date = db.DateTimeField(default=datetime.datetime.now, required=True)
-    #FIXME: change default
+    start_date = db.DateTimeField(default=datetime.datetime.utcnow(),
+                                  required=True)
+    end_date = db.DateTimeField(default=datetime.datetime.utcnow(),
+                                required=True)
     uid = db.StringField(max_length=255, required=True)
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+    created_at = db.DateTimeField(default=datetime.datetime.utcnow(),
+                                  required=True)
 
     meta = {
         'allow_inheritance': True,
@@ -32,6 +34,7 @@ class Schedule(db.Document):
 
     def create_schedule(self, request):
         form = ScheduleForm(request.form)
+        import pdb; pdb.set_trace()
         if request.method == 'POST' and form.validate():
             schedule = Schedule()
             schedule.subject = form.subject.data
