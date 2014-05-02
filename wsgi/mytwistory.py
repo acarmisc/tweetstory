@@ -79,7 +79,7 @@ def login_local():
 def signup():
     user = User()
 
-    if user.create_user(request):
+    if user.create_from_request(request):
         return redirect(url_for('users'))
     else:
         return redirect(url_for('/'))

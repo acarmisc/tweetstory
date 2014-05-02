@@ -31,15 +31,20 @@ class User(db.Document):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def create_user(self, request):
-        form = self.UserForm(request.form)
+    def create_user(self):
+        self.save()
+
+        return True
+
+    def create_from_request(self, request):
+        form = UserForm(request.form)
         if request.method == 'POST' and form.validate():
             user = User()
             user.username = form.username.data
             user.password = form.password.data
             user.email = form.email.data
 
-            user.save()
+            user.create_user()
 
         return True
 
@@ -52,5 +57,16 @@ class User(db.Document):
         else:
             return False
 
+    def get_or_create(self):
+        found = self.check_exists()
+        if not found:
+            self.to_mongo()
+            self.save()
+            return self.username
+        else:
+            return found.username
+
+    def get_all(self):
+        return User.objects()
 
 UserForm = model_form(User)
