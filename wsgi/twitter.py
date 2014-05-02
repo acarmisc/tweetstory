@@ -42,7 +42,6 @@ class twitterClient(object):
 
         for el in todo:
             api = self.connect()
-            import pdb; pdb.set_trace()
             results = api.search(q=el.hashtag,result_type='recent')
 
             _logger.debug("Fetching data for #%s" % el.hashtag)
