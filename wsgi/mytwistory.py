@@ -4,7 +4,6 @@ from tools import getConfig, _logger
 from twitter import twitterClient
 from flask.ext.mongoengine import MongoEngine
 
-
 config = getConfig()
 _logger = _logger('Core')
 

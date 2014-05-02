@@ -8,39 +8,32 @@ from twitter import twitterClient
 from tools import getConfig
 import time
 import logging
+from mytwistory import db
 from models.zombie import Zombie
-from pymongo import MongoClient
+from models.schedule import Schedule
 
 
 config = getConfig()
-client = MongoClient(host=config['db_url'])
-
-db = client.config['db_name']
 
 tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.now()
 
-todo = db.schedule.find({'start_date': {'$lt': now},
-                         'end_date': {'$gte': now}})
-
+# getting schedules
+todo = Schedule.objects(start_date__lte=now,
+                        end_date__gte=now)
 
 logging.basicConfig(level=logging.DEBUG)
 
 logging.debug("Fetching data at %s" % time.ctime())
 fetched = tClient.fetch(todo)
 
-#TODO: move to specific object
-history = db.zombie
+
 for f in fetched:
-    # avoid duplicated tweet
-    zz = Zombie()
-    #import pdb; pdb.set_trace()
-    # rewrite...
-    found = history.find({'oid': f['oid']})
-    if found.count() == 0:
+    found = Zombie.objects(oid=f['oid'])
+    if len(found) == 0:
         try:
+            zz = Zombie()
             zz.create_zombie(f)
-            #history.insert(f)
         except:
             pass

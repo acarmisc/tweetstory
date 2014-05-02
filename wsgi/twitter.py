@@ -42,16 +42,16 @@ class twitterClient(object):
 
         for el in todo:
             api = self.connect()
-            results = api.search(q=el['hashtag'])
+            results = api.search(q=el.hashtag)
 
-            _logger.debug("Fetching data for #%s" % el['hashtag'])
+            _logger.debug("Fetching data for #%s" % el.hashtag)
 
             for r in results:
                 hashtags = []
                 for h in r.entities['hashtags']:
                     hashtags.append(h['text'])
 
-                data = {'oid': r.id,
+                data = {'oid': str(r.id),
                         'text': r.text,
                         'author': r.author.screen_name,
                         'avatar': r.user.profile_image_url_https,

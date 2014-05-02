@@ -41,10 +41,6 @@ class Zombie(db.Document):
         return True
 
     def get_by_schedule(self, schedule):
-        """
-        ffilter = {'$or': [{'hashtags': {'tag': schedule['hashtag']}},
-                  {'hashtags': {'tag': schedule['hashtag'].lower()}}]}
-        """
         schedule = schedule[0]
         found = Zombie.objects(hashtags__icontains=schedule.hashtag,
                                created_at__gte=schedule.start_date,
