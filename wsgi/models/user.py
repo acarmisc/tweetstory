@@ -9,7 +9,7 @@ _logger = _logger('Models')
 
 
 class User(db.Document):
-    username = db.StringField(max_length=255, required=True)
+    username = db.StringField(max_length=255, required=True, unique=True)
     password = db.StringField(max_length=255, required=False)
     first_name = db.StringField(max_length=255, required=False)
     last_name = db.StringField(max_length=255, required=False)
@@ -17,6 +17,7 @@ class User(db.Document):
     twitter_id = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(required=False)
+    token = db.StringField(default='test', required=True)
 
     meta = {
         'allow_inheritance': True,
@@ -70,6 +71,9 @@ class User(db.Document):
 
     def get_all(self):
         return User.objects()
+
+    def get_token(self):
+        return User.objects.get(username=self.username).token
 
 UserForm = model_form(User)
 

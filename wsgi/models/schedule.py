@@ -33,16 +33,25 @@ class Schedule(db.Document):
         return '<Schedule %r>' % self.subject
 
     def create_schedule(self, request):
-        form = ScheduleForm(request.form)
-        if request.method == 'POST' and form.validate():
-            schedule = Schedule()
-            schedule.subject = form.subject.data
-            schedule.hashtag = form.hashtag.data
-            schedule.start_date = form.start_date.data
-            schedule.end_date = form.end_date.data
-            schedule.uid = session['uid']
+        schedule = Schedule()
 
-            schedule.save()
+        if 'form' in request:
+            form = ScheduleForm(request.form)
+
+            if request.method == 'POST' and form.validate():
+                schedule.subject = form.subject.data
+                schedule.hashtag = form.hashtag.data
+                schedule.start_date = form.start_date.data
+                schedule.end_date = form.end_date.data
+                schedule.uid = session['uid']
+        else:
+            schedule.subject = request['subject']
+            schedule.hashtag = request['hashtag']
+            schedule.start_date = request['start_date']
+            schedule.end_date = request['end_date']
+            schedule.uid = session['user']
+
+        schedule.save()
 
         return True
 

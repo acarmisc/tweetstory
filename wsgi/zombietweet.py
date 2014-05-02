@@ -183,6 +183,73 @@ def get_user(id=None):
 def save_user(id=None):
     return users()
 
+
+""" API """
+from flask.ext.httpauth import HTTPBasicAuth
+from flask import make_response
+from flask import jsonify
+
+auth = HTTPBasicAuth()
+
+
+@auth.get_password
+def get_password(username):
+    user = User(username=username)
+
+    if user.check_exists():
+        return user.get_token()
+    else:
+        return None
+
+
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
+
+@app.route('/api/status')
+@auth.login_required
+def api_status():
+    return make_response(jsonify({'response': 'Service online'}), 200)
+
+
+@app.route('/api/get_schedules')
+@auth.login_required
+def get_schedules():
+    schedules = Schedule()
+    results = schedules.get_by_logged_user(auth.username())
+    return results.to_json()
+
+
+@app.route('/api/get_zombies/<id>')
+@auth.login_required
+def get_zombies(id=id):
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+
+    zombie = Zombie()
+    results = zombie.get_by_schedule(schedule)
+
+    return results.to_json()
+
+
+@app.route('/api/create_schedule', methods=['POST'])
+@auth.login_required
+def api_create_schedule():
+    if not request.json or not 'subject' in request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+    data = {
+        'subject': request.json.get('subject', ""),
+        'hashtag': request.json.get('hashtag', ""),
+        'start_date': request.json.get('start_date', ""),
+        'end_date': request.json.get('end_date', "")
+    }
+    session['user'] = auth.username()
+    schedule = Schedule()
+    schedule.create_schedule(data)
+    return get_schedules()
+
+
 if __name__ == "__main__":
     app.secret_key = 'A0Zr98j/3yXaRGXHH!jmN]LWX/d?RT'
     app.run(debug=True)
