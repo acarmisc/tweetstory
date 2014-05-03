@@ -5,6 +5,10 @@ body {
     background-image: url('../img/ice_age.png');
 }
 
+.navbar-brand {
+    padding-top: 13px;
+}
+
 .messages-container {
     min-height: 500px;
     overflow-y: scroll;
