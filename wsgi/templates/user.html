@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
     <h2>{{ user.username }}</h2>
+    <div class="user-avater">
+        <img src="{{ user.profile_image_url }}"
+    </div>
     <form class="well form-horizontal" role="form" method="POST"
         action="{{ user.id }}">
 

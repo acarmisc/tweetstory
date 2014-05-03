@@ -47,18 +47,6 @@ def logout():
     return redirect(url_for('welcome'))
 
 
-@app.route('/post_login')
-def post_login():
-    user = User(username=session['twitter_user'],
-                twitter_id=session['twitter_id'])
-
-    session['user'] = user.get_or_create()
-    session['uid'] = session['user']
-    session['logged_in'] = True
-
-    return redirect(url_for('list'))
-
-
 @app.route('/login_local', methods=['POST'])
 def login_local():
     user = User(username=request.form.get('username'),
@@ -147,8 +135,32 @@ def oauth_authorized(resp):
     session['twitter_user'] = resp['screen_name']
     session['twitter_id'] = resp['user_id']
 
+    user = tClient.get_user(resp['screen_name'])
+    user = {
+        'time_zone': user.time_zone,
+        'utc_offset': user.utc_offset,
+        'profile_image_url': user.profile_image_url
+    }
+
+    session['twitter_data'] = user
+
     flash('You were signed in as %s' % resp['screen_name'])
     return redirect(next_url)
+
+
+@app.route('/post_login')
+def post_login():
+    user = User(username=session['twitter_user'],
+                twitter_id=session['twitter_id'],
+                time_zone=session['twitter_data']['time_zone'],
+                utc_offset=session['twitter_data']['utc_offset'],
+                profile_image_url=session['twitter_data']['profile_image_url'])
+
+    session['user'] = user.get_or_create()
+    session['uid'] = session['user']
+    session['logged_in'] = True
+
+    return redirect(url_for('list'))
 
 
 """ basic admin """

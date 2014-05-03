@@ -18,6 +18,9 @@ class User(db.Document):
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(required=False)
     token = db.StringField(default='test', required=True)
+    time_zone = db.StringField(max_length=255)
+    utc_offset = db.IntField()
+    profile_image_url = db.StringField()
 
     meta = {
         'allow_inheritance': True,
@@ -78,4 +81,5 @@ class User(db.Document):
 UserForm = model_form(User)
 
 UserSmallForm = model_form(User, only=['first_name', 'last_name', 'username',
-                                       'password', 'email'])
+                                       'password', 'email', 'time_zone',
+                                       'utc_offset'])

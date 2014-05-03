@@ -62,3 +62,9 @@ class twitterClient(object):
                 fetched.append(data)
 
         return fetched
+
+    def get_user(self, screen_name):
+        api = self.connect()
+        user = api.get_user(screen_name, include_entities=1)
+
+        return user
