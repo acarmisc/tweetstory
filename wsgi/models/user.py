@@ -2,6 +2,7 @@ from flask.ext.mongoengine.wtf import model_form
 from tools import getConfig, _logger
 from zombietweet import db
 import datetime
+import uuid
 
 
 config = getConfig()
@@ -17,7 +18,7 @@ class User(db.Document):
     twitter_id = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     last_login = db.DateTimeField(required=False)
-    token = db.StringField(default='test', required=True)
+    token = db.StringField(max_length=255, required=True)
     time_zone = db.StringField(max_length=255)
     utc_offset = db.IntField()
     profile_image_url = db.StringField()
@@ -65,12 +66,13 @@ class User(db.Document):
 
     def get_or_create(self):
         found = self.check_exists()
+        self.token = uuid.uuid4().hex
         if not found:
             self.to_mongo()
             self.save()
-            return self.username
+            return self
         else:
-            return found.username
+            return found
 
     def get_all(self):
         return User.objects()
@@ -82,4 +84,25 @@ UserForm = model_form(User)
 
 UserSmallForm = model_form(User, only=['first_name', 'last_name', 'username',
                                        'password', 'email', 'time_zone',
-                                       'utc_offset'])
+                                       'token', 'utc_offset'])
+
+
+class Group(db.Document):
+    name = db.StringField(max_length=255, required=True, unique=True)
+    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+
+    meta = {'allow_inheritance': True,
+            'indexes': ['-created_at', 'name'],
+            'ordering': ['-created_at']
+            }
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Group %r>' % self.name
+
+    def create_group(self):
+        self.save()
+
+        return True

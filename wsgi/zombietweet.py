@@ -156,7 +156,7 @@ def post_login():
                 utc_offset=session['twitter_data']['utc_offset'],
                 profile_image_url=session['twitter_data']['profile_image_url'])
 
-    session['user'] = user.get_or_create()
+    session['user'] = user.get_or_create().username
     session['uid'] = session['user']
     session['logged_in'] = True
 
@@ -217,6 +217,29 @@ def get_password(username):
 @auth.error_handler
 def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)
+
+
+@app.route('/api/whoiam/<username>')
+def whoiam(username):
+    user = User(username=username)
+    token = user.get_token()
+    return make_response(jsonify({'response': token}), 200)
+
+
+@app.route('/api/post_login', methods=['POST'])
+def api_post_login():
+    if not request.json or not 'twitter_user' in request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+
+    user = User(username=request.json.get('twitter_user', ""),
+                twitter_id=request.json.get('twitter_id', ""),
+                time_zone=request.json.get('time_zone', ""),
+                utc_offset=request.json.get('utc_offset', ""),
+                profile_image_url=request.json.get('profile_image_url', "")
+                )
+
+    logged_user = user.get_or_create()
+    return logged_user.get_token()
 
 
 @app.route('/api/status')
