@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, \
 from tools import getConfig, _logger
 from twitter import twitterClient
 from flask.ext.mongoengine import MongoEngine
+import datetime
 
 
 config = getConfig()
@@ -81,16 +82,22 @@ def list():
         return redirect(url_for('welcome'))
 
     schedules = Schedule()
-    results = schedules.get_by_logged_user(session['user'])
-    form = ScheduleSimpleForm()
+    results = schedules.get_by_logged_user(session['user'], timeadapt=True)
 
-    return render_template('list.html', entries=results, form=form)
+    form = ScheduleSimpleForm()
+    now = datetime.datetime.utcnow()+datetime.timedelta(0, session['utc_offset'])
+
+    defaults = {
+        'start_date': now.strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return render_template('list.html', entries=results, form=form, defaults=defaults)
 
 
 @app.route('/save', methods=['POST'])
 def save():
     schedule = Schedule()
-    schedule.create_schedule(request)
+    schedule.create_schedule(request, rest=False, delta=session['utc_offset'])
 
     return list()
 
@@ -157,6 +164,7 @@ def post_login():
                 profile_image_url=session['twitter_data']['profile_image_url'])
 
     session['user'] = user.get_or_create().username
+    session['utc_offset'] = user.utc_offset
     session['uid'] = session['user']
     session['logged_in'] = True
 

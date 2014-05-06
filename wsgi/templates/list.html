@@ -2,13 +2,14 @@
 {% block body %}
 
         <h3>New</h3>
-        <!-- replace action with ... -->
         <form class="form-inline well record-form" id="new-ticket-form" role="form"
         action="/save" method="POST">
 <p class="pull-right"><input type="submit" class="btn btn-primary" value="Save" /></p>
-          {% import "_inline_forms.html" as forms %}
-          {{ forms.render(form) }}
-
+            {{ form.csrf_token }}
+            {{ form.hashtag(class="form-control", size=16) }}
+            {{ form.start_date(value=defaults.start_date, class="form-control", size=16) }}
+            {{ form.end_date(value=defaults.start_date, class="form-control", size=16) }}
+            {{ form.subject(class="form-control", size=16) }}
 
         </form>
 

@@ -29,11 +29,17 @@ class User(db.Document):
         'ordering': ['-created_at']
     }
 
+    @property
     def __unicode__(self):
         return self.username
 
+    @property
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def get_my_now(self):
+        now = datetime.datetime.now()
+        return now + datetime.timedelta(0, self.utc_offset)
 
     def create_user(self):
         self.save()
@@ -76,6 +82,9 @@ class User(db.Document):
 
     def get_all(self):
         return User.objects()
+
+    def get_by_username(self):
+        return User.objects.get(username=self.username)
 
     def get_token(self):
         return User.objects.get(username=self.username).token
