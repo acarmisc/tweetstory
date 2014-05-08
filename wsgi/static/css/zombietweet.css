@@ -115,10 +115,12 @@ h2 {
 }
 
 .registration {
-    padding: 30px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
     text-align: center;
     color: white;
+}
+
+.registration p {
+    margin-bottom: 50px;
 }
 
 .row {
@@ -126,10 +128,10 @@ h2 {
 }
 
 .dark {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    margin-top: 15%;
-    background-color: black;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 10%;
+    background-color: rgba(0,0,0,0.8);
 }
 
 .footer {
