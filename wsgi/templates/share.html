@@ -3,16 +3,27 @@
 
 
   <div class="container">
-    <div class="schedule col-md-6 well">
-      <h1>{{ schedule.subject }}</h1>
-      <p class="interval">
-        <span class="label label-info">{{ schedule.start_date }}</span>
-        <span class="label label-info">{{ schedule.end_date }}</span>
-      </p>
+    <div class="schedule col-md-6">
+      <div class="well mywell">
+        <h1>{{ schedule.subject }}</h1>
+        <p class="interval">
+          <span class="label label-info">{{ schedule.start_date }}</span>
+          <span class="label label-info">{{ schedule.end_date }}</span>
+        </p>
 
-      <p class="hashtag">#{{ schedule.hashtag }}</p>
+        <p class="hashtag">#{{ schedule.hashtag }}</p>
 
-      <div class="author"><a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></div>
+        <div class="author">
+
+          <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a>
+        </div>
+        <p align="center">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-via="acarmisc" data-size="large" data-hashtags="zombietweet"><img src="/static/img/icon-share.png" /> Tweet</a>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </p>
+
+      </div>
     </div>
 
     <div class="messages-container col-md-6">
@@ -27,7 +38,6 @@
             <div class="msg">{{ message.text }}</div>
             <div class="footnotes">
                 <div class="created_at">{{ message.created_at }}</div>
-                <div class="delta">{{ message.getDelta(schedule.start_date) }}</div>
             </div>
           </div>
         {% endfor %}

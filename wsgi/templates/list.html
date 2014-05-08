@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
-
+    <div class="real-content">
         <h3>New</h3>
         <form class="form-inline well record-form" id="new-ticket-form" role="form"
         action="/save" method="POST">
 <p class="pull-right"><input type="submit" class="btn btn-primary" value="Save" /></p>
             {{ form.csrf_token }}
-            {{ form.hashtag(class="form-control", size=16) }}
+            {{ form.hashtag(class="form-control", size=16, placeholder="#") }}
             {{ form.start_date(value=defaults.start_date, class="form-control", size=16) }}
             {{ form.end_date(value=defaults.start_date, class="form-control", size=16) }}
-            {{ form.subject(class="form-control", size=16) }}
+            {{ form.subject(class="form-control", size=16, placeholder="a title") }}
 
         </form>
 
@@ -35,5 +35,5 @@
 
       {% endfor %}
     </table>
-
+</div>
 {% endblock %}

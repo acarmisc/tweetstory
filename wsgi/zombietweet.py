@@ -129,7 +129,6 @@ def share(id=None):
     zombie = Zombie()
     zombies = zombie.get_by_schedule(schedule)
 
-    # should return schedule and zombies
     return render_template('share.html', schedule=schedule[0], zombies=zombies)
 
 
@@ -181,6 +180,7 @@ def post_login():
     session['utc_offset'] = user.utc_offset
     session['uid'] = session['user']
     session['logged_in'] = True
+    session['profile_image_url'] = user.profile_image_url
 
     return redirect(url_for('list'))
 
