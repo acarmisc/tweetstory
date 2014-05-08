@@ -7,6 +7,7 @@ import datetime
 from twitter import twitterClient
 from tools import getConfig
 import logging
+from zombietweet import db
 from models.zombie import Zombie
 from models.schedule import Schedule
 
