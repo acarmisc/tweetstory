@@ -7,7 +7,6 @@ import datetime
 from twitter import twitterClient
 from tools import getConfig
 import logging
-from zombietweet import db
 from models.zombie import Zombie
 from models.schedule import Schedule
 
@@ -18,7 +17,7 @@ tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.utcnow()
 
-# getting schedules
+#TODO: prevent duplicate hashtag query
 todo = Schedule.objects(start_date__lte=now,
                         end_date__gte=now)
 
