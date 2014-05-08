@@ -85,7 +85,7 @@ def list():
     results = schedules.get_by_logged_user(session['user'], timeadapt=True)
 
     form = ScheduleSimpleForm()
-    now = datetime.datetime.utcnow()+datetime.timedelta(0, session['utc_offset'])
+    now = datetime.datetime.utcnow() + datetime.timedelta(0, session['utc_offset'])
 
     defaults = {
         'start_date': now.strftime("%Y-%m-%d %H:%M:%S")
@@ -117,6 +117,20 @@ def show(id=None):
 
     # should return schedule and zombies
     return render_template('show.html', schedule=schedule[0], zombies=zombies)
+
+
+@app.route("/share/<id>", methods=['GET'])
+def share(id=None):
+    # getting schedule
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+
+    # getting zombie related to specific schedule
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    # should return schedule and zombies
+    return render_template('share.html', schedule=schedule[0], zombies=zombies)
 
 
 """ Twitter login part """
