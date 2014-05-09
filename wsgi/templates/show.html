@@ -1,24 +1,28 @@
 {% extends "layout.html" %}
 {% block body %}
-
-
   <div class="container">
     <div class="schedule col-md-6">
+      <div class="fixed-block col-md-4">
       <div class="well mywell">
-        <h1>{{ schedule.subject }}</h1>
-        <p class="interval">
-          <span class="label label-info">{{ schedule.start_date }}</span>
-          <span class="label label-info">{{ schedule.end_date }}</span>
-        </p>
-
-        <p class="hashtag">#{{ schedule.hashtag }}</p>
-
-        <div class="author">
-          <div class="author-avatar">
+        <div class="author-profile pull-right">
+          <div>
             <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_bigger') }}" />
           </div>
-          <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a>
+          <div>
+            <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a>
+          </div>
         </div>
+        <h3>{{ schedule.subject }}</h3>
+        <h2 class="hashtag">#{{ schedule.hashtag }}</h2>
+        <div class="interval">
+          <p class="false-block" style="width: 45%">
+            from <br /><span class="label label-info">{{ schedule.start_date.strftime('%d %b %y %H:%M') }} UTC</span>
+          </p>
+          <p class="false-block" style="width: 45%">
+            to <br /><span class="label label-info">{{ schedule.end_date.strftime('%d %b %y %H:%M') }} UTC</span>
+          </p>
+        </div>
+
         <p align="center">
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="acarmisc" data-size="large" data-hashtags="zombietweet"><img src="/static/img/icon-share.png" /> Tweet</a>
 
@@ -27,20 +31,19 @@
 
       </div>
     </div>
+    </div>
 
     <div class="messages-container col-md-6">
       <div class="messages">
 
         {% for message in zombies %}
           <div class="twitt-block">
+            <div class="created_at pull-right">{{ message.created_at.strftime('%d %b %y %H:%M') }}</div>
             <div class="avatar">
               <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
             </div>
             <div class="author">{{ message.author }}</div>
             <div class="msg">{{ message.text }}</div>
-            <div class="footnotes">
-                <div class="created_at">{{ message.created_at }}</div>
-            </div>
           </div>
         {% endfor %}
 

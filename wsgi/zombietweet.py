@@ -105,7 +105,7 @@ def save():
 @app.route("/show/<id>", methods=['GET'])
 def show(id=None):
     if 'logged_in' not in session:
-        return redirect(url_for('welcome'))
+        return share(id)
 
     # getting schedule
     schedule = Schedule()

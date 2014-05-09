@@ -17,7 +17,16 @@ h2 {
     background-color: rgba(0,0,0,0.2);
 }
 
+.fixed-block {
+    position: fixed;
+}
+
 .mywell {
+        display: none;
+}
+
+
+.user-warning {
         display: none;
 }
 
@@ -26,8 +35,13 @@ h2 {
     .mywell {
         display: block;
         background-color: rgba(255,255,255,0.8);
-        position: fixed;
         box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    }
+
+    .user-warning {
+        display: block;
+        text-align: center;
+        color: white;
     }
 }
 
@@ -89,12 +103,14 @@ h2 {
 }
 
 .twitt-block .created_at {
-    color: #aaa;
+    color: #bbb;
     float: right;
+    font-size: 70%;
+    font-weight: 500;
 }
 
 .record-form input[type=text]{
-    font-size: 130%;
+    font-size: 110%;
     padding: 10px;
 }
 
@@ -144,4 +160,9 @@ h2 {
     background-color: white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     margin-top: 10px;
+}
+
+.false-block {
+    display: inline-table;
+    text-align: center;
 }
