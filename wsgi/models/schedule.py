@@ -38,7 +38,7 @@ class Schedule(db.Document):
 
             if request.method == 'POST' and form.validate():
                 schedule.subject = form.subject.data
-                schedule.hashtag = form.hashtag.data
+                schedule.hashtag = form.hashtag.data.replace("#", "")
                 schedule.start_date = form.start_date.data - datetime.timedelta(0, delta)
                 schedule.end_date = form.end_date.data - datetime.timedelta(0, delta)
                 schedule.uid = session['uid']
