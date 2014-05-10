@@ -17,14 +17,15 @@
             to <br /><span class="label label-info">{{ schedule.end_date.strftime('%d %b %y %H:%M') }} UTC</span>
           </p>
         </div>
+       </div>
 
-        <p align="center">
+        <p align="left">
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="acarmisc" data-size="large" data-hashtags="zombietweet"><img src="/static/img/icon-share.png" /> Tweet</a>
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
         </p>
 
-      </div>
+
 
       <div class="user-warning">
         <p><img src="/static/img/danger.png" /><br /> ONLY THE BRAVE! AT THE MOMENT THIS IS ONLY AN EXPERIMENT: YOU CAN SIGN IN WITH TWITTER AND HAVING SOME TESTS.</p>
@@ -45,8 +46,10 @@
             <div class="avatar">
               <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
             </div>
-            <div class="author">{{ message.author }}</div>
-            <div class="msg">{{ message.text }}</div>
+            <div class="author">
+              <a target="_blank" href="http://twitter.com/{{ message.author }}">{{ message.author }}</a>
+            </div>
+            <div class="msg">{{ message.text_parsed()|safe }}</div>
           </div>
         {% endfor %}
 

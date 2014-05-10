@@ -24,12 +24,14 @@
         </tr>
       {% for schedule in entries %}
         <tr class="schedule-entry">
-            <td><a href="/show/{{ schedule.id }}">{{ schedule.subject }}</a></td>
+            <td><a href="{{ url_for('show', id=schedule.id) }}">{{ schedule.subject }}</a></td>
             <td>#{{ schedule.hashtag }}</td>
             <td>{{ schedule.start_date.strftime('%d %b %y %H:%M:%S') }}</td>
             <td>{{ schedule.end_date.strftime('%d %b %y %H:%M:%S') }}</td>
             <td>
-
+                <a href="{{ url_for('delete_schedule', id=schedule.id) }}">
+                    <img src="/static/img/trash.png" />
+                </a>
             </td>
         </tr>
 
