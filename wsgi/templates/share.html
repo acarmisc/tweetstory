@@ -5,19 +5,19 @@
   <div class="container">
     <div class="schedule col-md-6">
       <div class="fixed-block col-md-4">
-      <div class="well mywell">
-        <h3>{{ schedule.subject }}</h3>
-        <h5>recorded by <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></h5>
-        <h2 class="hashtag">#{{ schedule.hashtag }}</h2>
-        <div class="interval">
-          <p class="false-block" style="width: 45%">
-            from <br /><span class="label label-info">{{ schedule.start_date.strftime('%d %b %y %H:%M') }} UTC</span>
-          </p>
-          <p class="false-block" style="width: 45%">
-            to <br /><span class="label label-info">{{ schedule.end_date.strftime('%d %b %y %H:%M') }} UTC</span>
-          </p>
+        <div class="well mywell">
+        <div class="author-profile pull-left">
+          <div align="center">
+            <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_bigger') }}" />
+          </div>
+          <div>
+            <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a>
+          </div>
         </div>
-       </div>
+        <div>
+          <h4>{{ schedule.subject }}</h4>
+          <h3 class="hashtag">#{{ schedule.hashtag }}</h3>
+        </div>
 
         <p align="left">
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="acarmisc" data-size="large" data-hashtags="zombietweet"><img src="/static/img/icon-share.png" /> Tweet</a>
