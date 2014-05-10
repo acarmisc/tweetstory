@@ -6,6 +6,8 @@ from flask.ext.mongoengine import MongoEngine
 import datetime
 
 
+__version__ = 0.2
+
 config = getConfig()
 _logger = _logger('Core')
 
@@ -24,6 +26,11 @@ from models.schedule import Schedule
 from models.zombie import Zombie
 
 """ basic functions """
+
+
+@app.route("/version")
+def get_version():
+    return jsonify({'version': __version__})
 
 
 @app.route("/")
