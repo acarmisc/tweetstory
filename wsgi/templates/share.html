@@ -5,18 +5,22 @@
   <div class="container">
     <div class="schedule col-md-6">
       <div class="fixed-block col-md-4">
-        <div class="well mywell">
-        <div class="author-profile pull-left">
-
-          <div>
-            <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a>
-          </div>
-        </div>
+      <div class="well mywell">
         <div>
           <h4>{{ schedule.subject }}</h4>
+          <p>by <a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></p>
           <h3 class="hashtag">#{{ schedule.hashtag }}</h3>
         </div>
 
+        <div class="interval" style="clear: both">
+          <p class="false-block" style="width: 45%">
+            from <br /><span class="label label-info">{{ schedule.start_date.strftime('%d %b %y %H:%M') }} UTC</span>
+          </p>
+          <p class="false-block" style="width: 45%">
+            to <br /><span class="label label-info">{{ schedule.end_date.strftime('%d %b %y %H:%M') }} UTC</span>
+          </p>
+        </div>
+        </div>
         <p align="left">
           <a href="https://twitter.com/share" class="twitter-share-button" data-via="acarmisc" data-size="large" data-hashtags="zombietweet"><img src="/static/img/icon-share.png" /> Tweet</a>
 
@@ -24,14 +28,6 @@
         </p>
 
 
-
-      <div class="user-warning">
-        <p><img src="/static/img/danger.png" /><br /> ONLY THE BRAVE! AT THE MOMENT THIS IS ONLY AN EXPERIMENT: YOU CAN SIGN IN WITH TWITTER AND HAVING SOME TESTS.</p>
-
-        <p align="center">
-          <a class="btn btn-success" href="http://www.zombietweet.com">More info</a>
-        </p>
-      </div>
     </div>
     </div>
 
