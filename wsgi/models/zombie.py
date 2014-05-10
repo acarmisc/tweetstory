@@ -52,3 +52,16 @@ class Zombie(db.Document):
                                created_at__gte=schedule.start_date,
                                created_at__lte=schedule.end_date)
         return found
+
+    def text_parsed(self):
+        from ttp import ttp
+        p = ttp.Parser()
+        result = p.parse(self.text)
+        #TODO: should be done better!
+        return result.html.replace('search.twitter.com', 'twitter.com')
+
+    def text_parsed_test(self):
+        import re
+        URL_REGEX = re.compile(r'''((?:mailto:|ftp://|http://|https://)[^ <>'"{}|\\^`[\]]*)''')
+
+        return URL_REGEX.sub(r'<a target="_blank" href="\1">\1</a>', self.text)

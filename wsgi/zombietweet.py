@@ -102,6 +102,15 @@ def save():
     return list()
 
 
+@app.route('/delete_schedule/<id>', methods=['GET'])
+def delete_schedule(id=None):
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+    schedule.delete()
+
+    return redirect(url_for('list'))
+
+
 @app.route("/show/<id>", methods=['GET'])
 def show(id=None):
     if 'logged_in' not in session:

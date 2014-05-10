@@ -53,6 +53,12 @@ class Schedule(db.Document):
 
         return True
 
+    def delete(self):
+        if Schedule.delete():
+            return True
+        else:
+            return False
+
     def get_by_logged_user(self, uid, timeadapt=None):
         found = Schedule.objects(uid=uid)
 
