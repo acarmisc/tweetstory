@@ -171,3 +171,26 @@ h2 {
 .author-profile {
     margin-right: 20px;
 }
+
+.nav > li.dropdown {
+    background-color: rgba(0,0,0,0.4);
+}
+
+label {
+    font-weight: 500;
+}
+
+.profile-top {
+    text-align: center;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+th {
+    font-weight: 500;
+}

@@ -129,7 +129,9 @@ def post_login():
                 utc_offset=session['twitter_data']['utc_offset'],
                 profile_image_url=session['twitter_data']['profile_image_url'])
 
-    session['user'] = user.get_or_create().username
+    user = user.get_or_create()
+    session['user'] = user.username
+    session['user_id'] = user.id.__str__()
     session['utc_offset'] = user.utc_offset
     session['uid'] = session['user']
     session['logged_in'] = True
@@ -234,7 +236,11 @@ def get_user(id=None):
 
     form = UserSmallForm(obj=user)
 
-    return render_template('user.html', user=user, form=form)
+    schedule = Schedule(uid=id)
+    schedules = schedule.get_by_logged_user(session['user'], timeadapt=True)
+
+    return render_template('user.html', user=user, form=form,
+                           schedules=schedules)
 
 
 @app.route("/save_user/<id>", methods=['POST'])

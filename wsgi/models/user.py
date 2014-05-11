@@ -91,9 +91,9 @@ class User(db.Document):
 
 UserForm = model_form(User)
 
-UserSmallForm = model_form(User, only=['first_name', 'last_name', 'username',
-                                       'password', 'email', 'time_zone',
-                                       'token', 'utc_offset'])
+UserSmallForm = model_form(User, only=['first_name', 'last_name',
+                                       'email', 'time_zone', 'utc_offset',
+                                       'token'])
 
 
 class Group(db.Document):

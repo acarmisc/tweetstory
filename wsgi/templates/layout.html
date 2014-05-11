@@ -40,10 +40,12 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ session.user }} <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_mini') }}" />
+                {{ session.user }} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <!--<li><a href="{{ url_for('users') }}">Users</a></li>
-                <li class="divider"></li>-->
+                <li><a href="{{ url_for('get_user', id=session.user_id) }}">my profile</a></li>
+                <li class="divider"></li>
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
               </ul>
             </li>
