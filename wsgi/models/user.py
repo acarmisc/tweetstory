@@ -22,6 +22,7 @@ class User(db.Document):
     time_zone = db.StringField(max_length=255)
     utc_offset = db.IntField()
     profile_image_url = db.StringField()
+    first_login = db.BooleanField(default=True)
 
     meta = {
         'allow_inheritance': True,
@@ -69,6 +70,17 @@ class User(db.Document):
 
     def get_by_id(self):
         return User.objects.get(id=self.id)
+
+    def update_user(self):
+        try:
+            self.update(set__first_name=self.first_name,
+                        set__last_name=self.last_name,
+                        set__email=self.email,
+                        set__first_login=False)
+        except RuntimeError:
+            pass
+
+        return True
 
     def get_or_create(self):
         found = self.check_exists()

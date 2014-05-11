@@ -3,22 +3,29 @@
 
 <div class="col-md-8">
     <div class="well">
-        <div class="profile-top">
-            <div class="">
-                <h2>
-                    <img class="img-circle" src="{{ user.profile_image_url.replace('_normal', '_bigger') }}" />
-                    {{ user.username }}
-                    <span class="badge">{{ schedules.count() }}</span>
-                </h2>
-            </div>
-        </div>
+        <h2>
+            <img class="img-circle" src="{{ user.profile_image_url.replace('_normal', '_bigger') }}" />
+            {{ user.username }}
+            <span class="badge">{{ schedules.count() }}</span>
+        </h2>
         <div>
-            <form class="form-horizontal" role="form" method="POST"
-                action="{{ user.id }}">
-
-                {% import "_forms.html" as forms %}
-                {{ forms.render(form) }}
-
+            <form class="form-horizontal" role="form" method="POST" action="{{ user.id }}">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.first_name(class="form-control", placeholder="First Name") }}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name(class="form-control", placeholder="Last Name") }}
+                </div>
+                <div class="form-group">
+                    {{ form.email(class="form-control", placeholder="E-mail") }}
+                </div>
+                <div class="form-group">
+                    {{ form.token(class="form-control", placeholder="Token", disabled="disabled") }}
+                </div>
+                <div class="form-group">
+                    {{ form.time_zone(class="form-control", placeholder="Time Zone", disabled="disabled") }}
+                </div>
                 <input type="submit" class="btn btn-primary" value="Update" />
             </form>
         </div>

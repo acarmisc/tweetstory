@@ -137,7 +137,11 @@ def post_login():
     session['logged_in'] = True
     session['profile_image_url'] = user.profile_image_url
 
-    return redirect(url_for('list'))
+    if user.first_login:
+        flash('This is your first login. Please fill up the fields.')
+        return redirect(url_for('get_user', id=user.id))
+    else:
+        return redirect(url_for('list'))
 
 
 """ schedules """
@@ -225,13 +229,19 @@ def users():
     return render_template('users.html', users=users)
 
 
-@app.route("/user/<id>", methods=['GET'])
+@app.route("/user/<id>", methods=['GET', 'POST'])
 def get_user(id=None):
     from models.user import UserSmallForm
     if 'logged_in' not in session:
         return redirect(url_for('welcome'))
 
     user = User(id=id)
+    if request.method == 'POST':
+        user.first_name = request.form.get('first_name', None)
+        user.last_name = request.form.get('last_name', None)
+        user.email = request.form.get('email', None)
+        user.update_user()
+
     user = user.get_by_id()
 
     form = UserSmallForm(obj=user)
