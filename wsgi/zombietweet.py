@@ -43,6 +43,9 @@ def welcome():
     return render_template('login.html', form=form)
 
 
+""" security """
+
+
 @app.route('/login')
 def login():
     return twitter.authorize(callback=url_for('oauth_authorized',
@@ -80,72 +83,6 @@ def signup():
         return redirect(url_for('users'))
     else:
         return redirect(url_for('/'))
-
-
-@app.route("/list")
-def list():
-    from models.schedule import ScheduleSimpleForm
-    if 'logged_in' not in session:
-        return redirect(url_for('welcome'))
-
-    schedules = Schedule()
-    results = schedules.get_by_logged_user(session['user'], timeadapt=True)
-
-    form = ScheduleSimpleForm()
-    now = datetime.datetime.utcnow() + datetime.timedelta(0, session['utc_offset'])
-
-    defaults = {
-        'start_date': now.strftime("%Y-%m-%d %H:%M:%S")
-    }
-
-    return render_template('list.html', entries=results, form=form, defaults=defaults)
-
-
-@app.route('/save', methods=['POST'])
-def save():
-    schedule = Schedule()
-    schedule.create_schedule(request, rest=False, delta=session['utc_offset'])
-
-    return list()
-
-
-@app.route('/delete_schedule/<id>', methods=['GET'])
-def delete_schedule(id=None):
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
-    schedule.delete()
-
-    return redirect(url_for('list'))
-
-
-@app.route("/show/<id>", methods=['GET'])
-def show(id=None):
-    if 'logged_in' not in session:
-        return share(id)
-
-    # getting schedule
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
-
-    # getting zombie related to specific schedule
-    zombie = Zombie()
-    zombies = zombie.get_by_schedule(schedule)
-
-    # should return schedule and zombies
-    return render_template('show.html', schedule=schedule[0], zombies=zombies)
-
-
-@app.route("/share/<id>", methods=['GET'])
-def share(id=None):
-    # getting schedule
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
-
-    # getting zombie related to specific schedule
-    zombie = Zombie()
-    zombies = zombie.get_by_schedule(schedule)
-
-    return render_template('share.html', schedule=schedule[0], zombies=zombies)
 
 
 """ Twitter login part """
@@ -199,6 +136,77 @@ def post_login():
     session['profile_image_url'] = user.profile_image_url
 
     return redirect(url_for('list'))
+
+
+""" schedules """
+
+
+@app.route("/list")
+def list():
+    from models.schedule import ScheduleSimpleForm
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    schedules = Schedule()
+    results = schedules.get_by_logged_user(session['user'], timeadapt=True)
+
+    form = ScheduleSimpleForm()
+    now = datetime.datetime.utcnow() + \
+        datetime.timedelta(0, session['utc_offset'])
+
+    defaults = {
+        'start_date': now.strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    return render_template('list.html', entries=results, form=form,
+                           defaults=defaults)
+
+
+@app.route('/save', methods=['POST'])
+def save():
+    schedule = Schedule()
+    schedule.create_schedule(request, rest=False, delta=session['utc_offset'])
+
+    return list()
+
+
+@app.route('/delete_schedule/<id>', methods=['GET'])
+def delete_schedule(id=None):
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+    schedule.delete()
+
+    return redirect(url_for('list'))
+
+
+@app.route("/show/<id>", methods=['GET'])
+def show(id=None):
+    if 'logged_in' not in session:
+        return share(id)
+
+    # getting schedule
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+
+    # getting zombie related to specific schedule
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    # should return schedule and zombies
+    return render_template('show.html', schedule=schedule[0], zombies=zombies)
+
+
+@app.route("/share/<id>", methods=['GET'])
+def share(id=None):
+    # getting schedule
+    schedule = Schedule()
+    schedule = schedule.get_by_id(id)
+
+    # getting zombie related to specific schedule
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    return render_template('share.html', schedule=schedule[0], zombies=zombies)
 
 
 """ basic admin """
