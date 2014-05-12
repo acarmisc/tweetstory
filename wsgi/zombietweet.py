@@ -28,11 +28,6 @@ from models.zombie import Zombie
 """ basic functions """
 
 
-@app.route("/version")
-def get_version():
-    return jsonify({'version': __version__})
-
-
 @app.route("/")
 def welcome():
     from models.user import UserSmallForm
@@ -264,6 +259,11 @@ from flask import make_response
 from flask import jsonify
 
 auth = HTTPBasicAuth()
+
+
+@app.route("/version")
+def get_version():
+    return jsonify({'version': __version__})
 
 
 @auth.get_password
