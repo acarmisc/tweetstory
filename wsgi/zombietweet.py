@@ -315,7 +315,7 @@ def api_status():
 def get_schedules():
     schedules = Schedule()
     results = schedules.get_by_logged_user(auth.username())
-    return results.to_json()
+    return jsonify(schedules.pack_json(results))
 
 
 @app.route('/api/get_zombies/<id>')
@@ -326,8 +326,7 @@ def get_zombies(id=id):
 
     zombie = Zombie()
     results = zombie.get_by_schedule(schedule)
-
-    return results.to_json()
+    return jsonify(zombie.pack_json(results))
 
 
 @app.route('/api/create_schedule', methods=['POST'])

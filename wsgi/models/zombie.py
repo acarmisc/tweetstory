@@ -53,6 +53,21 @@ class Zombie(db.Document):
                                created_at__lte=schedule.end_date)
         return found
 
+    def pack_json(self, llist):
+        nlist = []
+        for ll in llist:
+            nel = {
+                'oid': ll.oid,
+                'screen_name': ll.screen_name,
+                'author': ll.author,
+                'created_at': ll.created_at.strftime("%Y-%M-%d %H:%I:%S"),
+                'avatar': ll.avatar,
+                'id': ll.id.__str__()
+            }
+            nlist.append(nel)
+
+        return {'zombies': nlist}
+
     def text_parsed(self):
         from ttp import ttp
         p = ttp.Parser()

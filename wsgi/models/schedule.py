@@ -76,6 +76,22 @@ class Schedule(db.Document):
             ll.end_date = ll.end_date + datetime.timedelta(0, session['utc_offset'])
         return llist
 
+    def pack_json(self, llist):
+        nlist = []
+        for ll in llist:
+            nel = {
+                'id': ll.id.__str__(),
+                'created_at': ll.created_at.strftime("%Y-%M-%d %H:%I:%S"),
+                'end_date': ll.end_date.strftime("%Y-%M-%d %H:%I:%S"),
+                'hashtag': ll.hashtag,
+                'start_date': ll.start_date.strftime("%Y-%M-%d %H:%I:%S"),
+                'subject': ll.subject,
+                'uid': ll.uid,
+            }
+            nlist.append(nel)
+
+        return {'schedules': nlist}
+
 
 ScheduleForm = model_form(Schedule)
 

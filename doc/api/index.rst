@@ -56,26 +56,28 @@ Used to fetch user's schedules list from server. ::
 
 Returns: ::
 
-    [
-      {
-        "_cls": "Schedule",
-        "_id": {
-          "$oid": "5363f10584fda5d98eb402b8"
+    {
+      "schedules": [
+        {
+          "created_at": "2014-36-10 17:05:48",
+          "end_date": "2014-57-10 17:05:01",
+          "hashtag": "selfie",
+          "id": "536e63c77a1d345acc9e2333",
+          "start_date": "2014-37-10 17:05:01",
+          "subject": "selfie",
+          "uid": "acarmisc"
         },
-        "created_at": {
-          "$date": 1399058625459
-        },
-        "end_date": {
-          "$date": 1399063800000
-        },
-        "hashtag": "Crozza",
-        "start_date": {
-          "$date": 1399058634000
-        },
-        "subject": "Crozza 2 maggio",
-        "uid": "acarmisc"
-      }
-    ]
+        {
+          "created_at": "2014-21-02 19:07:06",
+          "end_date": "2014-19-02 20:08:32",
+          "hashtag": "Crozza",
+          "id": "5363f0307a1d344b54d982ee",
+          "start_date": "2014-19-02 19:07:32",
+          "subject": "Crozza",
+          "uid": "acarmisc"
+        }
+      ]
+    }
 
 Authentication *required*.
 Note: datetime must be exchanged in UTC format.
@@ -90,19 +92,26 @@ Fetch zombies for the given schedule. ::
 
 Returns: ::
 
-    [
-        {
-            "oid": "462320872335106048",
-            "screen_name": "john",
-            "author": "John Doe",
-            "text": "Tweet text",
-            "created_at": {"$date": 1399060860000},
-            "hashtags": ["crozzanelpaesedellemeraviglie"],
-            "avatar": "https://pbs.twimg.com/profile_images/123456/aaaaa_normal.jpeg",
-            "_id": {"$oid": "5363f9a184fda585d3df798b"},
-            "_cls": "Zombie"
-        },
-    ]
+    {
+        "zombies": [
+            {
+              "author": "FutureOLLG_2",
+              "avatar": "https://pbs.twimg.com/profile_images/464709234173558784/u_HPsCDm_normal.png",
+              "created_at": "2014-37-10 17:05:38",
+              "id": "536e63f17a1d345ad07873d8",
+              "oid": "465183894372110336",
+              "screen_name": "FutureOLLG_2"
+            },
+            {
+              "author": "LuFernandezSily",
+              "avatar": "https://pbs.twimg.com/profile_images/440398976467353600/SUT-wxKI_normal.jpeg",
+              "created_at": "2014-37-10 17:05:37",
+              "id": "536e63f17a1d345ad07873dc",
+              "oid": "465183891331244033",
+              "screen_name": "LuFernandezSily"
+            },
+        ]
+    }
 
 Authentication *required*.
 Note: datetime must be exchanged in UTC format.
