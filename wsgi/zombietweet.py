@@ -24,6 +24,7 @@ db = MongoEngine(app)
 from models.user import User
 from models.schedule import Schedule
 from models.zombie import Zombie
+from models.event import Event
 
 """ basic functions """
 
@@ -193,8 +194,13 @@ def show(id=None):
     zombie = Zombie()
     zombies = zombie.get_by_schedule(schedule)
 
+    # getting statistics
+    event = Event(resource_id=id, resource_type='schedule')
+    statistics = event.get_views_by_schedule()
+
     # should return schedule and zombies
-    return render_template('show.html', schedule=schedule[0], zombies=zombies)
+    return render_template('show.html', schedule=schedule[0], zombies=zombies,
+                           statistics=statistics)
 
 
 @app.route("/share/<id>", methods=['GET'])
@@ -321,6 +327,13 @@ def get_schedules():
 @app.route('/api/get_zombies/<id>')
 @auth.login_required
 def get_zombies(id=id):
+    Event().remember({'request': request,
+                      'description': 'get_zombies',
+                      'resource_type': 'schedule',
+                      'resource_id': id,
+                      'media': 'api',
+                      'type': 'statistic'})
+
     schedule = Schedule()
     schedule = schedule.get_by_id(id)
 
