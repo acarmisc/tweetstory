@@ -319,6 +319,13 @@ def api_status():
 @app.route('/api/get_schedules')
 @auth.login_required
 def get_schedules():
+    Event().remember({'request': request,
+                      'description': 'get_schedules',
+                      'resource_type': 'schedule',
+                      'resource_id': '',
+                      'media': 'api',
+                      'type': 'statistic'})
+
     schedules = Schedule()
     results = schedules.get_by_logged_user(auth.username())
     return jsonify(schedules.pack_json(results))
@@ -329,7 +336,7 @@ def get_schedules():
 def get_zombies(id=id):
     Event().remember({'request': request,
                       'description': 'get_zombies',
-                      'resource_type': 'schedule',
+                      'resource_type': 'zombies',
                       'resource_id': id,
                       'media': 'api',
                       'type': 'statistic'})
