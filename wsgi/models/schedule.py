@@ -81,10 +81,10 @@ class Schedule(db.Document):
         for ll in llist:
             nel = {
                 'id': ll.id.__str__(),
-                'created_at': ll.created_at.strftime("%Y-%M-%d %H:%I:%S"),
-                'end_date': ll.end_date.strftime("%Y-%M-%d %H:%I:%S"),
+                'created_at': ll.created_at.strftime("%Y-%m-%d %H:%I:%S"),
+                'end_date': ll.end_date.strftime("%Y-%m-%d %H:%I:%S"),
                 'hashtag': ll.hashtag,
-                'start_date': ll.start_date.strftime("%Y-%M-%d %H:%I:%S"),
+                'start_date': ll.start_date.strftime("%Y-%m-%d %H:%I:%S"),
                 'subject': ll.subject,
                 'uid': ll.uid,
             }

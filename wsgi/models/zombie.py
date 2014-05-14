@@ -60,7 +60,7 @@ class Zombie(db.Document):
                 'oid': ll.oid,
                 'screen_name': ll.screen_name,
                 'author': ll.author,
-                'created_at': ll.created_at.strftime("%Y-%M-%d %H:%I:%S"),
+                'created_at': ll.created_at.strftime("%Y-%m-%d %H:%I:%S"),
                 'avatar': ll.avatar,
                 'id': ll.id.__str__()
             }
