@@ -307,7 +307,8 @@ def api_post_login():
                 )
 
     logged_user = user.get_or_create()
-    return logged_user.get_token()
+    #TODO: to be checked
+    return make_response(jsonify({'response': logged_user.get_token()}))
 
 
 @app.route('/api/status')
