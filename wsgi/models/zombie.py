@@ -50,7 +50,7 @@ class Zombie(db.Document):
         schedule = schedule[0]
         found = Zombie.objects(hashtags__icontains=schedule.hashtag,
                                created_at__gte=schedule.start_date,
-                               created_at__lte=schedule.end_date)
+                               created_at__lte=schedule.end_date).limit(100)
         return found
 
     def pack_json(self, llist):
