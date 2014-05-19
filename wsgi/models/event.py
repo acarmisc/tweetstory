@@ -15,7 +15,7 @@ class Event(db.Document):
     media = db.StringField(max_length=255, required=True)
     resource_type = db.StringField(max_length=255, required=False)
     resource_id = db.StringField(max_length=255, required=False)
-    uid = db.StringField(max_length=255, required=True)
+    uid = db.StringField(max_length=255, required=False)
     created_at = db.DateTimeField(default=datetime.datetime.utcnow(),
                                   required=True)
 
@@ -42,7 +42,10 @@ class Event(db.Document):
             event.resource_id = data['resource_id']
 
         event.host = data['request'].remote_addr
-        event.uid = session['uid']
+
+        #TODO: session does not exists in api request
+        if 'uid' in session:
+            event.uid = session['uid']
 
         event.save()
 
