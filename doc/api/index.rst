@@ -31,16 +31,9 @@ Used as callback URL after successul Twitter login. ::
 
 Returns: ::
 
-    HTTP/1.1 200 OK
-    Date: Sat, 10 May 2014 10:29:30 GMT
-    Server: Apache/2.2.15 (Red Hat)
-    Content-Length: 4
-    Content-Type: text/html; charset=utf-8
-    Vary: Accept-Encoding
+    { "response": "UsErT0k3n" }
 
-    myToken
-
-Where ``myToken`` is the user logged token. This value must be used in the next queries.
+Where ``response`` contains the user logged token. This value must be used in the next queries.
 
 Example: ::
 
