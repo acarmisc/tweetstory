@@ -62,6 +62,7 @@ class Zombie(db.Document):
                 'author': ll.author,
                 'created_at': ll.created_at.strftime("%Y-%m-%d %H:%I:%S"),
                 'avatar': ll.avatar,
+                'text': ll.text,
                 'id': ll.id.__str__()
             }
             nlist.append(nel)
