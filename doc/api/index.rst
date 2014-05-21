@@ -4,7 +4,7 @@ ZombieTweet's API
 API Version
 -----------
 
-Curren version is *v0.1*; release date May, 10 2014.
+Curren version is *v0.2*; release date May, 20 2014.
 
 
 Get Status
@@ -93,7 +93,8 @@ Returns: ::
               "created_at": "2014-37-10 17:05:38",
               "id": "536e63f17a1d345ad07873d8",
               "oid": "465183894372110336",
-              "screen_name": "FutureOLLG_2"
+              "screen_name": "FutureOLLG_2",
+              "text": "lorem ipsum dolor sit amet"
             },
             {
               "author": "LuFernandezSily",
@@ -101,7 +102,8 @@ Returns: ::
               "created_at": "2014-37-10 17:05:37",
               "id": "536e63f17a1d345ad07873dc",
               "oid": "465183891331244033",
-              "screen_name": "LuFernandezSily"
+              "screen_name": "LuFernandezSily",
+              "text": "lorem ipsum dolor sit amet"
             },
         ]
     }
