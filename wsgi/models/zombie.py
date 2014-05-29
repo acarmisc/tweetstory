@@ -46,11 +46,22 @@ class Zombie(db.Document):
 
         return True
 
-    def get_by_schedule(self, schedule):
+    def get_by_schedule(self, schedule, slot=False):
         schedule = schedule[0]
-        found = Zombie.objects(hashtags__icontains=schedule.hashtag,
-                               created_at__gte=schedule.start_date,
-                               created_at__lte=schedule.end_date).limit(600)
+        slot = slot or False
+        items_per_page = 10
+        if slot:
+            offset = (int(slot) - 1) * items_per_page
+
+            found = Zombie.objects(hashtags__icontains=schedule.hashtag,
+                                   created_at__gte=schedule.start_date,
+                                   created_at__lte=schedule.end_date).skip( offset ).limit( items_per_page )
+        else:
+            #TODO: pagination also for web
+            found = Zombie.objects(hashtags__icontains=schedule.hashtag,
+                                   created_at__gte=schedule.start_date,
+                                   created_at__lte=schedule.end_date).limit(600)
+
         return found
 
     def pack_json(self, llist):

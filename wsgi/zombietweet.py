@@ -332,9 +332,13 @@ def get_schedules():
     return jsonify(schedules.pack_json(results))
 
 
-@app.route('/api/get_zombies/<id>')
+@app.route('/<path:fullurl>')
 @auth.login_required
-def get_zombies(id=id):
+def get_zombies(fullurl):
+    params = fullurl.split('/')
+    id = params[2]
+    slot = params[3]
+
     Event().remember({'request': request,
                       'description': 'get_zombies',
                       'resource_type': 'zombies',
@@ -346,7 +350,7 @@ def get_zombies(id=id):
     schedule = schedule.get_by_id(id)
 
     zombie = Zombie()
-    results = zombie.get_by_schedule(schedule)
+    results = zombie.get_by_schedule(schedule, slot)
     return jsonify(zombie.pack_json(results))
 
 

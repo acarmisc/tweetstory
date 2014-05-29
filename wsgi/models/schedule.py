@@ -43,10 +43,13 @@ class Schedule(db.Document):
                 schedule.end_date = form.end_date.data - datetime.timedelta(0, delta)
                 schedule.uid = session['uid']
         else:
+            start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d %H:%M:%S')
+            end_date = start_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d %H:%M:%S')
+
             schedule.subject = request['subject']
-            schedule.hashtag = request['hashtag']
-            schedule.start_date = request['start_date'] - datetime.timedelta(0, delta)
-            schedule.end_date = request['end_date'] - datetime.timedelta(0, delta)
+            schedule.hashtag = request['hashtag'].replace("#", "")
+            schedule.start_date = start_date - datetime.timedelta(0, delta)
+            schedule.end_date = end_date - datetime.timedelta(0, delta)
             schedule.uid = session['user']
 
         schedule.save()
