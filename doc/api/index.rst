@@ -81,7 +81,11 @@ Get Zombies
 
 Fetch zombies for the given schedule. ::
 
-    /api/get_zombies/{schedule_id}
+    /api/get_zombies/{schedule_id}/{page_n}
+
+Where:
+  - {schedule_id}: contains the ID of the desired schedule
+  - {page_n}: is the number for pagination. The number of elements foreach page is set on the server side.
 
 Returns: ::
 
