@@ -337,7 +337,8 @@ def get_schedules():
 def get_zombies(fullurl):
     params = fullurl.split('/')
     id = params[2]
-    slot = params[3]
+    if len(params) > 3:
+        slot = params[3]
 
     Event().remember({'request': request,
                       'description': 'get_zombies',
@@ -350,7 +351,7 @@ def get_zombies(fullurl):
     schedule = schedule.get_by_id(id)
 
     zombie = Zombie()
-    results = zombie.get_by_schedule(schedule, slot)
+    results = zombie.get_by_schedule(schedule, slot=False)
     return jsonify(zombie.pack_json(results))
 
 

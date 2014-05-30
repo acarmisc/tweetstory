@@ -38,13 +38,14 @@ class Schedule(db.Document):
 
             if request.method == 'POST' and form.validate():
                 schedule.subject = form.subject.data
+                #TODO: Trim!!!
                 schedule.hashtag = form.hashtag.data.replace("#", "")
                 schedule.start_date = form.start_date.data - datetime.timedelta(0, delta)
                 schedule.end_date = form.end_date.data - datetime.timedelta(0, delta)
                 schedule.uid = session['uid']
         else:
             start_date = datetime.datetime.strptime(request['start_date'], '%Y-%m-%d %H:%M:%S')
-            end_date = start_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d %H:%M:%S')
+            end_date = datetime.datetime.strptime(request['end_date'], '%Y-%m-%d %H:%M:%S')
 
             schedule.subject = request['subject']
             schedule.hashtag = request['hashtag'].replace("#", "")
@@ -84,10 +85,10 @@ class Schedule(db.Document):
         for ll in llist:
             nel = {
                 'id': ll.id.__str__(),
-                'created_at': ll.created_at.strftime("%Y-%m-%d %H:%I:%S"),
-                'end_date': ll.end_date.strftime("%Y-%m-%d %H:%I:%S"),
+                'created_at': ll.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                'end_date': ll.end_date.strftime("%Y-%m-%d %H:%M:%S"),
                 'hashtag': ll.hashtag,
-                'start_date': ll.start_date.strftime("%Y-%m-%d %H:%I:%S"),
+                'start_date': ll.start_date.strftime("%Y-%m-%d %H:%M:%S"),
                 'subject': ll.subject,
                 'uid': ll.uid,
             }
