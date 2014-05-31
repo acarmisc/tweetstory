@@ -80,6 +80,25 @@ class Zombie(db.Document):
 
         return {'zombies': nlist}
 
+    def count_links(self, zombies):
+        import re
+        links = []
+        for z in zombies:
+            found = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', z.text)
+            links += found
+
+        return len(links)
+
+    def count_users(self, zombies):
+        import re
+        users = []
+        for z in zombies:
+            found = re.findall('@[a-zA-Z]+', z.text)
+            users += found
+
+        users = sorted(set(users))
+        return len(users)
+
     def text_parsed(self):
         from ttp import ttp
         p = ttp.Parser()

@@ -1,6 +1,6 @@
 body {
     margin-top: 60px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     font-size: 1.7em;
     background-image: url('../img/blurred-bg.jpg');
     background-position: center center;
@@ -16,6 +16,7 @@ h2 {
 
 .navbar-default {
     background-color: rgba(0,0,0,0.2);
+    border: none;
 }
 
 .fixed-block {
@@ -111,12 +112,11 @@ h2 {
     color: #bbb;
     float: right;
     font-size: 70%;
-    font-weight: 500;
+    font-weight: 300;
 }
 
 .record-form input[type=text]{
-    font-size: 110%;
-    padding: 10px;
+
 }
 
 .label-info {
@@ -257,21 +257,26 @@ th {
 }
 
 .schedule-data {
+    padding-top: 10px;
     background-color: #3D3B42;
     text-align: center;
 }
 
 .schedule-data h4 {
     color: #FFFFFF;
+    font-weight: 100;
 }
 
 .schedule-data h3.hashtag {
     color: #FFFFFF;
+    font-weight: 200;
+    font-size: 32px;
 }
 
 .inpage-stats {
     border-top: 1px solid rgba(0,0,0,0.1);
     padding: 5px;
+    color: white;
 }
 
 .inpage-stats label {
@@ -287,3 +292,10 @@ th {
     color: white;
 }
 
+.inpage-stats .false-block {
+    border-right: 1px solid rgba(0,0,0,0.1);
+    width: 70px;
+    min-height: 70px;
+    font-weight: 200;
+    font-size: 13px;
+}

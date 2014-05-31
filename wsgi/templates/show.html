@@ -26,11 +26,27 @@
       </div>
 
       <div class="inpage-stats">
-        <p class="stat"><label>visits</label> <span class="stat-value">{{ statistics.views }}</span>
-        <p class="stat"><label>starred</label> <span class="stat-value"></span>
-        <p class="stat"><label>links</label> <span class="stat-value"></span>
-        <p class="stat"><label>images</label> <span class="stat-value"></span>
-        <p class="stat"><label>users</label> <span class="stat-value"></span>
+        <p class="false-block">
+          visits <br />
+          <span class="label label-info">{{ statistics.views }}</span>
+        </p>
+        <p class="false-block">
+          starred<br />
+          <span class="label label-info">0</span>
+        </p>
+        <p class="false-block">
+          links <br />
+          <span class="label label-info">{{ statistics.links }}</span>
+        </p>
+        <p class="false-block">
+          images<br />
+          <span class="label label-info">0</span>
+        </p>
+        <p class="false-block">
+          users<br />
+          <span class="label label-info">{{ statistics.users }}</span>
+        </p>
+
       </div>
 
       <div class="social">
