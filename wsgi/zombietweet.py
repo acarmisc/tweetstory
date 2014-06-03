@@ -183,9 +183,6 @@ def delete_schedule(id=None):
 
 @app.route("/show/<id>", methods=['GET'])
 def show(id=None):
-    if 'logged_in' not in session:
-        return share(id)
-
     # getting schedule
     schedule = Schedule()
     schedule = schedule.get_by_id(id)
@@ -203,21 +200,16 @@ def show(id=None):
     statistics['users'] = zombie.count_users(zombies)
 
     # should return schedule and zombies
+    return render_template('share.html', schedule=schedule[0], zombies=zombies,
+                           statistics=statistics)
+
     return render_template('show.html', schedule=schedule[0], zombies=zombies,
                            statistics=statistics)
 
 
 @app.route("/share/<id>", methods=['GET'])
 def share(id=None):
-    # getting schedule
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
-
-    # getting zombie related to specific schedule
-    zombie = Zombie()
-    zombies = zombie.get_by_schedule(schedule)
-
-    return render_template('share.html', schedule=schedule[0], zombies=zombies)
+    return redirect(url_for('show', id=id))
 
 
 """ basic admin """
