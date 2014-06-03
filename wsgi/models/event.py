@@ -52,14 +52,18 @@ class Event(db.Document):
         return True
 
     def get_views_by_schedule(self):
-        statistics = {}
         events = Event.objects(resource_id=self.resource_id,
                                resource_type=self.resource_type,
                                description='description')
 
-        statistics['views'] = events.count()
+        return events.count()
 
-        return statistics
+    def get_stars_by_schedule(self):
+        events = Event.objects(resource_id=self.resource_id,
+                               resource_type=self.resource_type,
+                               description='stars')
+
+        return events.count()
 
     def get_by_logged_user(self, uid):
         found = Event.objects(uid=uid)

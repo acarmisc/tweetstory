@@ -1,10 +1,11 @@
 body {
     margin-top: 60px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif !important;
     font-size: 1.7em;
-    background-image: url('../img/intro-bg.jpg');
+    background-image: url('../img/blurred-bg.jpg');
     background-position: center center;
     background-attachment: fixed;
+    background-size: 100%;
 }
 
 h2 {
@@ -15,6 +16,7 @@ h2 {
 
 .navbar-default {
     background-color: rgba(0,0,0,0.2);
+    border: none;
 }
 
 .fixed-block {
@@ -35,8 +37,6 @@ h2 {
 @media(min-width:1024px) {
     .mywell {
         display: block;
-        background-color: rgba(255,255,255,0.8);
-        box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
     }
 
     .user-warning {
@@ -47,17 +47,16 @@ h2 {
 }
 
 .navbar-brand {
-    padding-top: 13px;
+
 }
 
 .messages-container {
-
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .messages {
-    background-color: rgba(255,255,255,1);
     margin-top: 30px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
 .schedule {
@@ -70,11 +69,16 @@ h2 {
     margin-bottom: 20px;
     padding: 5px;
     min-height: 110px;
-    border-bottom: 2px inset rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .twitt-block .msg {
     font-weight: 300;
+    color: #FFFFFF;
+}
+
+.twitt-block .msg a {
+    color: #C0EAF0;
 }
 
 .twitt-block .footnotes {
@@ -99,20 +103,20 @@ h2 {
 
 
 .twitt-block .author {
-    color: #777;
+    color: #C0EAF0;
     font-size: 80%;
+    font-weight: 500;
 }
 
 .twitt-block .created_at {
     color: #bbb;
     float: right;
     font-size: 70%;
-    font-weight: 500;
+    font-weight: 300;
 }
 
 .record-form input[type=text]{
-    font-size: 110%;
-    padding: 10px;
+
 }
 
 .label-info {
@@ -213,4 +217,85 @@ th {
 .stat-block .value {
     text-align: center;
     font-size: 90%;
+}
+
+.navbar {
+    background-color: rgba(0,0,0,0.7);
+}
+
+
+/* v0.2 */
+
+.fullbody {
+    background-color: rgba(255,255,255,0.1);
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+
+
+.context-data {
+    position: fixed;
+}
+
+.context-data .profile .profile-image > img {
+    width: 150px;
+    height: 150px;
+}
+
+.profile {
+    padding-top: 10px;
+    text-align: center;
+    background-color: #0C6F73;
+}
+
+.profile .profile-name a {
+    font-size: 22px;
+    color: white;
+}
+
+.interval {
+    color: white;
+}
+
+.schedule-data {
+    padding-top: 10px;
+    background-color: #3D3B42;
+    text-align: center;
+}
+
+.schedule-data h4 {
+    color: #FFFFFF;
+    font-weight: 100;
+}
+
+.schedule-data h3.hashtag {
+    color: #FFFFFF;
+    font-weight: 200;
+    font-size: 32px;
+}
+
+.inpage-stats {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding: 5px;
+    color: white;
+}
+
+.inpage-stats label {
+    height: 25px;
+    background-color: #2A292E;
+    width: 90px;
+    text-align: right;
+    color: white;
+    padding-right: 3px;
+}
+
+.inpage-stats span.stat-value {
+    color: white;
+}
+
+.inpage-stats .false-block {
+    border-right: 1px solid rgba(0,0,0,0.1);
+    width: 70px;
+    min-height: 70px;
+    font-weight: 200;
+    font-size: 13px;
 }

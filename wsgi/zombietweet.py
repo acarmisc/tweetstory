@@ -195,8 +195,12 @@ def show(id=None):
     zombies = zombie.get_by_schedule(schedule)
 
     # getting statistics
+    statistics = {}
     event = Event(resource_id=id, resource_type='schedule')
-    statistics = event.get_views_by_schedule()
+    statistics['views'] = event.get_views_by_schedule()
+    statistics['stars'] = event.get_stars_by_schedule()
+    statistics['links'] = zombie.count_links(zombies)
+    statistics['users'] = zombie.count_users(zombies)
 
     # should return schedule and zombies
     return render_template('show.html', schedule=schedule[0], zombies=zombies,
@@ -351,7 +355,7 @@ def get_zombies(fullurl):
     schedule = schedule.get_by_id(id)
 
     zombie = Zombie()
-    results = zombie.get_by_schedule(schedule, slot=False)
+    results = zombie.get_by_schedule(schedule, slot=slot or False)
     return jsonify(zombie.pack_json(results))
 
 
