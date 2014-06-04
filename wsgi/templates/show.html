@@ -40,7 +40,7 @@
         </p>
         <p class="false-block">
           images<br />
-          <span class="label label-info">0</span>
+          <span class="label label-info">{{ statistics.images }}</span>
         </p>
         <p class="false-block">
           users<br />
@@ -61,24 +61,45 @@
   </div>
 
   <div class="col-md-8">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tweets" data-toggle="tab"><span class="glyphicon glyphicon-font"></span> Tweets</a></li>
+      <li><a href="#photos" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> Photos</a></li>
+      <li><a href="#links" data-toggle="tab"><span class="glyphicon glyphicon-link"></span> Links</a></li>
+    </ul>
+
     <div class="messages-container">
-      <div class="messages">
-
-        {% for message in zombies %}
-          <div class="twitt-block">
-            <div class="created_at pull-right">{{ message.created_at.strftime('%d %b %y %H:%M') }}</div>
-            <div class="avatar">
-              <a target="_blank" href="http://twitter.com/{{ message.author }}">
-                <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
-              </a>
+      <div class="tab-content">
+        <div class="messages tab-pane active" id="tweets">
+          {% for message in zombies %}
+            <div class="twitt-block">
+              <div class="created_at pull-right">{{ message.created_at.strftime('%d %b %y %H:%M') }}</div>
+              <div class="avatar">
+                <a target="_blank" href="http://twitter.com/{{ message.author }}">
+                  <img src="{{ message.avatar.replace('_normal', '_bigger') }}" />
+                </a>
+              </div>
+              <div class="author">
+                <a target="_blank" href="http://twitter.com/{{ message.author }}">{{ message.author }}</a>
+              </div>
+              <div class="msg">{{ message.text_parsed()|safe }}</div>
             </div>
-            <div class="author">
-              <a target="_blank" href="http://twitter.com/{{ message.author }}">{{ message.author }}</a>
+          {% endfor %}
+        </div>
+        <div class="tab-pane collections" id="photos">
+          {% for photo in photos %}
+            <div class="photo">
+              <img src="{{ photo.image }}" title="{{ photo.text }}" class="img-rounded" />
             </div>
-            <div class="msg">{{ message.text_parsed()|safe }}</div>
-          </div>
-        {% endfor %}
-
+          {% endfor %}
+        </div>
+        <div class="tab-pane collections" id="links">
+          {% for link in links %}
+            <div class="link" data-id="{{ link.oid }}" data-title="{{ link.title }}">
+              <p><a href="{{ link.link }}">{{ link.link }}</a></p>
+              <p class="small-text">{{ link.text|safe }}</p>
+            </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>

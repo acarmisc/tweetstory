@@ -192,19 +192,24 @@ def show(id=None):
     zombies = zombie.get_by_schedule(schedule)
 
     # getting statistics
+    # TODO: statics should be collected in one cycle!!
     statistics = {}
     event = Event(resource_id=id, resource_type='schedule')
     statistics['views'] = event.get_views_by_schedule()
     statistics['stars'] = event.get_stars_by_schedule()
     statistics['links'] = zombie.count_links(zombies)
     statistics['users'] = zombie.count_users(zombies)
+    statistics['images'] = zombie.count_images(zombies)
+
+    photos = zombie.get_photos(zombies)
+    links = zombie.get_links(zombies)
 
     # should return schedule and zombies
-    return render_template('share.html', schedule=schedule[0], zombies=zombies,
-                           statistics=statistics)
-
-    return render_template('show.html', schedule=schedule[0], zombies=zombies,
-                           statistics=statistics)
+    return render_template('show.html', schedule=schedule[0],
+                           zombies=zombies,
+                           statistics=statistics,
+                           photos=photos,
+                           links=links)
 
 
 @app.route("/share/<id>", methods=['GET'])

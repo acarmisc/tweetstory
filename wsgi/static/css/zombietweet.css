@@ -5,7 +5,7 @@ body {
     background-image: url('../img/blurred-bg.jpg');
     background-position: center center;
     background-attachment: fixed;
-    background-size: 100%;
+    background-size: 100% 100%;
 }
 
 h2 {
@@ -298,4 +298,32 @@ th {
     min-height: 70px;
     font-weight: 200;
     font-size: 13px;
+}
+
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: rgba(255,255,255,0.2);
+    border-color: transparent;
+}
+
+.nav-tabs > li > a {
+    color: white;
+}
+
+.nav-tabs {
+    border-bottom-color: rgba(255,255,255,0.3);
+}
+
+.photo {
+    display: inline-block;
+    margin: 3px;
+}
+
+.photo > img {
+    width: 150px;
+    height: auto;
+}
+
+.small-text {
+    font-size: 11px;
 }

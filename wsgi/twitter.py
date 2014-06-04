@@ -48,8 +48,14 @@ class twitterClient(object):
 
             for r in results:
                 hashtags = []
+                media = []
+
                 for h in r.entities['hashtags']:
                     hashtags.append(h['text'])
+
+                if 'media' in r.entities:
+                    for m in r.entities['media']:
+                        media.append(m['media_url'])
 
                 data = {'oid': str(r.id),
                         'text': r.text,
@@ -57,7 +63,9 @@ class twitterClient(object):
                         'avatar': r.user.profile_image_url_https,
                         'screen_name': r.user.screen_name,
                         'hashtags': hashtags,
-                        'created_at': r.created_at}
+                        'created_at': r.created_at,
+                        'retweet_count': r.retweet_count,
+                        'media': media}
 
                 fetched.append(data)
 

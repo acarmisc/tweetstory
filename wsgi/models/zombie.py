@@ -15,6 +15,8 @@ class Zombie(db.Document):
     hashtags = db.ListField()
     created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
     screen_name = db.StringField()
+    retweet_count = db.IntField()
+    media = db.ListField()
 
     meta = {
         'allow_inheritance': True,
@@ -41,6 +43,8 @@ class Zombie(db.Document):
         zombie.hashtags = data['hashtags']
         zombie.created_at = data['created_at']
         zombie.screen_name = data['screen_name']
+        zombie.retweet_count = data['retweet_count']
+        zombie.media = data['media']
 
         zombie.save()
 
@@ -89,6 +93,17 @@ class Zombie(db.Document):
 
         return len(links)
 
+    def get_links(self, zombies):
+        import re
+
+        links = []
+        for z in zombies:
+            found = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', z.text)
+            for l in found:
+                links.append({'link': l, 'oid': z.oid, 'text': z.text})
+
+        return links
+
     def count_users(self, zombies):
         import re
         users = []
@@ -98,6 +113,22 @@ class Zombie(db.Document):
 
         users = sorted(set(users))
         return len(users)
+
+    def count_images(self, zombies):
+        images = []
+        for z in zombies:
+            images += z.media
+
+        images = sorted(set(images))
+        return len(images)
+
+    def get_photos(self, zombies):
+        photos = []
+        for z in zombies:
+            for m in z.media:
+                photos.append({'image': m, 'text': z.text})
+
+        return photos
 
     def text_parsed(self):
         from ttp import ttp
