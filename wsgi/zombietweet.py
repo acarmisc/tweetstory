@@ -340,6 +340,8 @@ def get_zombies(fullurl):
     id = params[2]
     if len(params) > 3:
         slot = params[3]
+    else:
+        slot = False
 
     Event().remember({'request': request,
                       'description': 'get_zombies',
@@ -352,7 +354,7 @@ def get_zombies(fullurl):
     schedule = schedule.get_by_id(id)
 
     zombie = Zombie()
-    results = zombie.get_by_schedule(schedule, slot=slot or False)
+    results = zombie.get_by_schedule(schedule, slot=slot)
     return jsonify(zombie.pack_json(results))
 
 
