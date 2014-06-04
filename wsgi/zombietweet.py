@@ -54,33 +54,6 @@ def logout():
     return redirect(url_for('welcome'))
 
 
-@app.route('/login_local', methods=['POST'])
-def login_local():
-    user = User(username=request.form.get('username'),
-                password=request.form.get('password'))
-
-    check = user.check_exists()
-    if check:
-        # get more data from check
-        session['user'] = check.username
-        session['logged_in'] = True
-        flash('You were signed in as %s' % session['user'])
-        return redirect(url_for('list'))
-    else:
-        flash('Login failed')
-        return redirect(url_for('/'))
-
-
-@app.route('/signup', methods=['POST'])
-def signup():
-    user = User()
-
-    if user.create_from_request(request):
-        return redirect(url_for('users'))
-    else:
-        return redirect(url_for('/'))
-
-
 """ Twitter login part """
 
 
