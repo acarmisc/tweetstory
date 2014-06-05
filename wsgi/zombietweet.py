@@ -168,11 +168,12 @@ def show(id=None):
     # TODO: statics should be collected in one cycle!!
     statistics = {}
     event = Event(resource_id=id, resource_type='schedule')
-    statistics['views'] = event.get_views_by_schedule()
+    #statistics['views'] = event.get_views_by_schedule()
     statistics['stars'] = event.get_stars_by_schedule()
     statistics['links'] = zombie.count_links(zombies)
     statistics['users'] = zombie.count_users(zombies)
     statistics['images'] = zombie.count_images(zombies)
+    statistics['zombies'] = zombies.count()
 
     photos = zombie.get_photos(zombies)
     links = zombie.get_links(zombies)

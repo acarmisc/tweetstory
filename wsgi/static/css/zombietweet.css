@@ -34,6 +34,10 @@ h2 {
 }
 
 
+.context-data {
+    display: none;
+}
+
 @media(min-width:1024px) {
     .mywell {
         display: block;
@@ -44,6 +48,11 @@ h2 {
         text-align: center;
         color: white;
     }
+
+    .context-data {
+        display: block;
+    }
+
 }
 
 .navbar-brand {
@@ -241,17 +250,6 @@ th {
     height: 150px;
 }
 
-.profile {
-    padding-top: 10px;
-    text-align: center;
-    background-color: #0C6F73;
-}
-
-.profile .profile-name a {
-    font-size: 22px;
-    color: white;
-}
-
 .interval {
     color: white;
 }
@@ -326,4 +324,34 @@ th {
 
 .small-text {
     font-size: 11px;
+}
+
+.author > a {
+    color: rgba(166, 192, 231, 1);
+}
+
+.link > p > a {
+    color: rgba(166, 192, 231, 1);
+}
+
+.profile {
+    padding-top: 10px;
+    text-align: center;
+    background-color: #0C6F73;
+    padding-bottom: 10px;
+}
+
+.profile .profile-name {
+    text-align: left;
+}
+
+.profile .profile-name a {
+    font-size: 22px;
+    font-weight: 200;
+    color: white;
+}
+
+.profile-block {
+    display: inline-block;
+    vertical-align: top;
 }

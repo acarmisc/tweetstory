@@ -3,7 +3,7 @@
 
 <div class="container fullbody">
   <div class="col-md-4">
-    <div class="context-data col-md-3">
+    <div class="context-data">
       <div class="schedule-data">
         <h4>{{ schedule.subject }}</h4>
         <h3 class="hashtag">#{{ schedule.hashtag }}</h3>
@@ -19,17 +19,16 @@
       </div>
 
       <div class="profile">
-        <div class="profile-image">
+        <div class="profile-image profile-block">
           <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_200x200') }}" />
         </div>
-        <p class="profile-name"><a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></p>
+        <div class="profile-name profile-block">
+          <h4><a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></h4>
+          <p>{{ session.twitter_data.time_zone }} </p>
+        </div>
       </div>
 
       <div class="inpage-stats">
-        <p class="false-block">
-          visits <br />
-          <span class="label label-info">{{ statistics.views }}</span>
-        </p>
         <p class="false-block">
           starred<br />
           <span class="label label-info">0</span>
@@ -45,6 +44,10 @@
         <p class="false-block">
           users<br />
           <span class="label label-info">{{ statistics.users }}</span>
+        </p>
+        <p class="false-block">
+          zombies<br />
+          <span class="label label-info">{{ statistics.zombies }}</span>
         </p>
 
       </div>

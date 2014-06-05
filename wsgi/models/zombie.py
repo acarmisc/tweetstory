@@ -105,11 +105,9 @@ class Zombie(db.Document):
         return links
 
     def count_users(self, zombies):
-        import re
         users = []
         for z in zombies:
-            found = re.findall('@[a-zA-Z]+', z.text)
-            users += found
+            users += z.author
 
         users = sorted(set(users))
         return len(users)
