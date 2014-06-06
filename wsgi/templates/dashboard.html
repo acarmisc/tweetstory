@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="real-content row">
+    <div class="col-md-8 onwhite">
+        <div class="overview-block" id="recent-schedules">
+            <h4>Recent schedules</h4>
+        </div>
+
+        <div class="overview-block" id="last-users">
+            <h4>Last users</h4>
+        </div>
+
+        <div class="overview-block" id="most-popular">
+            <h4>Most popular hashtags</h4>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="schedule-data">
+            <h4>Welcome</h4>
+            <h3 class="hashtag">Explore the ZombieTweet world.</h3>
+        </div>
+        <div class="profile">
+            <div class="profile-image profile-block">
+              <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_200x200') }}" />
+            </div>
+            <div class="profile-name profile-block">
+              <h4><a href="http://twitter.com/{{ session.uid }}">@{{ session.uid }}</a></h4>
+              <p>{{ session.twitter_data.time_zone }} </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

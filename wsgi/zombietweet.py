@@ -39,6 +39,16 @@ def welcome():
     return render_template('login.html', form=form)
 
 
+@app.route("/dashboard")
+def dashboard():
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    context = {}
+
+    return render_template('dashboard.html', context=context)
+
+
 """ security """
 
 

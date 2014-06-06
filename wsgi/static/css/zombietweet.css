@@ -245,7 +245,7 @@ th {
     position: fixed;
 }
 
-.context-data .profile .profile-image > img {
+.profile .profile-image > img {
     width: 150px;
     height: 150px;
 }
@@ -354,4 +354,10 @@ th {
 .profile-block {
     display: inline-block;
     vertical-align: top;
+}
+
+.onwhite h4 {
+    font-size: 24px;
+    font-weight: 200;
+    color: #3D3B42;
 }

@@ -101,6 +101,9 @@ class User(db.Document):
     def get_token(self):
         return User.objects.get(username=self.username).token
 
+    def get_last(self, limit=False):
+        return User.objects().limit(limit)
+
 UserForm = model_form(User)
 
 UserSmallForm = model_form(User, only=['first_name', 'last_name',
