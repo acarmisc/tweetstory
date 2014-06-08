@@ -91,7 +91,9 @@
         <div class="tab-pane collections" id="photos">
           {% for photo in photos %}
             <div class="photo">
-              <img src="{{ photo.image }}" title="{{ photo.text }}" class="img-rounded" />
+              <a href="{{ photo.image }}" title="{{ photo.text }}" data-gallery>
+                <img src="{{ photo.image }}" title="{{ photo.text }}" class="img-rounded" />
+              </a>
             </div>
           {% endfor %}
         </div>
