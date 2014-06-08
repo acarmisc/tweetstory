@@ -23,7 +23,6 @@ class User(db.Document):
     utc_offset = db.IntField()
     profile_image_url = db.StringField()
     first_login = db.BooleanField(default=True)
-    description = db.StringField()
 
     meta = {
         'allow_inheritance': True,
