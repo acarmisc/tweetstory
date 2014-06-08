@@ -49,8 +49,8 @@ def dashboard():
     schedule = Schedule()
     user = User()
 
-    context['last_schedules'] = schedule.get_last(5)
-    context['last_users'] = user.get_last(5)
+    context['last_schedules'] = schedule.get_last(8)
+    context['last_users'] = user.get_last(8)
     context['running'] = schedule.get_running()
 
     return render_template('dashboard.html', context=context)
