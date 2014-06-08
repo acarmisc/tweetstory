@@ -317,7 +317,8 @@ def get_schedules():
                       'resource_type': 'schedule',
                       'resource_id': '',
                       'media': 'api',
-                      'type': 'statistic'})
+                      'type': 'statistic',
+                      'uid': auth.username()})
 
     schedules = Schedule()
     results = schedules.get_by_logged_user(auth.username())
@@ -339,7 +340,8 @@ def get_zombies(fullurl):
                       'resource_type': 'zombies',
                       'resource_id': id,
                       'media': 'api',
-                      'type': 'statistic'})
+                      'type': 'statistic',
+                      'uid': auth.username()})
 
     schedule = Schedule()
     schedule = schedule.get_by_id(id)
@@ -354,6 +356,15 @@ def get_zombies(fullurl):
 def api_create_schedule():
     if not request.json or not 'subject' in request.json:
         return jsonify({'error': 'Malformed request'}), 400
+
+    Event().remember({'request': request,
+                      'description': 'create_schedule',
+                      'resource_type': 'schedule',
+                      'resource_id': '0',
+                      'media': 'api',
+                      'type': 'statistic',
+                      'uid': auth.username()})
+
     data = {
         'subject': request.json.get('subject', ""),
         'hashtag': request.json.get('hashtag', ""),
