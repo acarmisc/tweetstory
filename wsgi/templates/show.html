@@ -20,7 +20,7 @@
 
       <div class="profile">
         <div class="profile-image profile-block">
-          <img class="img-circle" src="{{ session.profile_image_url.replace('_normal', '_200x200') }}" />
+          <img class="img-circle" src="{{ schedule.get_author().profile_image_url.replace('_normal', '_200x200') }}" />
         </div>
         <div class="profile-name profile-block">
           <h4><a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></h4>

@@ -35,8 +35,8 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/list">My schedules</a></li>
+              <li><a href="/dashboard"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a></li>
+              <li><a href="/list"><i class="glyphicon glyphicon-record"></i> My schedules</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
@@ -60,6 +60,12 @@
           <div class="flash alert alert-dismissable alert-success">{{ message }}</div>
         {% endfor %}
         {% block body %}{% endblock %}
+    </div>
+    <div class="footer">
+      ZombieTweet |
+      <a href="http://www.zombietweet.com">About</a> |
+      <a href="http://indiegogo.com/projects/zombietweet">Crowdfunding on IndieGoGo</a> |
+      <a href="http://www.zombietweet.com#contacts">Contacts</a>
     </div>
 
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>

@@ -46,6 +46,13 @@ def dashboard():
 
     context = {}
 
+    schedule = Schedule()
+    user = User()
+
+    context['last_schedules'] = schedule.get_last(5)
+    context['last_users'] = user.get_last(5)
+    context['running'] = schedule.get_running()
+
     return render_template('dashboard.html', context=context)
 
 
@@ -111,7 +118,7 @@ def post_login():
     user = user.get_or_create()
     session['user'] = user.username
     session['user_id'] = user.id.__str__()
-    session['utc_offset'] = user.utc_offset
+    session['utc_offset'] = user.utc_offset or 0
     session['uid'] = session['user']
     session['logged_in'] = True
     session['profile_image_url'] = user.profile_image_url

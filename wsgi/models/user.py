@@ -23,6 +23,7 @@ class User(db.Document):
     utc_offset = db.IntField()
     profile_image_url = db.StringField()
     first_login = db.BooleanField(default=True)
+    description = db.StringField()
 
     meta = {
         'allow_inheritance': True,
@@ -90,6 +91,8 @@ class User(db.Document):
             self.save()
             return self
         else:
+            #TODO: update user data from live
+            #get_live_userdata
             return found
 
     def get_all(self):
@@ -103,6 +106,25 @@ class User(db.Document):
 
     def get_last(self, limit=False):
         return User.objects().limit(limit)
+
+    def count_schedule(self):
+        from models.schedule import Schedule
+        return Schedule.objects(uid=self.username).count()
+
+    def count_followers(self):
+        return 0
+
+    def count_likes(self):
+        return 0
+
+    def get_live_userdata(self):
+        from twitter import twitterClient
+        config = getConfig()
+        tClient = twitterClient(config_dict=config['twitter'])
+
+        mydata = tClient.get_user(self.username)
+        return mydata
+
 
 UserForm = model_form(User)
 
