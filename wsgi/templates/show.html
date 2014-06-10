@@ -66,7 +66,7 @@
   <div class="col-md-8">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#tweets" data-toggle="tab"><span class="glyphicon glyphicon-font"></span> Tweets</a></li>
-      <li><a href="#photos" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> Photos</a></li>
+      <!-- <li><a href="#photos" data-toggle="tab"><span class="glyphicon glyphicon-picture"></span> Photos</a></li> -->
       <li><a href="#links" data-toggle="tab"><span class="glyphicon glyphicon-link"></span> Links</a></li>
     </ul>
 
@@ -88,7 +88,7 @@
             </div>
           {% endfor %}
         </div>
-        <div class="tab-pane collections" id="photos">
+        <!-- <div class="tab-pane collections" id="photos">
           {% for photo in photos %}
             <div class="photo">
               <a href="{{ photo.image }}" title="{{ photo.text }}" data-gallery>
@@ -96,7 +96,7 @@
               </a>
             </div>
           {% endfor %}
-        </div>
+  </div>--> 
         <div class="tab-pane collections" id="links">
           {% for link in links %}
             <div class="link" data-id="{{ link.oid }}" data-title="{{ link.title }}">
