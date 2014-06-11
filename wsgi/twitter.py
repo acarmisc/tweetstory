@@ -42,7 +42,7 @@ class twitterClient(object):
 
         for el in todo:
             api = self.connect()
-            results = api.search(q=el.hashtag, result_type='recent')
+            results = api.search(q=el.hashtag, result_type='recent', include_entities=True)
 
             _logger.debug("Fetching data for #%s" % el.hashtag)
             _logger.debug("Fetched %i elements" % len(results))
