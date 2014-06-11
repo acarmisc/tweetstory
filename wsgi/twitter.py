@@ -45,6 +45,7 @@ class twitterClient(object):
             results = api.search(q=el.hashtag, result_type='recent')
 
             _logger.debug("Fetching data for #%s" % el.hashtag)
+            _logger.debug("Fetched %i elements" % len(results))
 
             for r in results:
                 hashtags = []

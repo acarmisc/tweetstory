@@ -122,9 +122,12 @@ class Zombie(db.Document):
 
     def get_photos(self, zombies):
         photos = []
+        l = []
         for z in zombies:
             for m in z.media:
-                photos.append({'image': m, 'text': z.text})
+                if m not in l:
+                    photos.append({'image': m, 'text': z.text})
+                    l.append(m)
 
         return photos
 

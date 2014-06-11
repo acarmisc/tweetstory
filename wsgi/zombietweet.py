@@ -251,6 +251,14 @@ def save_user(id=None):
     return users()
 
 
+""" PRO """
+
+
+@app.route('/pro')
+def pro():
+    return render_template('pro/index.html')
+
+
 """ API """
 from flask.ext.httpauth import HTTPBasicAuth
 from flask import make_response
