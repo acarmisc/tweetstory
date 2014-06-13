@@ -24,7 +24,9 @@
         </div>
         <div class="profile-name profile-block">
           <h4><a href="http://twitter.com/{{ schedule.uid }}">@{{ schedule.uid }}</a></h4>
-          <p>{{ session.twitter_data.time_zone }} </p>
+          {% if session.user_id %}
+            <p>{{ session.twitter_data.time_zone }} </p>
+          {% endif %}
         </div>
       </div>
 
