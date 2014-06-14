@@ -1,5 +1,5 @@
 from flask import render_template, request, \
-    session, redirect, url_for
+    session, redirect, url_for, jsonify
 from lib.tools import _logger
 
 from zombietweet import app
@@ -41,6 +41,45 @@ def get_user(id=None):
 
     return render_template('user.html', user=user, form=form,
                            schedules=schedules)
+
+
+@app.route("/user/checkFollowing", methods=['POST'])
+def check_following():
+    if not request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+
+    user = User(id=request.json.get('username', None))
+    if user.check_following(session['user_id']):
+        return jsonify({'label': "Unfollow", 'action': "unfollow"})
+    else:
+        return jsonify({'label': "Follow", 'action': "follow"})
+
+
+@app.route("/user/relate", methods=['POST'])
+def relate_users():
+    if not request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+
+    from models.user import Relationship
+    relation = Relationship(username=request.json.get('username', None),
+                            follower=session['user_id'])
+    relation.create()
+
+    return jsonify({'response': "Relation created."})
+
+
+@app.route("/user/unrelate", methods=['POST'])
+def unrelate_users():
+    if not request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+
+    from models.user import Relationship
+    relation = Relationship(username=request.json.get('username', None),
+                            follower=session['user_id'])
+    relation = relation.get_by_data()
+    relation.delete()
+
+    return jsonify({'response': "Relation deleted."})
 
 
 @app.route("/save_user/<id>", methods=['POST'])

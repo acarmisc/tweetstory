@@ -111,7 +111,7 @@ class User(db.Document):
         return Schedule.objects(uid=self.username).count()
 
     def count_followers(self):
-        return 0
+        return Relationship.objects(username=self.id).count()
 
     def count_likes(self):
         return 0
@@ -124,6 +124,11 @@ class User(db.Document):
         mydata = tClient.get_user(self.username)
         return mydata
 
+    def check_following(self, follower):
+        relation = Relationship(username=self.id, follower=follower)
+
+        return relation.exists()
+
 
 UserForm = model_form(User)
 
@@ -131,3 +136,48 @@ UserSmallForm = model_form(User, only=['first_name', 'last_name',
                                        'email', 'time_zone', 'utc_offset',
                                        'token'])
 
+
+class Relationship(db.Document):
+    follower = db.ReferenceField('User')
+    username = db.ReferenceField('User')
+    type = db.StringField(max_length=255, required=False)
+    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
+
+    meta = {
+        'allow_inheritance': True,
+        'indexes': ['-created_at', 'username'],
+        'ordering': ['-created_at']
+    }
+
+    @property
+    def __unicode__(self):
+        return self.username
+
+    @property
+    def __repr__(self):
+        return '<Relationship %r>' % self.username
+
+    def get_by_data(self):
+        return Relationship.objects(username=self.username, follower=self.follower)
+
+    def create(self):
+        check = Relationship.objects(username=self.username,
+                                     follower=self.follower).count()
+
+        if check < 1:
+            try:
+                self.save()
+            except:
+                return False
+        else:
+            return False
+
+    def delete(self):
+        if Relationship.delete():
+            return True
+        else:
+            return False
+
+    def exists(self):
+        return True if Relationship.objects(username=self.username,
+                                            follower=self.follower).count() > 0 else False

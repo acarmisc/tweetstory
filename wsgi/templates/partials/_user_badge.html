@@ -1,0 +1,22 @@
+<div class="user-el">
+    <div class="user-pic">
+        <img class="img-circle" src="{{ user.profile_image_url.replace('_normal', '_200x200') }}" />
+    </div>
+    <div class="user-name">
+        <a href="/user/{{ user.id }}">{{ user.username }}</a>
+    </div>
+    <div>
+        <div class="user-inforow">
+            <i class="glyphicon glyphicon-record"></i> Schedules
+            <span class="pull-right label label-info user-infonum">{{ user.count_schedule() }}</span>
+        </div>
+        <div class="user-inforow">
+            <i class="glyphicon glyphicon-user"></i> Followers
+            <span class="pull-right label label-info user-infonum">{{ user.count_followers() }}</span>
+        </div>
+        <div class="user-inforow">
+            <i class="glyphicon glyphicon-heart-empty"></i> Likes
+            <span class="pull-right label label-info user-infonum">{{ user.count_likes() }}</span>
+        </div>
+    </div>
+</div>
