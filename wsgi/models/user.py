@@ -1,5 +1,5 @@
 from flask.ext.mongoengine.wtf import model_form
-from tools import getConfig, _logger
+from lib.tools import getConfig, _logger
 from zombietweet import db
 import datetime
 import uuid
@@ -131,23 +131,3 @@ UserSmallForm = model_form(User, only=['first_name', 'last_name',
                                        'email', 'time_zone', 'utc_offset',
                                        'token'])
 
-
-class Group(db.Document):
-    name = db.StringField(max_length=255, required=True, unique=True)
-    created_at = db.DateTimeField(default=datetime.datetime.now, required=True)
-
-    meta = {'allow_inheritance': True,
-            'indexes': ['-created_at', 'name'],
-            'ordering': ['-created_at']
-            }
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Group %r>' % self.name
-
-    def create_group(self):
-        self.save()
-
-        return True

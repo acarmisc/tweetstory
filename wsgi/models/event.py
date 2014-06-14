@@ -1,5 +1,5 @@
 from flask import session
-from tools import getConfig, _logger
+from lib.tools import getConfig, _logger
 from zombietweet import db
 import datetime
 

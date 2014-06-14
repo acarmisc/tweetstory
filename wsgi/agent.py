@@ -4,17 +4,16 @@ store them to db.
 """
 
 import datetime
-from twitter import twitterClient
-from tools import getConfig
+from lib.tools import getConfig
 import logging
-from zombietweet import db
+
+from zombietweet import tClient
+
 from models.zombie import Zombie
 from models.schedule import Schedule
 
 
 config = getConfig()
-
-tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.utcnow()
 
