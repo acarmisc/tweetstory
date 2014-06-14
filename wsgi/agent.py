@@ -18,7 +18,6 @@ tClient = twitterClient(config_dict=config['twitter'])
 
 now = datetime.datetime.utcnow()
 
-#TODO: prevent duplicate hashtag query
 todo = Schedule.objects(start_date__lte=now,
                         end_date__gte=now)
 

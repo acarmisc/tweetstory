@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="fullbody row">
+    <div class="col-md-8">
+        <div class="overview-block" id="recent-schedules">
+            <h4>Recent schedules</h4>
+            {% for s in context.last_schedules %}
+                <div class="schedule-el" data-id="{{ s.id }}">
+                    {{ s.subject }}
+                    <span class="pull-right label label-info">{{ s.count_zombies() }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="overview-block" id="last-users">
+            <h4>Last users</h4>
+            {% for u in context.last_users %}
+                <div class="user-el">
+                    <div class="user-pic">
+                        <img class="img-circle" src="{{ u.profile_image_url.replace('_normal', '_200x200') }}" />
+                    </div>
+                    <div class="user-name">
+                        {{ u.username }}
+                    </div>
+                    <div class="user-local">
+                        {{ u.time_zone }}
+                    </div>
+                    <div>
+                        <div class="user-inforow">
+                            <i class="glyphicon glyphicon-record"></i> Schedules
+                            <span class="pull-right label label-info user-infonum">{{ u.count_schedule() }}</span>
+                        </div>
+                        <div class="user-inforow">
+                            <i class="glyphicon glyphicon-user"></i> Followers
+                            <span class="pull-right label label-info user-infonum">{{ u.count_followers() }}</span>
+                        </div>
+                        <div class="user-inforow">
+                            <i class="glyphicon glyphicon-heart-empty"></i> Likes
+                            <span class="pull-right label label-info user-infonum">{{ u.count_likes() }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!--
+        <div class="overview-block" id="most-popular">
+            <h4>Most popular hashtags</h4>
+        </div>
+        -->
+    </div>
+    <div class="col-md-4">
+        <div class="">
+            <h4>Explore the ZombieTweet world</h4>
+            <p>Current running schedule:</p>
+            <div class="running-els">
+            {% if context.running : %}
+                {% for r in context.running %}
+                    <div class="running-el" data-id="{{ r.id }}">
+                        <div class="pull-left author-img">
+                            <img class="img-circle" src="{{ r.get_author().profile_image_url }}" />
+                        </div>
+                        <div class="pull-right">
+                            <div class="mini-counter">
+                                <span class="label label-success"><i class="glyphicon glyphicon-align-left"></i>
+                                {{ r.count_zombies() }}</span><br />
+                            </div>
+                            <div class="mini-counter">
+                                <span class="label label-success"><i class="glyphicon glyphicon-camera"></i>
+                                {{ r.count_images() }}</span>
+                            </div>
+                        </div>
+                        <p class="running-subject">{{ r.subject }} <span class="hashtag">#{{ r.hashtag }}</span><br />
+                        <span class="running-info"><b>{{ r.start_date.strftime('%d %b %y %H:%M') }} UTC</p>
+                    </div>
+                {% endfor %}
+            {% else: %}
+                <p class="alert alert-warning">No recordings running.</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

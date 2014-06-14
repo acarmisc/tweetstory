@@ -80,6 +80,20 @@ class Schedule(db.Document):
             ll.end_date = ll.end_date + datetime.timedelta(0, session['utc_offset'])
         return llist
 
+    def get_last(self, limit=False):
+        found = Schedule.objects().limit(limit)
+        return found
+
+    def count_zombies(self):
+        #FIXME: should be done better
+        from models.zombie import Zombie
+        schedule = Schedule()
+        zombie = Zombie()
+
+        schedule = schedule.get_by_id(self.id)
+        zombies = zombie.get_by_schedule(schedule)
+        return zombies.count()
+
     def pack_json(self, llist):
         nlist = []
         for ll in llist:
@@ -95,6 +109,28 @@ class Schedule(db.Document):
             nlist.append(nel)
 
         return {'schedules': nlist}
+
+    def get_running(self):
+        now = datetime.datetime.utcnow()
+        todo = Schedule.objects(start_date__lte=now,
+                                end_date__gte=now)
+
+        return todo
+
+    def get_author(self):
+        from models.user import User
+        user = User(username=self.uid)
+        return user.get_by_username()
+
+    def count_images(self):
+        from models.zombie import Zombie
+        schedule = Schedule()
+        zombie = Zombie()
+
+        schedule = schedule.get_by_id(self.id)
+
+        zombies = zombie.get_by_schedule(schedule)
+        return zombie.count_images(zombies)
 
 
 ScheduleForm = model_form(Schedule)

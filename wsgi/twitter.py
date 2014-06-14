@@ -39,35 +39,41 @@ class twitterClient(object):
 
     def fetch(self, todo):
         fetched = []
+        api = self.connect()
+        done = []
 
         for el in todo:
-            api = self.connect()
-            results = api.search(q=el.hashtag, result_type='recent')
+            if el.hashtag not in done:
+                done.append(el.hashtag)
+                results = api.search(q=el.hashtag, result_type='recent', include_entities=True)
 
-            _logger.debug("Fetching data for #%s" % el.hashtag)
+                _logger.debug("Fetching data for #%s" % el.hashtag)
+                _logger.debug("Fetched %i elements" % len(results))
 
-            for r in results:
-                hashtags = []
-                media = []
+                for r in results:
+                    hashtags = []
+                    media = []
 
-                for h in r.entities['hashtags']:
-                    hashtags.append(h['text'])
+                    for h in r.entities['hashtags']:
+                        hashtags.append(h['text'])
 
-                if 'media' in r.entities:
-                    for m in r.entities['media']:
-                        media.append(m['media_url'])
+                    if 'media' in r.entities:
+                        for m in r.entities['media']:
+                            media.append(m['media_url'])
 
-                data = {'oid': str(r.id),
-                        'text': r.text,
-                        'author': r.author.screen_name,
-                        'avatar': r.user.profile_image_url_https,
-                        'screen_name': r.user.screen_name,
-                        'hashtags': hashtags,
-                        'created_at': r.created_at,
-                        'retweet_count': r.retweet_count,
-                        'media': media}
+                    data = {'oid': str(r.id),
+                            'text': r.text,
+                            'author': r.author.screen_name,
+                            'avatar': r.user.profile_image_url_https,
+                            'screen_name': r.user.screen_name,
+                            'hashtags': hashtags,
+                            'created_at': r.created_at,
+                            'retweet_count': r.retweet_count,
+                            'media': media}
 
-                fetched.append(data)
+                    fetched.append(data)
+            else:
+                pass
 
         return fetched
 

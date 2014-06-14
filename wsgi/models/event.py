@@ -16,6 +16,7 @@ class Event(db.Document):
     resource_type = db.StringField(max_length=255, required=False)
     resource_id = db.StringField(max_length=255, required=False)
     uid = db.StringField(max_length=255, required=False)
+    uid = db.StringField(max_length=255)
     created_at = db.DateTimeField(default=datetime.datetime.utcnow(),
                                   required=True)
 
