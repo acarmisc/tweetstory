@@ -58,7 +58,7 @@ class Schedule(db.Document):
         return res
 
     def delete(self):
-        if Schedule.delete():
+        if Schedule.objects(id=self.id).delete():
             return True
         else:
             return False
@@ -71,8 +71,7 @@ class Schedule(db.Document):
         return found
 
     def get_by_id(self):
-        found = Schedule.objects(id=self.id)
-        return found[0]
+        return Schedule.objects.get(id=self.id)
 
     def to_my_time(self, llist):
         for ll in llist:

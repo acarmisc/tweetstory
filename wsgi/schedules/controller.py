@@ -50,8 +50,7 @@ def save():
 
 @app.route('/delete_schedule/<id>', methods=['GET'])
 def delete_schedule(id=None):
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
+    schedule = Schedule(id=id).get_by_id()
     schedule.delete()
 
     return redirect(url_for('list'))
