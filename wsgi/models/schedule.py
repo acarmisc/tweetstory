@@ -53,9 +53,9 @@ class Schedule(db.Document):
             schedule.end_date = end_date - datetime.timedelta(0, delta)
             schedule.uid = session['user']
 
-        schedule.save()
+        res = schedule.save()
 
-        return True
+        return res
 
     def delete(self):
         if Schedule.delete():
@@ -70,9 +70,9 @@ class Schedule(db.Document):
             found = self.to_my_time(found)
         return found
 
-    def get_by_id(self, id):
-        found = Schedule.objects(id=id)
-        return found
+    def get_by_id(self):
+        found = Schedule.objects(id=self.id)
+        return found[0]
 
     def to_my_time(self, llist):
         for ll in llist:
@@ -87,10 +87,10 @@ class Schedule(db.Document):
     def count_zombies(self):
         #FIXME: should be done better
         from models.zombie import Zombie
-        schedule = Schedule()
+        schedule = Schedule(id=self.id)
         zombie = Zombie()
 
-        schedule = schedule.get_by_id(self.id)
+        schedule = schedule.get_by_id()
         zombies = zombie.get_by_schedule(schedule)
         return zombies.count()
 
@@ -124,10 +124,10 @@ class Schedule(db.Document):
 
     def count_images(self):
         from models.zombie import Zombie
-        schedule = Schedule()
+        schedule = Schedule(id=self.id)
         zombie = Zombie()
 
-        schedule = schedule.get_by_id(self.id)
+        schedule = schedule.get_by_id()
 
         zombies = zombie.get_by_schedule(schedule)
         return zombie.count_images(zombies)

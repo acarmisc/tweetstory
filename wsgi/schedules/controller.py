@@ -35,7 +35,15 @@ def list():
 @app.route('/save', methods=['POST'])
 def save():
     schedule = Schedule()
-    schedule.create_schedule(request, rest=False, delta=session['utc_offset'])
+    res = schedule.create_schedule(request, rest=False, delta=session['utc_offset'])
+
+    Event().remember({'request': request,
+                'description': 'create schedule',
+                'resource_type': 'schedule',
+                'resource_id': res.id.__str__(),
+                'media': 'core',
+                'type': 'events',
+                'uid': session['user_id']})
 
     return list()
 
@@ -52,8 +60,8 @@ def delete_schedule(id=None):
 @app.route("/show/<id>", methods=['GET'])
 def show(id=None):
     # getting schedule
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
+    schedule = Schedule(id=id)
+    schedule = schedule.get_by_id()
 
     # getting zombie related to specific schedule
     zombie = Zombie()
@@ -74,7 +82,7 @@ def show(id=None):
     links = zombie.get_links(zombies)
 
     # should return schedule and zombies
-    return render_template('show.html', schedule=schedule[0],
+    return render_template('show.html', schedule=schedule,
                            zombies=zombies,
                            statistics=statistics,
                            photos=photos,

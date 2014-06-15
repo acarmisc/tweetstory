@@ -6,6 +6,7 @@ from zombietweet import app
 
 from models.user import User
 from models.schedule import Schedule
+from models.event import Event
 
 
 @app.route('/users')
@@ -37,7 +38,7 @@ def get_user(id=None):
     form = UserSmallForm(obj=user)
 
     schedule = Schedule(uid=id)
-    schedules = schedule.get_by_logged_user(session['user'], timeadapt=True)
+    schedules = schedule.get_by_logged_user(user.username, timeadapt=True)
 
     return render_template('user.html', user=user, form=form,
                            schedules=schedules)
@@ -65,6 +66,14 @@ def relate_users():
                             follower=session['user_id'])
     relation.create()
 
+    Event().remember({'request': request,
+                    'description': 'follow',
+                    'resource_type': 'user',
+                    'resource_id': request.json.get('username'),
+                    'media': 'core',
+                    'type': 'events',
+                    'uid': session['user_id']})
+
     return jsonify({'response': "Relation created."})
 
 
@@ -79,7 +88,31 @@ def unrelate_users():
     relation = relation.get_by_data()
     relation.delete()
 
+    Event().remember({'request': request,
+                    'description': 'unfollow',
+                    'resource_type': 'user',
+                    'resource_id': request.json.get('username'),
+                    'media': 'core',
+                    'type': 'events',
+                    'uid': session['user_id']})
+
     return jsonify({'response': "Relation deleted."})
+
+
+@app.route("/user/get_from_twitter", methods=['POST'])
+def get_from_twitter():
+    if not request.json:
+        return jsonify({'error': 'Malformed request'}), 400
+
+    user = User(username=request.json.get('username')).get_from_twitter()
+
+    result = {
+        'description': user.description,
+        'location': user.location,
+        'head_bg': user.profile_background_image_url,
+        'head_color': user.profile_background_color,
+    }
+    return jsonify({'response': result})
 
 
 @app.route("/save_user/<id>", methods=['POST'])

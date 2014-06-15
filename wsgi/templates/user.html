@@ -1,38 +1,79 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="container fullbody">
-    <div class="col-md-4">
-        <h2>
-            <img class="img-circle" src="{{ user.profile_image_url.replace('_normal', '_bigger') }}" />
-            {{ user.username }}
-            <span class="badge">{{ user.count_schedule() }}</span>
-        </h2>
-        <div>
-            <form class="form-horizontal" role="form" method="POST" action="{{ user.id }}">
-                {{ form.csrf_token }}
-                <div class="form-group">
-                    {{ form.first_name(class="form-control", placeholder="First Name", disabled="disabled") }}
-                </div>
-                <div class="form-group">
-                    {{ form.last_name(class="form-control", placeholder="Last Name", disabled="disabled") }}
-                </div>
-                <div class="form-group">
-                    {{ form.email(class="form-control", placeholder="E-mail", disabled="disabled") }}
-                </div>
-                <div class="form-group">
-                    {{ form.token(class="form-control", placeholder="Token", disabled="disabled") }}
-                </div>
-                <div class="form-group">
-                    {{ form.time_zone(class="form-control", placeholder="Time Zone", disabled="disabled") }}
-                </div>
-                <input type="submit" class="btn btn-primary" value="Update" />
-            </form>
-        </div>
-        {% include 'partials/_btn_follow.html' %}
-    </div>
-</div>
+<div class="whitebody fullbody">
+    <div class="userprofile-head" data-username="{{ user.username }}">
+        <div class="head-data">
+            <div class="head-cell">
+                <img class="profile-pic" src="{{ user.profile_image_url.replace('_normal', '_200x200') }}" />
+            </div>
+            <div class="head-cell">
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                <h3>{{ user.username }}<br />
+                <span class="description pull-right" id="description"></span></h3>
+                <p><br />
+                    <button class="btn btn-transparent">
+                        <i class="glyphicon glyphicon-record"></i> Schedules {{ user.count_schedule() }}</button>
+                    <button class="btn btn-transparent">
+                        <i class="glyphicon glyphicon-user"></i> Followers {{ user.count_followers() }}</button>
 
-<div class="col-md-4">
+                    {% include 'partials/_btn_follow.html' %}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="userprofile-body">
+        <div class="col-md-3">
+            <h3>Profile</h3>
+            {% if session and session['user_id'] == user.id.__str__() %}
+                {% include 'partials/_user_form.html' %}
+            {% else %}
+                {% include 'partials/_user_profile.html' %}
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <h3>Connections</h3>
+            <div class="scrollable-box user-twitter-followers">
+            {% for f in user.get_followers() %}
+                <div class="follower-row">
+                    <img class="img-circle pull-left" src="{{ f.follower.profile_image_url.replace('_normal', '_mini') }}">
+                    <p>{{ f.follower.username }}</p>
+                </div>
+            {% endfor %}
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <h3>Events</h3>
+            <div class="scrollable-box user-events">
+            {% for e in user.get_events(20) %}
+                <div class="follower-row">
+                    <p>{{ e.owner}} {{ e.description }} <a href="{{ e.url }}">{{ e.resource_name }}</a><br />
+                        <span>{{ e.created_at.strftime('%d %b %y %H:%M:%S') }}</span></p>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h3>Schedules</h3>
+            <div class="scrollable-box user-schedules">
+                {% for s in schedules %}
+                    <div class="user-schedule" data-id="{{ s.id }}">
+                        <p class="pull-right">
+                            <span class="label label-info"><i class="glyphicon glyphicon-align-left"></i>
+                                {{ s.count_zombies() }}</span><br />
+                            <span class="label label-info"><i class="glyphicon glyphicon-camera"></i>
+                                {{ s.count_images() }}</span>
+                        </p>
+                        <h5>#{{ s.hashtag }}</h5>
+                        <h4><a href="/show/{{s.id}}">{{ s.subject }}</a></h4>
+                        <p class="running-info">{{ s.start_date.strftime('%d %b %y %H:%M') }} UTC</p>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

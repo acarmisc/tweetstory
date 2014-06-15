@@ -33,6 +33,11 @@ h2 {
         display: none;
 }
 
+.btn-transparent {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid;
+    color: rgba(255,255,255,0.7);
+}
 
 .context-data {
     display: none;
@@ -514,4 +519,117 @@ th {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* user page */
+
+.whitebody  {
+    background-color: white;
+}
+
+.userprofile-head {
+    background-color: #0C6F73;
+    min-height: 150px;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding-top: 5px;
+}
+
+.userprofile-head .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 300px;
+    border: 5px solid rgba(255,255,255,0.1);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.userprofile-head h2 {
+    color: white;
+    font-weight: 100;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.userprofile-head h3 {
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    margin-top: 5px;
+    font-size: 20px;
+ }
+
+ .userprofile-head h3 .description {
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    margin-top: 5px;
+ }
+
+.userprofile-body {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.userprofile-body h3 {
+    font-weight: 200;
+    color: #0C6F73;
+ }
+
+.userprofile-body h4 {
+    font-weight: 500;
+    color: #0C6F73;
+    font-size: 16px;
+ }
+
+.userprofile-body .scrollable-box {
+    max-height: 260px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+ }
+
+.userprofile-head .head-cell {
+    display: inline-table;
+    min-width: 170px;
+    vertical-align: top;
+    text-align: left;
+    height: 100%;
+}
+
+.userprofile-body .user-schedule {
+
+}
+
+.userprofile-body .user-schedule h4 {
+    margin-top: 4px;
+    margin-bottom: 2px;
+    font-weight: 500;
+    color: rgba(209, 148, 23, 1);;
+    font-size: 14px;
+}
+
+.userprofile-body .user-schedule h5 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-weight: 200;
+    font-size: 12px;
+    color: #333;
+}
+
+.user-twitter-followers {
+    margin-bottom: 10px;
+}
+
+.follower-row {
+    border-bottom: 1px solid #eee;
+}
+
+.follower-row img {
+    margin-right: 5px;
+}
+
+.follower-row p {
+    font-size: 12px;
+    color: #999;
 }

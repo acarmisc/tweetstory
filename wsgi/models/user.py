@@ -113,6 +113,9 @@ class User(db.Document):
     def count_followers(self):
         return Relationship.objects(username=self.id).count()
 
+    def get_followers(self):
+        return Relationship.objects(username=self.id)
+
     def count_likes(self):
         return 0
 
@@ -128,6 +131,39 @@ class User(db.Document):
         relation = Relationship(username=self.id, follower=follower)
 
         return relation.exists()
+
+    def get_events(self, limit=False):
+        from models.event import Event
+        from models.schedule import Schedule
+
+        event = Event(uid=self.username)
+        events = []
+        for e in event.get_my_events('events'):
+            if e.resource_type == 'user':
+                resource_name = User(id=e.resource_id).get_by_id().username
+                url_prefix = '/user/' + e.resource_id
+            elif e.resource_type == 'schedule':
+                resource_name = Schedule(id=e.resource_id).get_by_id().subject
+                url_prefix = '/show/' + e.resource_id
+
+            el = {
+                'owner': e.uid,
+                'description': e.description,
+                'resource_type': e.resource_type,
+                'resource_id': e.resource_id,
+                'resource_name': resource_name,
+                'created_at': e.created_at,
+                'url': url_prefix
+            }
+            events.append(el)
+
+        return events
+
+    def get_from_twitter(self):
+        from zombietweet import tClient
+        user = tClient.get_user(self.username)
+
+        return user
 
 
 UserForm = model_form(User)

@@ -51,7 +51,6 @@ class Zombie(db.Document):
         return True
 
     def get_by_schedule(self, schedule, slot=False):
-        schedule = schedule[0]
         slot = slot or False
         items_per_page = 10
         if slot:

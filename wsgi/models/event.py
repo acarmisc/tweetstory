@@ -71,6 +71,9 @@ class Event(db.Document):
 
         return found
 
+    def get_my_events(self, type):
+        return Event.objects(uid=self.uid, type=type)
+
     def pack_json(self, llist):
         nlist = []
         for ll in llist:
