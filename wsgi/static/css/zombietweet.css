@@ -527,14 +527,35 @@ th {
     background-color: white;
 }
 
+.head-background {
+    position: absolute;
+    top: 0 ;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+    background-size: cover;
+    z-index: 0;
+}
+
 .userprofile-head {
     background-color: #0C6F73;
     min-height: 150px;
     text-align: center;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    padding-top: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.userprofile-head .head-cell {
+    display: inline-table;
+    min-width: 170px;
+    vertical-align: top;
+    text-align: left;
+    height: 100%;
+    position: relative;
+    margin-top: 5px;
 }
 
 .userprofile-head .profile-pic {
@@ -589,13 +610,7 @@ th {
     overflow-x: hidden;
  }
 
-.userprofile-head .head-cell {
-    display: inline-table;
-    min-width: 170px;
-    vertical-align: top;
-    text-align: left;
-    height: 100%;
-}
+
 
 .userprofile-body .user-schedule {
 

@@ -3,6 +3,7 @@
 <div class="whitebody fullbody">
     <div class="userprofile-head" data-username="{{ user.username }}">
         <div class="head-data">
+            <div class="head-background" style="background-image: url('{{ user.profile_image_url.replace('_normal', '') }}')"></div>
             <div class="head-cell">
                 <img class="profile-pic" src="{{ user.profile_image_url.replace('_normal', '_200x200') }}" />
             </div>
