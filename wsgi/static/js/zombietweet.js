@@ -43,6 +43,10 @@ $(function() {
         applyVague($('.head-background'));
     }
 
+    $('.user-form').on('sumit', function(){
+        alert('ciao');
+    });
+
 });
 
 

@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="whitebody fullbody">
+    <div class="userprofile-head" data-username="{{ user.username }}">
+        <div class="head-data">
+            <div class="head-background" style="background-image: url('{{ user.profile_image_url.replace('_normal', '') }}')"></div>
+            <div class="head-cell">
+                <img class="profile-pic" src="{{ user.profile_image_url.replace('_normal', '_200x200') }}" />
+            </div>
+            <div class="head-cell">
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                <h3>{{ user.username }}<br />
+                <span class="description pull-right" id="description"></span></h3>
+                <p><br />
+                    <button class="btn btn-transparent">
+                        <i class="glyphicon glyphicon-record"></i> Schedules {{ user.count_schedule() }}</button>
+                    <button class="btn btn-transparent">
+                        <i class="glyphicon glyphicon-user"></i> Followers {{ user.count_followers() }}</button>
+
+                    {% include 'partials/_btn_follow.html' %}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="userprofile-body">
+        <div class="col-md-5">
+            <h3>Profile</h3>
+            {% include 'partials/_user_form.html' %}
+        </div>
+        <div class="col-md-4">
+            <h3>Events</h3>
+
+        </div>
+        <div class="col-md-3">
+            <h3>Schedules</h3>
+            <div class="scrollable-box user-schedules">
+                {% for s in schedules %}
+                    <div class="user-schedule" data-id="{{ s.id }}">
+                        <p class="pull-right">
+                            <span class="label label-info"><i class="glyphicon glyphicon-align-left"></i>
+                                {{ s.count_zombies() }}</span><br />
+                            <span class="label label-info"><i class="glyphicon glyphicon-camera"></i>
+                                {{ s.count_images() }}</span>
+                        </p>
+                        <h5>#{{ s.hashtag }}</h5>
+                        <h4><a href="/show/{{s.id}}">{{ s.subject }}</a></h4>
+                        <p class="running-info">{{ s.start_date.strftime('%d %b %y %H:%M') }} UTC</p>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
