@@ -251,6 +251,10 @@ th {
     position: fixed;
 }
 
+.profile {
+    position: relative;
+}
+
 .profile .profile-image > img {
     width: 150px;
     height: 150px;
@@ -345,6 +349,11 @@ th {
     text-align: center;
     background-color: #0C6F73;
     padding-bottom: 10px;
+    overflow: hidden;
+}
+
+.profile-data {
+    position: relative;
 }
 
 .profile .profile-name {
@@ -527,7 +536,7 @@ th {
     background-color: white;
 }
 
-.head-background {
+.head-background, .profile-head {
     position: absolute;
     top: 0 ;
     left: 0;
