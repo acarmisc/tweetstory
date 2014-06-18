@@ -49,14 +49,6 @@ def post_login():
     session['profile_image_url'] = user.profile_image_url
 
     if user.first_login:
-        Event().remember({'request': request,
-                    'description': 'sign up as',
-                    'resource_type': 'user',
-                    'resource_id': session['user'],
-                    'media': 'core',
-                    'type': 'events',
-                    'uid': session['user_id']})
-
         flash('This is your first login. Please fill up the fields.')
         return redirect(url_for('first_login', id=user.id))
     else:

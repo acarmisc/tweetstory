@@ -41,7 +41,10 @@ $(function() {
         //getFromTwitter($('.userprofile-head').data('username'));
         //getFollowing($('.userprofile-head').data('username'));
         applyVague($('.head-background'));
+
     }
+
+    applyVague($('.profile-head'));
 
     $('.user-form').on('sumit', function(){
         alert('ciao');
