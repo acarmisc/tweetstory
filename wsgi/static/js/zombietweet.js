@@ -36,6 +36,10 @@ $(function() {
         });
     });
 
+    $('.datetimepicker').datetimepicker({
+        format: "YYYY-MM-DD HH:mm:ss"
+    });
+
     // data getters
     if($('.userprofile-head').data('username')){
         //getFromTwitter($('.userprofile-head').data('username'));
@@ -49,6 +53,7 @@ $(function() {
     $('.user-form').on('sumit', function(){
         alert('ciao');
     });
+
 
 });
 

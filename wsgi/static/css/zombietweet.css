@@ -64,6 +64,11 @@ h2 {
 
 }
 
+.inlineform-el {
+    width: 200px;
+    display: inline-table;
+}
+
 .messages-container {
     padding-left: 5px;
     padding-right: 5px;
