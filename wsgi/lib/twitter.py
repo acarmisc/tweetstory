@@ -32,8 +32,6 @@ class twitterClient(object):
 
     def authenticate(self):
         oauth = OAuth()
-        print config['twitter']['t_api_key']
-        print config['twitter']['t_api_secret']
         twitter = oauth.remote_app('twitter',
             base_url='https://api.twitter.com/1/',
             request_token_url='https://api.twitter.com/oauth/request_token',
