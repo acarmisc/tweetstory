@@ -36,11 +36,24 @@ $(function() {
         });
     });
 
+    $('.datetimepicker').datetimepicker({
+        format: "YYYY-MM-DD HH:mm:ss"
+    });
+
     // data getters
     if($('.userprofile-head').data('username')){
-        getFromTwitter($('.userprofile-head').data('username'));
-        getFollowing($('.userprofile-head').data('username'));
+        //getFromTwitter($('.userprofile-head').data('username'));
+        //getFollowing($('.userprofile-head').data('username'));
+        applyVague($('.head-background'));
+
     }
+
+    applyVague($('.profile-head'));
+
+    $('.user-form').on('sumit', function(){
+        alert('ciao');
+    });
+
 
 });
 
@@ -89,4 +102,11 @@ function getFromTwitter(username){
             console.log(errMsg);
         }
     });
+}
+
+
+function applyVague(item){
+    // ̦test item use
+    var vague = item.Vague({intensity:50});
+    vague.blur();
 }

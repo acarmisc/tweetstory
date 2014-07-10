@@ -2,26 +2,9 @@
 {% block body %}
     <div class="real-content">
         <h2>Users</h2>
-        <table class="table table-hover full-table">
-        <tr>
-            <th>username</th>
-            <th>e-mail</th>
-            <th>password</th>
-            <th>twitter ID</th>
-            <th></th>
-        </tr>
-            {% for user in users %}
-            <tr class="schedule-entry">
-                <td><a href="/user/{{ user.id }}">{{ user.username }}</a></td>
-                <td>{{ user.email }}</td>
-                <td>********</td>
-                <td>{{ user.twitter_id }}</td>
-                <td>
-
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
+        {% for user in users %}
+            {% include 'partials/_user_badge.html' %}
+        {% endfor %}
 </div>
 
 {% endblock %}

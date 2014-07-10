@@ -24,36 +24,13 @@
 
     </div>
     <div class="userprofile-body">
-        <div class="col-md-3">
+        <div class="col-md-5">
             <h3>Profile</h3>
-            {% if session and session['user_id'] == user.id.__str__() %}
-                {% include 'partials/_user_form.html' %}
-            {% else %}
-                {% include 'partials/_user_profile.html' %}
-            {% endif %}
+            {% include 'partials/_user_form.html' %}
         </div>
-        <div class="col-md-3">
-            <h3>Connections</h3>
-            <div class="scrollable-box user-twitter-followers">
-            {% for f in user.get_followers() %}
-                <div class="follower-row">
-                    <img class="img-circle pull-left" src="{{ f.follower.profile_image_url.replace('_normal', '_mini') }}">
-                    <p>{{ f.follower.username }}</p>
-                </div>
-            {% endfor %}
-            </div>
-
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <h3>Events</h3>
-            <div class="scrollable-box user-events">
-            {% for e in user.get_events(20) %}
-                <div class="follower-row">
-                    <p>{{ e.owner}} {{ e.description }} <a href="{{ e.url }}">{{ e.resource_name }}</a><br />
-                        <span>{{ e.created_at.strftime('%d %b %y %H:%M:%S') }}</span></p>
-                </div>
-            {% endfor %}
-            </div>
+
         </div>
         <div class="col-md-3">
             <h3>Schedules</h3>

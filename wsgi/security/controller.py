@@ -1,8 +1,9 @@
-from flask import session, redirect, url_for, flash
+from flask import session, redirect, url_for, flash, request, render_template
 from lib.tools import _logger
 
 from zombietweet import app, twitter
 from models.user import User
+from models.event import Event
 
 
 @app.route('/login')
@@ -15,6 +16,20 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('welcome'))
+
+
+@app.route('/first_login/<id>')
+def first_login(id=None):
+    from models.user import UserSmallForm
+    if 'logged_in' not in session:
+        return redirect(url_for('welcome'))
+
+    user = User(id=id)
+    user = user.get_by_id()
+
+    form = UserSmallForm(obj=user)
+
+    return render_template('first_login.html', user=user, form=form)
 
 
 @app.route('/post_login')
@@ -35,6 +50,6 @@ def post_login():
 
     if user.first_login:
         flash('This is your first login. Please fill up the fields.')
-        return redirect(url_for('get_user', id=user.id))
+        return redirect(url_for('first_login', id=user.id))
     else:
         return redirect(url_for('list'))

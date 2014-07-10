@@ -7,9 +7,11 @@
 <p class="pull-right"><input type="submit" class="btn btn-primary" value="Save" /></p>
             {{ form.csrf_token }}
             {{ form.hashtag(class="form-control", size=16, placeholder="#") }}
-            {{ form.start_date(value=defaults.start_date, class="form-control", size=16) }}
-            {{ form.end_date(value=defaults.start_date, class="form-control", size=16) }}
             {{ form.subject(class="form-control", size=16, placeholder="a title") }}
+
+            {{ form.start_date(value=defaults.start_date, class="form-control date datetimepicker", size=16) }}
+
+            {{ form.end_date(value=defaults.end_date, class="form-control date datetimepicker", size=16, placeholder="stop recording") }}
 
         </form>
 

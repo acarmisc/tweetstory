@@ -95,8 +95,8 @@ def get_zombies(fullurl):
                       'type': 'statistic',
                       'uid': auth.username()})
 
-    schedule = Schedule()
-    schedule = schedule.get_by_id(id)
+    schedule = Schedule(id=id)
+    schedule = schedule.get_by_id()
 
     zombie = Zombie()
     results = zombie.get_by_schedule(schedule, slot=slot)

@@ -1,5 +1,7 @@
-TWEETSTORY
-==========
+ZombieTweet
+===========
+
+http://www.zombietweet.com
 
 Run
 ---
