@@ -53,7 +53,7 @@ class Zombie(db.Document):
     def get_by_schedule(self, schedule, slot=False):
         slot = slot or False
         items_per_page = 10
-        if slot:
+        if slot and slot > 0:
             offset = (int(slot) - 1) * items_per_page
 
             found = Zombie.objects(hashtags__icontains=schedule.hashtag,
