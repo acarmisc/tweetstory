@@ -77,6 +77,25 @@ def get_schedules():
     return jsonify(schedules.pack_json(results))
 
 
+@app.route('/api/delete_schedule/<id>', methods=['DELETE'])
+@auth.login_required
+def api_delete_schedule(id):
+    Event().remember({'request': request,
+                      'description': 'delete_schedule',
+                      'resource_type': 'schedule',
+                      'resource_id': id,
+                      'media': 'api',
+                      'type': 'statistic',
+                      'uid': auth.username()})
+
+    schedules = Schedule(id=id)
+    try:
+        schedules.delete()
+        return make_response(jsonify({'response': 'Item deleted'}), 200)
+    except:
+        return make_response(jsonify({'response': 'No item found'}), 400)
+
+
 @app.route('/<path:fullurl>')
 @auth.login_required
 def get_zombies(fullurl):
