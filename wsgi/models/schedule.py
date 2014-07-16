@@ -64,7 +64,7 @@ class Schedule(db.Document):
             return False
 
     def get_by_logged_user(self, uid, timeadapt=None):
-        found = Schedule.objects(uid=uid)
+        found = Schedule.objects(uid=uid).order_by('created_at DESC')
 
         if timeadapt:
             found = self.to_my_time(found)

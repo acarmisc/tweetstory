@@ -34,6 +34,8 @@ Returns: ::
       ]
     }
 
+Schedules are provided in descending order by ``created_at`` field.
+
 Authentication *required*.
 Note: datetime must be exchanged in UTC format.
 
@@ -58,8 +60,12 @@ Follow the next example to insert new schedule. ::
 
     curl -u username:password -i -H "Content-Type: application/json" -X POST -d '{"subject": "Lorem ipsum", "hashtag": "#dolorSit", "start_date": "2014-05-02 19:04:06", "end_date": "2014-05-02 20:04:06"}' http:///api/create_schedule
 
+This methods return the ID of the last inserted schedule.
+
 Authentication *required*.
-Note: datetime must be exchanged in UTC format.
+
+.. NOTE::
+  datetime must be exchanged in UTC format.
 
 
 Delete schedule
