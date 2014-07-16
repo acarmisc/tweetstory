@@ -79,3 +79,6 @@ Follow the next example to delete a schedule. ::
 
     curl -u username:password -i -H "Accept: application/json" -X DELETE http://localhost:9090/api/delete_schedule/53a1f7154459d92264f3369e
 
+.. WARNING::
+   no confirm or alert provided, you have to implement them on your own!
+
