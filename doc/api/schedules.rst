@@ -60,7 +60,7 @@ Follow the next example to insert new schedule. ::
 
     curl -u username:password -i -H "Content-Type: application/json" -X POST -d '{"subject": "Lorem ipsum", "hashtag": "#dolorSit", "start_date": "2014-05-02 19:04:06", "end_date": "2014-05-02 20:04:06"}' http:///api/create_schedule
 
-This methods return the ID of the last inserted schedule.
+This methods return last inserted schedule.
 
 Authentication *required*.
 

@@ -145,4 +145,4 @@ def api_create_schedule():
     session['user'] = auth.username()
     schedule = Schedule()
     last = schedule.create_schedule(data, rest=True)
-    return last.id.__str__()
+    return jsonify(schedule.pack_json([last]))
