@@ -110,10 +110,36 @@ def api_get_media(id):
     schedule = Schedule(id=id)
     schedule = schedule.get_by_id()
 
-    results = schedule.get_media()
-    images = schedule.count_images()
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    results = zombie.get_photos(zombies)
+    images = zombie.count_images(zombies)
 
     return make_response(jsonify({'images': images, 'results': results}), 200)
+
+
+@app.route('/api/get_links/<id>', methods=['GET'])
+@auth.login_required
+def api_get_links(id):
+    Event().remember({'request': request,
+                      'description': 'get_links',
+                      'resource_type': 'links',
+                      'resource_id': id,
+                      'media': 'api',
+                      'type': 'statistic',
+                      'uid': auth.username()})
+
+    schedule = Schedule(id=id)
+    schedule = schedule.get_by_id()
+
+    zombie = Zombie()
+    zombies = zombie.get_by_schedule(schedule)
+
+    results = zombie.get_links(zombies)
+    links = zombie.count_links(zombies)
+
+    return make_response(jsonify({'links': links, 'results': results}), 200)
 
 
 @app.route('/<path:fullurl>')
