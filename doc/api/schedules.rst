@@ -88,3 +88,34 @@ Follow the next example to delete a schedule. ::
 .. WARNING::
    no confirm or alert provided, you have to implement them on your own!
 
+
+Get media
+---------
+
+To get media for given schedule ID: ::
+
+    /api/get_media/<id>
+
+You have to pass data in the URL like ::
+
+    http://localhost/api/get_media/53a1f7154459d92264f3369e
+
+Returns: ::
+
+    {
+      "images": 3,
+      "results": [
+        {
+          "image": "http://pbs.twimg.com/media/Bt0T8Q0CMAAFDhM.jpg",
+          "text": "RT @helentroth: #ibizarocks #bff #summer2014 @LinziDunn http://t.co/FjwWN9fyQq"
+        },
+        {
+          "image": "http://pbs.twimg.com/media/Bt0SrTeIYAI3YJ8.jpg",
+          "text": "RT @flipflops_co_uk: How to apply sunscreen to your back! Please RT #summer2014 #Sunshine #Sunny #HOT http://t.co/kFZCG81HOV"
+        },
+        {
+          "image": "http://pbs.twimg.com/media/Bt0TwNsIgAAtZmh.jpg",
+          "text": "Grand Oasis Cancun \ud83c\udf34\u2600\ufe0f #oasis #cancun #beach #summer2014 #gottaloveit http://t.co/iKynyWQpRv"
+        }
+      ]
+    }

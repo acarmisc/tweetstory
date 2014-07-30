@@ -54,7 +54,7 @@ class Schedule(db.Document):
             schedule.uid = session['user']
 
         res = schedule.save()
-
+        # in produzione sbaglia data
         return res
 
     def delete(self):
@@ -130,6 +130,18 @@ class Schedule(db.Document):
 
         zombies = zombie.get_by_schedule(schedule)
         return zombie.count_images(zombies)
+
+    def get_media(self):
+        from models.zombie import Zombie
+        schedule = Schedule(id=self.id)
+        schedule = schedule.get_by_id()
+
+        zombie = Zombie()
+        zombies = zombie.get_by_schedule(schedule)
+
+        photos = zombie.get_photos(zombies)
+
+        return photos
 
 
 ScheduleForm = model_form(Schedule)

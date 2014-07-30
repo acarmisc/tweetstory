@@ -96,6 +96,26 @@ def api_delete_schedule(id):
         return make_response(jsonify({'response': 'No item found'}), 400)
 
 
+@app.route('/api/get_media/<id>', methods=['GET'])
+@auth.login_required
+def api_get_media(id):
+    Event().remember({'request': request,
+                      'description': 'get_media',
+                      'resource_type': 'media',
+                      'resource_id': id,
+                      'media': 'api',
+                      'type': 'statistic',
+                      'uid': auth.username()})
+
+    schedule = Schedule(id=id)
+    schedule = schedule.get_by_id()
+
+    results = schedule.get_media()
+    images = schedule.count_images()
+
+    return make_response(jsonify({'images': images, 'results': results}), 200)
+
+
 @app.route('/<path:fullurl>')
 @auth.login_required
 def get_zombies(fullurl):
