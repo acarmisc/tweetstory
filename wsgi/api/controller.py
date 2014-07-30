@@ -116,7 +116,7 @@ def api_get_media(id):
     results = zombie.get_photos(zombies)
     images = zombie.count_images(zombies)
 
-    return make_response(jsonify({'images': images, 'results': results}), 200)
+    return make_response(jsonify({'count': images, 'results': results}), 200)
 
 
 @app.route('/api/get_links/<id>', methods=['GET'])
@@ -139,7 +139,7 @@ def api_get_links(id):
     results = zombie.get_links(zombies)
     links = zombie.count_links(zombies)
 
-    return make_response(jsonify({'links': links, 'results': results}), 200)
+    return make_response(jsonify({'count': links, 'results': results}), 200)
 
 
 @app.route('/<path:fullurl>')

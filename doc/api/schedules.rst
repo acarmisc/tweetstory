@@ -105,7 +105,7 @@ You have to pass data in the URL like ::
 Returns: ::
 
     {
-      "images": 3,
+      "count": 3,
       "results": [
         {
           "image": "http://pbs.twimg.com/media/Bt0T8Q0CMAAFDhM.jpg",
@@ -124,3 +124,39 @@ Returns: ::
 
 Authentication *required*.
 
+
+Get links
+---------
+
+To get links for given schedule ID: ::
+
+    /api/get_links/<id>
+
+You have to pass data in the URL like ::
+
+    http://localhost/api/get_links/53a1f7154459d92264f3369e
+
+Returns: ::
+
+    {
+      "count": 3,
+      "results": [
+        {
+          "link": "http://t.co/FjwWN9fyQq",
+          "oid": "494573757634461697",
+          "text": "RT @helentroth: #ibizarocks #bff #summer2014 @LinziDunn http://t.co/FjwWN9fyQq"
+        },
+        {
+          "link": "http://t.co/nlfidZlDK1",
+          "oid": "494573505149947904",
+          "text": "Order your copy of the latest issue of Risen Magazine! #summer2014 #faith #christianmagazine http://t.co/nlfidZlDK1"
+        },
+        {
+          "link": "http://t.co/sttPHwbSWy",
+          "oid": "494573475886292992",
+          "text": "Rainy day fun\u2764\ufe0f #summer2014 @ Tulsa Children's Museum http://t.co/sttPHwbSWy"
+        },
+      ]
+    }
+
+Authentication *required*.
