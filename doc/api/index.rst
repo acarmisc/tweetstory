@@ -7,10 +7,10 @@ ZombieTweet's API
 API Version
 -----------
 
-Curren version is *v0.3*; release date July, 14 2014.
+Curren version is *v0.3*; release date July, 31 2014.
 
 Sections
-------
+--------
 
 * :doc:`System and security <system>`
 * :doc:`Schedules <schedules>`

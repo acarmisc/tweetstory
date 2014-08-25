@@ -116,6 +116,8 @@ def api_get_media(id):
     results = zombie.get_photos(zombies)
     images = zombie.count_images(zombies)
 
+    #TODO: try
+
     return make_response(jsonify({'count': images, 'results': results}), 200)
 
 
@@ -135,6 +137,8 @@ def api_get_links(id):
 
     zombie = Zombie()
     zombies = zombie.get_by_schedule(schedule)
+
+    #TODO: try
 
     results = zombie.get_links(zombies)
     links = zombie.count_links(zombies)
