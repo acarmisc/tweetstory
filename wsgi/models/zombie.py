@@ -88,18 +88,23 @@ class Zombie(db.Document):
         links = []
         for z in zombies:
             found = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', z.text)
-            links += found
+            if "//t.co/" not in found:
+                links += found
 
+        links = sorted(set(links))
         return len(links)
 
     def get_links(self, zombies):
         import re
 
+        done = []
         links = []
         for z in zombies:
             found = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', z.text)
             for l in found:
-                links.append({'link': l, 'oid': z.oid, 'text': z.text})
+                if l not in done and "//t.co/" not in l:
+                    links.append({'link': l, 'oid': z.oid, 'text': z.text})
+                    done.append(l)
 
         return links
 
