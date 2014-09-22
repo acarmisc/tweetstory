@@ -89,9 +89,17 @@ def api_delete_schedule(id):
         return make_response(jsonify({'response': 'No item found'}), 400)
 
 
-@app.route('/api/get_media/<id>', methods=['GET'])
+@app.route('/<path:fullurl>', methods=['GET'])
 @auth.login_required
-def api_get_media(id):
+def api_get_media(fullurl):
+
+    params = fullurl.split('/')
+    id = params[2]
+    if len(params) > 3:
+        slot = params[3]
+    else:
+        slot = False
+
     Event().remember({'request': request,
                       'description': 'get_media',
                       'resource_type': 'media',
@@ -104,7 +112,7 @@ def api_get_media(id):
     schedule = schedule.get_by_id()
 
     zombie = Zombie()
-    zombies = zombie.get_by_schedule(schedule)
+    zombies = zombie.get_by_schedule(schedule, slot=slot)
 
     results = zombie.get_photos(zombies)
     images = zombie.count_images(zombies)
@@ -114,9 +122,16 @@ def api_get_media(id):
     return make_response(jsonify({'count': images, 'results': results}), 200)
 
 
-@app.route('/api/get_links/<id>', methods=['GET'])
+@app.route('/<path:fullurl>', methods=['GET'])
 @auth.login_required
-def api_get_links(id):
+def api_get_links(fullurl):
+    params = fullurl.split('/')
+    id = params[2]
+    if len(params) > 3:
+        slot = params[3]
+    else:
+        slot = False
+
     Event().remember({'request': request,
                       'description': 'get_links',
                       'resource_type': 'links',
@@ -129,7 +144,7 @@ def api_get_links(id):
     schedule = schedule.get_by_id()
 
     zombie = Zombie()
-    zombies = zombie.get_by_schedule(schedule)
+    zombies = zombie.get_by_schedule(schedule, slot=slot)
 
     #TODO: try
 
