@@ -31,13 +31,6 @@ def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
 
-@app.route('/api/whoiam/<username>')
-def whoiam(username):
-    user = User(username=username)
-    token = user.get_token()
-    return make_response(jsonify({'response': token}), 200)
-
-
 @app.route('/api/post_login', methods=['POST'])
 def api_post_login():
     if not request.json or not 'twitter_user' in request.json:
