@@ -96,7 +96,7 @@ Get media
 
 To get media for given schedule ID: ::
 
-    /api/get_media/<id>
+    /api/get_media/<id>/[slot]
 
 You have to pass data in the URL like ::
 
@@ -122,6 +122,8 @@ Returns: ::
       ]
     }
 
+If you do not like to get all data in a single call you can pass the ``slot`` parameter at the end of the URL. This slot is like a page number, it is used for zombies pagination.
+
 Authentication *required*.
 
 
@@ -130,7 +132,7 @@ Get links
 
 To get links for given schedule ID: ::
 
-    /api/get_links/<id>
+    /api/get_links/<id>/[slot]
 
 You have to pass data in the URL like ::
 
@@ -158,5 +160,7 @@ Returns: ::
         },
       ]
     }
+
+If you do not like to get all data in a single call you can pass the ``slot`` parameter at the end of the URL. This slot is like a page number, it is used for zombies pagination.
 
 Authentication *required*.
